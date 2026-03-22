@@ -3611,7 +3611,7 @@ app.post('/user/login', (req, res) => {
 app.post('/admin/login', (req, res) => {
     const { email, password, adminCode } = req.body;
 
-    db.query('SELECT * FROM Admins WHERE username = ?', [email], async (err, results) => {
+    db.query('SELECT * FROM admins WHERE username = ?', [email], async (err, results) => {
         if (err) return res.status(500).json({ message: 'DB Error' });
 
         if (results.length > 0) {
