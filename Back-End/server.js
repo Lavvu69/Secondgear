@@ -39,11 +39,14 @@ db.connect(err => {
 
 // --- Email Configuration (Nodemailer) ---
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
-        user: 'secondgearproject01@gmail.com',
-        pass: 'bcwn gcdk tfqr dohy'
-    }
+        user: process.env.EMAIL_USER || 'secondgearproject01@gmail.com',
+        pass: process.env.EMAIL_PASS || 'bcwn gcdk tfqr dohy'
+    },
+    family: 4
 });
 
 // Test email connection
