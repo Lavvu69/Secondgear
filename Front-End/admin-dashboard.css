@@ -213,6 +213,66 @@ body {
     gap: 16px;
 }
 
+@media (max-width: 980px) {
+    .dashboard-container {
+        width: min(100%, 96vw);
+        margin: 16px auto 28px;
+    }
+
+    .admin-section {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .admin-dashboard-hero {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 18px 0;
+        padding: 14px;
+    }
+
+    .admin-dashboard-title {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .admin-dashboard-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-action-btn {
+        width: 100%;
+    }
+
+    .featured-admin-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    table th,
+    table td {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    .featured-admin-tools {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .featured-refresh-btn {
+        width: 100%;
+    }
+}
+
 .featured-admin-card {
     display: flex;
     flex-direction: column;
