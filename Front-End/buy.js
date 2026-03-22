@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             cars.sort((a, b) => a.id - b.id);
             // Create a fragment for better performance
             const fragment = document.createDocumentFragment();
-            const PLACEHOLDER_IMG = 'images/cars/placeholder.png';
+            const PLACEHOLDER_IMG = 'images/cars/about.jpg';
             // Populate filter dropdowns (once)
             if (makeSelect && modelSelect && yearSelect && allCars.length) {
                 // Makes
@@ -313,14 +313,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let imgUrl = '';
                 let imageVal = car.image_url || car.image;
                 if (imageVal) {
-                    // Remove leading slash if present
-                    if (imageVal.startsWith('/')) imageVal = imageVal.substring(1);
                     if (imageVal.startsWith('http://') || imageVal.startsWith('https://')) {
                         imgUrl = imageVal;
-                    } else if (imageVal.startsWith('images/cars/')) {
-                        imgUrl = imageVal;
                     } else {
-                        imgUrl = 'images/cars/' + imageVal;
+                        if (imageVal.startsWith('/')) imageVal = imageVal.substring(1);
+                        if (imageVal.startsWith('images/cars/')) {
+                            imgUrl = imageVal;
+                        } else {
+                            imgUrl = 'images/cars/' + imageVal;
+                        }
                     }
                 } else {
                     imgUrl = PLACEHOLDER_IMG;
