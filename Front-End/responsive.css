@@ -1,12 +1,35 @@
 /* Mobile-first overrides: only active on small screens to keep desktop unchanged */
 
+* {
+    box-sizing: border-box;
+}
+
 @media (max-width: 980px) {
     html, body {
         overflow-x: hidden;
     }
 
+    body {
+        font-size: 15px;
+        line-height: 1.55;
+    }
+
+    h1 { font-size: 1.6rem; line-height: 1.2; }
+    h2 { font-size: 1.35rem; line-height: 1.25; }
+    h3 { font-size: 1.15rem; line-height: 1.3; }
+    h4 { font-size: 1.02rem; line-height: 1.3; }
+
     img, video, iframe {
         max-width: 100%;
+        height: auto;
+    }
+
+    .logo,
+    .brand,
+    .brand-logo,
+    .site-logo,
+    .navbar-logo {
+        max-width: 140px;
         height: auto;
     }
 
@@ -24,6 +47,35 @@
         padding-right: 16px;
     }
 
+    .section,
+    .page,
+    .main {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    .card,
+    .panel,
+    .info-card,
+    .stat-card,
+    .listing-card,
+    .vehicle-card,
+    .offer-card {
+        padding: 14px;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+    }
+
+    .card + .card,
+    .panel + .panel,
+    .info-card + .info-card,
+    .stat-card + .stat-card,
+    .listing-card + .listing-card,
+    .vehicle-card + .vehicle-card,
+    .offer-card + .offer-card {
+        margin-top: 12px;
+    }
+
     .floating-navbar {
         padding: 10px 12px;
     }
@@ -31,11 +83,19 @@
     .floating-navbar nav {
         width: 100%;
         justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
     .floating-navbar nav a {
         padding: 7px 8px;
         font-size: 0.88rem;
+    }
+
+    .floating-navbar nav a,
+    .nav-links a,
+    .tabs a {
+        white-space: nowrap;
     }
 
     .hero,
@@ -66,6 +126,7 @@
     .profile-grid,
     .admin-grid {
         grid-template-columns: 1fr !important;
+        gap: 12px;
     }
 
     .sidebar,
@@ -88,6 +149,33 @@
         overflow-x: auto;
     }
 
+    table th,
+    table td {
+        padding: 8px 10px;
+        font-size: 0.92rem;
+    }
+
+    .navbar,
+    .top-nav,
+    .main-nav,
+    header nav,
+    .menu,
+    .nav-links,
+    .tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .card,
+    .panel,
+    .info-card,
+    .stat-card,
+    .listing-card,
+    .vehicle-card,
+    .offer-card {
+        width: 100%;
+    }
+
     .modal,
     .dialog,
     .popup,
@@ -97,6 +185,36 @@
 }
 
 @media (max-width: 640px) {
+    body {
+        font-size: 14.5px;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 16px;
+    }
+
+    form {
+        display: grid;
+        gap: 12px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+    }
+
+    .btn,
+    .button,
+    .cta,
+    .signup-btn,
+    .submit-btn {
+        padding: 12px 14px;
+    }
+
     .floating-navbar .brand-name {
         font-size: 0.98rem;
     }
@@ -120,5 +238,23 @@
     .stat-card {
         margin-left: 0;
         margin-right: 0;
+    }
+
+    .hero-title,
+    .page-title,
+    .section-title,
+    .title {
+        font-size: 1.35rem;
+    }
+
+    .warning,
+    .alert,
+    .error,
+    .success,
+    .toast,
+    .message {
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 0.94rem;
     }
 }
