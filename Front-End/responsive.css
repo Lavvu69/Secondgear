@@ -425,7 +425,7 @@
         align-items: start;
         word-break: break-word;
         overflow-wrap: anywhere;
-        text-align: left;
+        text-align: left !important;
     }
 
     table.mobile-cards td:last-child {
@@ -437,11 +437,16 @@
         font-weight: 700;
         color: #475569;
         white-space: nowrap;
+        text-align: left;
     }
 
     table.mobile-cards td button,
     table.mobile-cards td a {
         width: auto;
         justify-self: start;
+    }
+
+    table.mobile-cards td * {
+        text-align: left;
     }
 }

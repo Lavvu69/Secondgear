@@ -315,6 +315,45 @@ body {
     }
 }
 
+@media (max-width: 860px) {
+    #statsSection {
+        padding: 14px !important;
+        margin: 16px 0 !important;
+        border-radius: 16px !important;
+    }
+
+    #statsSection > div {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: stretch !important;
+    }
+
+    #statsSection > div > div {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    #statsSection h2 {
+        font-size: 1.2rem !important;
+    }
+
+    #statsSection h3 {
+        font-size: 1rem !important;
+    }
+
+    #carRevenue,
+    #serviceRevenue {
+        font-size: 1.5rem !important;
+    }
+
+    #usersTable,
+    #bannedUsersTable,
+    #newsletterTable,
+    #offersTable {
+        width: 100% !important;
+    }
+}
+
 .featured-admin-card {
     display: flex;
     flex-direction: column;

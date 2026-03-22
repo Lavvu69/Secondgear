@@ -119,6 +119,45 @@ button:hover,
     box-shadow: 0 8px 16px rgba(29, 78, 216, 0.22);
 }
 
+@media (max-width: 860px) {
+    .dashboard-container {
+        width: 100%;
+        margin: 10px auto 24px;
+        padding: 10px 12px 16px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 1.45rem;
+        margin-bottom: 10px;
+    }
+
+    #holidayManagementSection,
+    #addOfflineBookingForm,
+    #addServiceForm,
+    #addMechanicForm,
+    #addWorkshopForm {
+        padding: 12px;
+        margin-bottom: 14px;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    #addHolidayForm,
+    .service-form-row {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+
+    table {
+        width: 100%;
+    }
+}
+
 .responsive-table-container {
     background: #fff;
     border: 1px solid var(--border);
