@@ -128,13 +128,15 @@ body {
         min-height: 72px;
         align-items: flex-start;
         flex-direction: column;
-        padding: 10px 12px 12px;
+        align-items: center;
+        padding: 12px 12px 14px;
     }
 
     .floating-navbar nav {
         width: 100%;
         gap: 6px;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .floating-navbar nav a {
@@ -147,7 +149,7 @@ body {
     }
 
     .floating-navbar .brand-name {
-        font-size: 0.98rem;
+        font-size: 1rem;
     }
 
     .floating-navbar .dropdown-content {
