@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
   ampmSelect.disabled = true;
 
   // Fetch admin holidays
-  fetch('http://localhost:5000/admin/holidays')
+  const API_BASE = window.location.origin;
+  fetch(`${API_BASE}/admin/holidays`)
     .then(res => res.json())
     .then(holidays => {
       holidayTimestamps = holidays.map(h => {
@@ -149,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ================= SHOW HOLIDAYS IN TIMETABLE ================= */
 
-  fetch('http://localhost:5000/admin/holidays')
+  fetch(`${API_BASE}/admin/holidays`)
     .then(res => res.json())
     .then(holidays => {
 
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ================= WORKSHOPS ================= */
 
   const workshopSelect = document.getElementById('workshop');
-  fetch('http://localhost:5000/admin/workshops')
+  fetch(`${API_BASE}/admin/workshops`)
     .then(res => res.json())
     .then(workshops => {
       workshops.forEach(ws => {
@@ -209,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       try {
-          const res = await fetch(`http://localhost:5000/api/mechanics/${workshopId}`);
+          const res = await fetch(`${API_BASE}/api/mechanics/${workshopId}`);
           if (!res.ok) {
               console.error('Failed to fetch mechanics for workshop');
               return;
@@ -244,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const priceInput = document.getElementById('price'); // Get the hidden input
   let currentCost = 0;
 
-  fetch('http://localhost:5000/admin/services')
+  fetch(`${API_BASE}/admin/services`)
     .then(res => res.json())
     .then(services => {
       serviceList = services;
@@ -346,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    fetch('http://localhost:5000/book-service', {
+    fetch(`${API_BASE}/book-service`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
