@@ -182,6 +182,16 @@
     .popup-card {
         width: min(92vw, 640px);
     }
+
+    .login-notice {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        margin: 12px auto !important;
+        width: 100% !important;
+        z-index: auto !important;
+    }
 }
 
 @media (max-width: 640px) {
