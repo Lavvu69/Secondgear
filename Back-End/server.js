@@ -5159,7 +5159,7 @@ app.post('/admin/sell-request/:id/confirm', upload.single('image'), (req, res) =
         carDetails.price = req.body.price;
     }
     // Use uploaded file if present, else use image_url from body or sell_request
-    const image = req.file ? '/images/cars/' + req.file.filename : (carDetails.image_url || null);
+    let image = req.file ? '/images/cars/' + req.file.filename : (carDetails.image_url || null);
     const toBool = (value, defaultValue = true) => {
         if (value === undefined || value === null || value === '') return defaultValue;
         if (typeof value === 'boolean') return value;
@@ -5171,6 +5171,12 @@ app.post('/admin/sell-request/:id/confirm', upload.single('image'), (req, res) =
     db.query('SELECT * FROM sell_requests WHERE id = ?', [id], (err, results) => {
         if (err || results.length === 0) return res.status(404).json({ message: 'Sell request not found' });
         const reqData = results[0];
+        if (!image) {
+            image = reqData.image_url || null;
+        }
+        if (image && !image.startsWith('/')) {
+            image = '/' + image;
+        }
         // Use values from the sell request; admin can only hide/show fields
         const make = reqData.make;
         const model = reqData.model;
