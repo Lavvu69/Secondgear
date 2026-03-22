@@ -45,6 +45,24 @@ body {
     margin-bottom: 20px;
 }
 
+.admin-section h2,
+.admin-section h3,
+.admin-section h4 {
+    margin: 0 0 12px;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+}
+
+.admin-section p,
+.admin-section label,
+.admin-section input,
+.admin-section select,
+.admin-section textarea,
+.admin-section button {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
 .admin-dashboard-hero {
     display: grid;
     grid-template-columns: minmax(240px, 1fr) minmax(360px, 2.2fr);
@@ -247,6 +265,18 @@ body {
     .featured-admin-list {
         grid-template-columns: 1fr;
     }
+
+    .admin-section h2 {
+        font-size: 1.2rem;
+    }
+
+    .admin-section h3 {
+        font-size: 1.05rem;
+    }
+
+    .admin-section {
+        gap: 12px;
+    }
 }
 
 @media (max-width: 720px) {
@@ -270,6 +300,18 @@ body {
 
     .featured-refresh-btn {
         width: 100%;
+    }
+
+    .admin-section {
+        padding: 14px;
+    }
+
+    .admin-section input,
+    .admin-section select,
+    .admin-section textarea,
+    .admin-section button {
+        width: 100%;
+        max-width: 100%;
     }
 }
 
