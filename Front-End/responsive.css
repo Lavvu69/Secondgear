@@ -394,6 +394,32 @@
 }
 
 @media (max-width: 720px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .dashboard-container,
+    .admin-section,
+    .responsive-table-container {
+        overflow: visible !important;
+    }
+
+    .smooth-unfold-section,
+    .smooth-unfold-section.open {
+        max-height: none !important;
+        overflow: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .responsive-table-container {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0 0 14px;
+    }
+
     table.mobile-cards thead {
         display: none;
     }
@@ -423,6 +449,7 @@
         border-bottom: 1px dashed #e2e8f0;
         font-size: 0.95rem;
         align-items: start;
+        white-space: normal !important;
         word-break: break-word;
         overflow-wrap: anywhere;
         text-align: left !important;
@@ -436,7 +463,7 @@
         content: attr(data-label);
         font-weight: 700;
         color: #475569;
-        white-space: nowrap;
+        white-space: normal;
         text-align: left;
     }
 
@@ -448,5 +475,14 @@
 
     table.mobile-cards td * {
         text-align: left;
+    }
+
+    table.mobile-cards {
+        min-width: 0 !important;
+    }
+
+    table {
+        min-width: 0 !important;
+        overflow: visible;
     }
 }
