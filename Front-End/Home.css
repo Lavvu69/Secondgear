@@ -287,17 +287,17 @@ body.home-page {
 }
 
 .hero-slide-1 {
-    background-image: url("images/Home_hero/hero1.jpg");
+    background-image: url("images/Home_Hero/hero1.jpg");
     animation-delay: 0s;
 }
 
 .hero-slide-2 {
-    background-image: url("images/Home_hero/hero2.jpg");
+    background-image: url("images/Home_Hero/hero2.jpg");
     animation-delay: 4s;
 }
 
 .hero-slide-3 {
-    background-image: url("images/Home_hero/hero3.jpg");
+    background-image: url("images/Home_Hero/hero3.jpg");
     animation-delay: 8s;
 }
 
