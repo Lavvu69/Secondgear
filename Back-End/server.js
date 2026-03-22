@@ -4344,7 +4344,12 @@ app.post('/buy', (req, res) => {
 
                                         db.query('SELECT email FROM users WHERE id = ?', [userId], (userErr, userResults) => {
                                             const userEmail = userResults && userResults.length > 0 ? userResults[0].email : null;
-                                            if (!userEmail) return res.json({ message: 'Purchase successful' });
+                                            const respondSuccess = () => {
+                                                if (!res.headersSent) {
+                                                    res.json({ message: 'Purchase successful' });
+                                                }
+                                            };
+                                            if (!userEmail) return respondSuccess();
 
                                             const invoiceDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
                                             const mailOptions = {
@@ -4384,10 +4389,10 @@ app.post('/buy', (req, res) => {
                                                 </div>
                                                 `
                                             };
-
+                                            // Respond immediately; email send should not block checkout.
+                                            respondSuccess();
                                             transporter.sendMail(mailOptions, (emailErr) => {
                                                 if (emailErr) console.error('Purchase invoice email failed:', emailErr);
-                                                res.json({ message: 'Purchase successful' });
                                             });
                                         });
                                     });
