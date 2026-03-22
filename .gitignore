@@ -9,6 +9,14 @@ Back-End/ca.pem
 **/dist/
 **/build/
 
+# local installers / large binaries
+*.msi
+*.exe
+
+# local db dumps (keep private)
+secondgeardb.sql
+cars.sql
+
 # logs
 **/*.log
 
