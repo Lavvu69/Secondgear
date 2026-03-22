@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
+const dns = require('dns');
 require('dotenv').config();
 
 const session = require('express-session');
@@ -13,6 +14,13 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 const activeAdminSessions = new Set();
+
+// Prefer IPv4 to avoid ENETUNREACH with IPv6-only SMTP routes on some hosts.
+try {
+    dns.setDefaultResultOrder('ipv4first');
+} catch (err) {
+    console.warn('DNS ipv4first not supported in this Node version:', err?.message || err);
+}
 function getDbSslConfig() {
     const caPath = process.env.DB_SSL_CA_PATH;
     if (!caPath) return undefined;
