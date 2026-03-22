@@ -366,20 +366,38 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(res => res.json())
       .then(result => {
         if (result.booking_id) {
-          bookingMsg.textContent = 'Booking submitted! We will contact you soon.';
-          bookingMsg.style.color = '#2980b9';
+          bookingMsg.textContent = result.message || 'Booking submitted! We will contact you soon.';
+          bookingMsg.style.color = '#166534';
+          bookingMsg.style.background = 'rgba(22,163,74,0.12)';
+          bookingMsg.style.border = '1px solid rgba(22,163,74,0.35)';
+          bookingMsg.style.padding = '10px 12px';
+          bookingMsg.style.borderRadius = '10px';
+          bookingMsg.style.display = 'block';
           form.reset();
           hourSelect.disabled = true;
           minuteSelect.disabled = true;
           ampmSelect.disabled = true;
+          bookingMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
           bookingMsg.textContent = result.message || 'Booking failed.';
-          bookingMsg.style.color = '#e74c3c';
+          bookingMsg.style.color = '#b91c1c';
+          bookingMsg.style.background = 'rgba(239,68,68,0.12)';
+          bookingMsg.style.border = '1px solid rgba(239,68,68,0.35)';
+          bookingMsg.style.padding = '10px 12px';
+          bookingMsg.style.borderRadius = '10px';
+          bookingMsg.style.display = 'block';
+          bookingMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       })
       .catch(() => {
         bookingMsg.textContent = 'Booking failed. Please try again later.';
-        bookingMsg.style.color = '#e74c3c';
+        bookingMsg.style.color = '#b91c1c';
+        bookingMsg.style.background = 'rgba(239,68,68,0.12)';
+        bookingMsg.style.border = '1px solid rgba(239,68,68,0.35)';
+        bookingMsg.style.padding = '10px 12px';
+        bookingMsg.style.borderRadius = '10px';
+        bookingMsg.style.display = 'block';
+        bookingMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
   });
 

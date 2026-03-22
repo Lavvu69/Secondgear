@@ -221,6 +221,31 @@ body {
     color: #0f172a;
 }
 
+.confirm-status {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: none;
+}
+
+.confirm-status.show {
+    display: block;
+}
+
+.confirm-status.success {
+    background: rgba(22, 163, 74, 0.12);
+    color: #166534;
+    border: 1px solid rgba(22, 163, 74, 0.35);
+}
+
+.confirm-status.error {
+    background: rgba(239, 68, 68, 0.12);
+    color: #b91c1c;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
 .confirm-btn-main {
     width: 100%;
     border: none;

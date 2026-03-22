@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
     const form = document.getElementById('confirmForm');
+    const confirmStatus = document.getElementById('confirmStatus');
 
     // Show car details inside form (with visibility toggles)
     const detailsDiv = document.createElement('div');
@@ -41,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     `;
                 };
+                const PLACEHOLDER_IMG = 'images/cars/about.jpg';
+                const rawImage = req.image_url || req.image || PLACEHOLDER_IMG;
+                const imageUrl = (rawImage.startsWith('http') || rawImage.startsWith('/')) ? rawImage : `/${rawImage}`;
                 detailsDiv.innerHTML = `
                     <div class="details-header">
                         <div>
@@ -48,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p>Toggle the details you want to show on the listing.</p>
                         </div>
                         <div class="details-image">
-                            <img src="${req.image_url || req.image}" alt="${req.make} ${req.model}">
+                            <img src="${imageUrl}" alt="${req.make} ${req.model}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';">
                         </div>
                     </div>
                     <div class="details-grid">
@@ -76,7 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 const priceInput = form.querySelector('input[name="price"]');
                 const preferredPrice = req.final_agreed_price || req.admin_offer_price || req.estimated_price || '';
-                agreedPriceValue = Number(req.final_agreed_price || req.admin_offer_price || req.estimated_price || 0);
+                const normalizeAmount = (value) => {
+                    if (value === null || value === undefined) return 0;
+                    const cleaned = String(value).replace(/[^\d.]/g, '');
+                    const num = Number(cleaned);
+                    return Number.isFinite(num) ? num : 0;
+                };
+                agreedPriceValue = normalizeAmount(req.final_agreed_price || req.admin_offer_price || req.estimated_price || 0);
                 if (priceInput && preferredPrice) {
                     priceInput.value = preferredPrice;
                 }
@@ -89,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateProfitDisplay() {
         if (!profitValueEl) return;
         const priceInput = form.querySelector('input[name="price"]');
-        const listingPrice = priceInput ? Number(priceInput.value || 0) : 0;
+        const listingPrice = priceInput ? Number(String(priceInput.value || '').replace(/[^\d.]/g, '')) : 0;
         const profit = listingPrice - (agreedPriceValue || 0);
         const safeProfit = Number.isFinite(profit) ? profit : 0;
         profitValueEl.textContent = `₹${safeProfit.toLocaleString('en-IN')}`;
@@ -104,13 +114,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        if (confirmStatus) {
+            confirmStatus.className = 'confirm-status show';
+            confirmStatus.textContent = 'Submitting...';
+        }
         const price = form.price.value;
         if (!id || !price) {
-            alert('Missing required fields');
+            if (confirmStatus) {
+                confirmStatus.className = 'confirm-status show error';
+                confirmStatus.textContent = 'Missing required fields.';
+            } else {
+                alert('Missing required fields');
+            }
             return;
         }
         if (!sellRequestDetails) {
-            alert('Car details not loaded. Please try again.');
+            if (confirmStatus) {
+                confirmStatus.className = 'confirm-status show error';
+                confirmStatus.textContent = 'Car details not loaded. Please refresh and try again.';
+            } else {
+                alert('Car details not loaded. Please try again.');
+            }
             return;
         }
         const carData = {
@@ -137,14 +161,32 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                alert('Vehicle confirmed and added to buy page!');
-                window.location.href = '/buy';
+                if (confirmStatus) {
+                    confirmStatus.className = 'confirm-status show success';
+                    confirmStatus.textContent = 'Vehicle confirmed and added to the Buy page.';
+                } else {
+                    alert('Vehicle confirmed and added to buy page!');
+                }
+                setTimeout(() => {
+                    window.location.href = '/buy';
+                }, 900);
             } else {
-                alert('Error: ' + (data.message || 'Could not confirm request'));
+                const message = data.message || 'Could not confirm request.';
+                if (confirmStatus) {
+                    confirmStatus.className = 'confirm-status show error';
+                    confirmStatus.textContent = message;
+                } else {
+                    alert('Error: ' + message);
+                }
             }
         })
         .catch(() => {
-            alert('Network error');
+            if (confirmStatus) {
+                confirmStatus.className = 'confirm-status show error';
+                confirmStatus.textContent = 'Network error. Please try again.';
+            } else {
+                alert('Network error');
+            }
         });
     });
 });
