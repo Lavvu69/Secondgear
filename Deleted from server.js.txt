@@ -1,0 +1,303 @@
+    }
+});
+const upload = multer({ storage });
+// --- Password Reset Requests Table ---
+db.query(`CREATE TABLE IF NOT EXISTS password_reset_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255),
+    answer_attempt VARCHAR(255),
+    new_password VARCHAR(255),
+    status ENUM('pending','approved','rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at TIMESTAMP NULL,
+    is_answer_correct TINYINT(1) DEFAULT 0
+)`, (err) => {
+    if (err) console.error('Error creating password_reset_requests table:', err);
+});
+
+// --- Holidays Table ---
+db.query(`CREATE TABLE IF NOT EXISTS holidays (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL UNIQUE,
+    description VARCHAR(255)
+)`, (err) => {
+    if (err) console.error('Error creating holidays table:', err);
+});
+
+db.query(`CREATE TABLE IF NOT EXISTS user_notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    type VARCHAR(50) NOT NULL DEFAULT 'system',
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    link VARCHAR(255) NULL,
+    is_read TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_notifications_user_id (user_id),
+    INDEX idx_user_notifications_read (is_read)
+)`, (err) => {
+    if (err) console.error('Error creating user_notifications table:', err);
+});
+
+db.query(`CREATE TABLE IF NOT EXISTS car_offers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    car_id INT NOT NULL,
+    user_id INT NOT NULL,
+    listed_price DECIMAL(12,2) NOT NULL,
+    offered_price DECIMAL(12,2) NOT NULL,
+    counter_price DECIMAL(12,2) NULL,
+    status ENUM('pending','countered','accepted','rejected','withdrawn','expired') DEFAULT 'pending',
+    user_message VARCHAR(500) NULL,
+    admin_response VARCHAR(500) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_car_offers_car_status (car_id, status),
+    INDEX idx_car_offers_user_created (user_id, created_at)
+)`, (err) => {
+    if (err) console.error('Error creating car_offers table:', err);
+});
+
+// --- Car Queries Table ---
+db.query(`CREATE TABLE IF NOT EXISTS car_queries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    car_id INT NOT NULL,
+    user_id INT NOT NULL,
+    user_email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    status ENUM('open','responded','closed') DEFAULT 'open',
+    admin_response TEXT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    responded_at TIMESTAMP NULL,
+    INDEX idx_car_queries_car (car_id),
+    INDEX idx_car_queries_user (user_id),
+    INDEX idx_car_queries_status (status)
+)`, (err) => {
+    if (err) console.error('Error creating car_queries table:', err);
+});
+
+// --- Mock Payments Tables (for realistic payment simulation) ---
+db.query(`CREATE TABLE IF NOT EXISTS mock_payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    car_id INT NOT NULL,
+    amount DECIMAL(12,2) NOT NULL,
+    currency VARCHAR(10) NOT NULL DEFAULT 'USD',
+    payment_method VARCHAR(50) NOT NULL,
+    status ENUM('requires_action','processing','succeeded','failed','canceled') NOT NULL,
+    client_secret VARCHAR(100) NOT NULL,
+    idempotency_key VARCHAR(120) NULL,
+    failure_reason VARCHAR(255) NULL,
+    receipt_no VARCHAR(50) NULL,
+    simulated_3ds_required TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_mock_payments_user (user_id),
+    INDEX idx_mock_payments_car (car_id),
+    INDEX idx_mock_payments_status (status),
+    UNIQUE KEY uniq_mock_payments_idempotency (idempotency_key)
+)`, (err) => {
+    if (err) console.error('Error creating mock_payments table:', err);
+});
+
+db.query(`CREATE TABLE IF NOT EXISTS mock_payment_events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_id INT NOT NULL,
+    event VARCHAR(50) NOT NULL,
+    payload TEXT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_mock_payment_events_payment (payment_id)
+)`, (err) => {
+    if (err) console.error('Error creating mock_payment_events table:', err);
+});
+
+// --- Chatbot History Table ---
+db.query(`CREATE TABLE IF NOT EXISTS chatbot_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    role ENUM('user','assistant') NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_chatbot_history_user (user_id),
+    INDEX idx_chatbot_history_created (created_at)
+)`, (err) => {
+    if (err) console.error('Error creating chatbot_history table:', err);
+});
+
+db.query(`CREATE TABLE IF NOT EXISTS Admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)`, (err) => {
+    if (err) console.error('Error creating Admins table:', err);
+});
+
+db.query('ALTER TABLE cars ADD COLUMN IF NOT EXISTS seller_email VARCHAR(255) NULL', (err) => {
+    if (err) console.error('Error adding seller_email column to cars:', err);
+});
+db.query('ALTER TABLE cars ADD COLUMN IF NOT EXISTS is_deleted TINYINT(1) DEFAULT 0', (err) => {
+    if (err) console.error('Error adding is_deleted column to cars:', err);
+});
+db.query('ALTER TABLE cars ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP NULL', (err) => {
+    if (err) console.error('Error adding deleted_at column to cars:', err);
+});
+db.query('ALTER TABLE cars ADD COLUMN IF NOT EXISTS featured TINYINT(1) DEFAULT 0', (err) => {
+    if (err) console.error('Error adding featured column to cars:', err);
+});
+
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS user_id INT NULL', (err) => {
+    if (err) console.error('Error adding user_id column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS color VARCHAR(50) NULL', (err) => {
+    if (err) console.error('Error adding color column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS fuel_type VARCHAR(50) NULL', (err) => {
+    if (err) console.error('Error adding fuel_type column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS mileage INT NULL', (err) => {
+    if (err) console.error('Error adding mileage column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS num_owners INT NULL', (err) => {
+    if (err) console.error('Error adding num_owners column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS registration_city VARCHAR(100) NULL', (err) => {
+    if (err) console.error('Error adding registration_city column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS registration_number VARCHAR(100) NULL', (err) => {
+    if (err) console.error('Error adding registration_number column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS transmission VARCHAR(50) NULL', (err) => {
+    if (err) console.error('Error adding transmission column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS vin VARCHAR(100) NULL', (err) => {
+    if (err) console.error('Error adding vin column to sell_requests:', err);
+});
+db.query('ALTER TABLE sell_requests ADD COLUMN IF NOT EXISTS insurance_validity VARCHAR(100) NULL', (err) => {
+    if (err) console.error('Error adding insurance_validity column to sell_requests:', err);
+});
+
+db.query('ALTER TABLE rejected_requests ADD COLUMN IF NOT EXISTS email VARCHAR(255) NULL', (err) => {
+    if (err) console.error('Error adding email column to rejected_requests:', err);
+});
+
+db.query('ALTER TABLE purchases ADD COLUMN IF NOT EXISTS final_price DECIMAL(12,2) NULL', (err) => {
+    if (err) console.error('Error adding final_price column to purchases:', err);
+});
+
+db.query('ALTER TABLE purchases ADD COLUMN IF NOT EXISTS offer_id INT NULL', (err) => {
+    if (err) console.error('Error adding offer_id column to purchases:', err);
+});
+
+function createUserNotification({ userId, type = 'system', title, message, link = null }) {
+    if (!userId || !title || !message) return;
+});
+
+
+// Ensure is_banned column exists in users table
+db.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS is_banned TINYINT(1) DEFAULT 0', (err) => {
+    if (err) console.error('Error adding is_banned column to users:', err);
+});
+// --- ADMIN: UNBAN USER ---
+app.post('/admin/unban-user', (req, res) => {
+    const { id } = req.body;
+    });
+});
+
+// Ensure banned_users table exists
+db.query(`CREATE TABLE IF NOT EXISTS banned_users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(20) UNIQUE,
+    banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)`, (err) => {
+    if (err) console.error('Error creating banned_users table:', err);
+});
+// --- ADMIN: BAN USER ---
+app.post('/admin/ban-user', (req, res) => {
+    const { user_id } = req.body;
+        });
+    })
+});
+// --- Offers Table Setup (run once at server start) ---
+db.query(
+    'CREATE TABLE IF NOT EXISTS offers (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(500) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+    (err) => {
+        if (err) console.error('Error creating offers table:', err);
+    }
+);
+
+// --- Admin: Get all offers ---
+app.get('/admin/offers', (req, res) => {
+    db.query('SELECT id, text, created_at, valid_from, valid_to FROM offers ORDER BY created_at DESC', (err, results) => {
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        return res.status(400).json({ message: 'Invalid email address.' });
+    }
+    // Create table if not exists (for demo, not for prod)
+    // Insert email
+    db.query(
+        'CREATE TABLE IF NOT EXISTS newsletter_subscribers (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255) UNIQUE, subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+        (err) => {
+            if (err) return res.status(500).json({ message: 'DB error', error: err });
+            // Insert email
+            db.query(
+                'INSERT IGNORE INTO newsletter_subscribers (email) VALUES (?)',
+                [email],
+                (err2, result) => {
+                    if (err2) return res.status(500).json({ message: 'DB error', error: err2 });
+                    if (result.affectedRows === 0) {
+                        return res.json({ message: 'You are already subscribed!' });
+                    }
+                    const mailOptions = {
+                        from: 'secondgearproject01@gmail.com',
+                        to: email,
+                        subject: 'Subscription Confirmed - SecondGear',
+                        html: `
+                            <div style="font-family: Arial, sans-serif; color: #0f172a; background: #f4f7fb; padding: 20px;">
+                                <div style="max-width: 640px; margin: 0 auto; background: #ffffff; padding: 28px; border-radius: 12px; box-shadow: 0 8px 24px rgba(15,23,42,0.08);">
+                                    <h2 style="margin: 0 0 12px; color: #0f3d57;">You're subscribed to SecondGear updates</h2>
+                                    <p style="margin: 0 0 12px;">Thanks for subscribing. You’ll receive updates on new listings, price drops, and service offers.</p>
+                                    <p style="margin: 0; color: #475569; font-size: 13px;">No spam. You can unsubscribe anytime from the footer on the website.</p>
+                                </div>
+                            </div>
+                        `
+                    };
+        'INSERT IGNORE INTO newsletter_subscribers (email) VALUES (?)',
+        [email],
+        (err2, result) => {
+            if (err2) return res.status(500).json({ message: 'DB error', error: err2 });
+            if (result.affectedRows === 0) {
+                return res.json({ message: 'You are already subscribed!' });
+            }
+            const mailOptions = {
+                from: 'secondgearproject01@gmail.com',
+                to: email,
+                subject: 'Subscription Confirmed - SecondGear',
+                html: `
+                    <div style="font-family: Arial, sans-serif; color: #0f172a; background: #f4f7fb; padding: 20px;">
+                        <div style="max-width: 640px; margin: 0 auto; background: #ffffff; padding: 28px; border-radius: 12px; box-shadow: 0 8px 24px rgba(15,23,42,0.08);">
+                            <h2 style="margin: 0 0 12px; color: #0f3d57;">You're subscribed to SecondGear updates</h2>
+                            <p style="margin: 0 0 12px;">Thanks for subscribing. You’ll receive updates on new listings, price drops, and service offers.</p>
+                            <p style="margin: 0; color: #475569; font-size: 13px;">No spam. You can unsubscribe anytime from the footer on the website.</p>
+                        </div>
+                    </div>
+                `
+            };
+
+                    transporter.sendMail(mailOptions, (emailErr) => {
+                        if (emailErr) {
+                            console.error('Newsletter confirmation email failed:', emailErr);
+                        }
+                        res.json({ message: 'Thanks! Check your email to confirm.' });
+                    });
+            transporter.sendMail(mailOptions, (emailErr) => {
+                if (emailErr) {
+                    console.error('Newsletter confirmation email failed:', emailErr);
+                }
+            );
+                res.json({ message: 'Thanks! Check your email to confirm.' });
+            });
+        }
+    );
+});

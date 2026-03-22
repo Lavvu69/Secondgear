@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - SecondGear</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="my-listings.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body class="profile-page">
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="profile.html" id="my-profile-link" style="display:none;">My Profile</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px; align-items:center; gap:10px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <main class="profile-main">
+        <section class="profile-view-controls" aria-label="Profile sections">
+            <button id="tab-overview" class="view-tab active" type="button">Overview</button>
+            <button id="tab-messages" class="view-tab" type="button">
+                Messages
+                <span id="messagesTabBadge" class="tab-badge" style="display:none;">0</span>
+            </button>
+            <button id="tab-offers" class="view-tab" type="button">My Offers</button>
+            <button id="tab-wishlist" class="view-tab" type="button">Wishlist</button>
+            <button id="tab-queries" class="view-tab" type="button">My Queries</button>
+            <button id="tab-listings" class="view-tab" type="button">My Listings</button>
+            <div class="view-arrows">
+                <button id="view-prev" type="button" aria-label="Previous section">‹</button>
+                <button id="view-next" type="button" aria-label="Next section">›</button>
+            </div>
+        </section>
+
+        <div class="profile-slider-shell">
+            <div class="profile-slider-track" id="profile-slider-track">
+                <section class="profile-panel" id="profile-panel-overview">
+                    <section class="profile-section">
+                        <div class="profile-title-row">
+                            <h2>My Profile</h2>
+                            <span id="profileVerifiedBadge" class="verified-pill" style="display:none;">Verified Seller</span>
+                        </div>
+                        <p class="section-subtitle">Manage your details and keep your account up to date.</p>
+                        <form id="profileForm">
+                            <label class="profile-field">
+                                <span>First Name</span>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </label>
+                            <label class="profile-field">
+                                <span>Last Name</span>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </label>
+                            <label class="profile-field">
+                                <span>Email</span>
+                                <input type="email" id="email" name="email" disabled>
+                            </label>
+                            <label class="profile-field">
+                                <span>Phone</span>
+                                <input type="tel" id="phone" name="phone" required>
+                            </label>
+                            <label class="profile-field">
+                                <span>New Password</span>
+                                <input type="password" id="password" name="password" placeholder="Leave blank to keep unchanged">
+                            </label>
+                            <button type="submit" class="profile-submit-btn">Update Profile</button>
+                            <div id="profileMsg"></div>
+                        </form>
+
+                        <section class="verified-seller-section">
+                            <div class="verified-header">
+                                <h3>Verified Seller</h3>
+                                <button type="button" id="verificationToggleBtn" class="verification-toggle-btn">Apply</button>
+                            </div>
+                            <p class="section-subtitle">Apply to get a verified badge on your listings. (Use fake credentials for this project.)</p>
+                            <div id="verifiedSellerStatus" class="verified-status">Loading verification status...</div>
+                            <div id="verificationFormWrap" class="verification-form-wrap collapsed" aria-hidden="true">
+                                <form id="verificationForm" class="verification-form" enctype="multipart/form-data">
+                                <label class="profile-field">
+                                    <span>Full Name</span>
+                                    <input type="text" id="verificationFullName" name="full_name" required>
+                                </label>
+                                <label class="profile-field">
+                                    <span>ID Type</span>
+                                    <select id="verificationIdType" name="id_type" required>
+                                        <option value="">Select ID Type</option>
+                                        <option value="Aadhaar">Aadhaar</option>
+                                        <option value="PAN">PAN</option>
+                                        <option value="Driving License">Driving License</option>
+                                        <option value="Passport">Passport</option>
+                                    </select>
+                                </label>
+                                <label class="profile-field">
+                                    <span>ID Number</span>
+                                    <input type="text" id="verificationIdNumber" name="id_number" required>
+                                </label>
+                                <label class="profile-field">
+                                    <span>ID Document (required)</span>
+                                    <input type="file" id="verificationIdDoc" name="id_doc" accept="image/*,.pdf" required>
+                                </label>
+                                <label class="profile-field">
+                                    <span>Selfie (optional)</span>
+                                    <input type="file" id="verificationSelfie" name="selfie" accept="image/*">
+                                </label>
+                                <label class="profile-field">
+                                    <span>Address Proof (optional)</span>
+                                    <input type="file" id="verificationAddressDoc" name="address_doc" accept="image/*,.pdf">
+                                </label>
+                                <button type="submit" class="profile-submit-btn" id="verificationSubmitBtn">Submit Verification</button>
+                                <div id="verificationMsg" class="verification-msg"></div>
+                                </form>
+                            </div>
+                        </section>
+                    </section>
+
+                    <div class="overview-bottom">
+                        <section class="profile-purchases" id="purchases">
+                            <h2>My Purchases</h2>
+                            <p class="section-subtitle">Cars you have purchased through SecondGear.</p>
+                            <div id="purchasesList">Loading...</div>
+                        </section>
+
+                        <section class="profile-bookings">
+                            <h2>My Bookings</h2>
+                            <p class="section-subtitle">Track and manage your service booking requests.</p>
+                            <div id="bookingsList">Loading...</div>
+                        </section>
+
+                    </div>
+                </section>
+
+                <section class="profile-panel" id="profile-panel-messages">
+                    <section class="profile-notifications">
+                        <div class="notifications-header">
+                            <div>
+                                <h2>Messages & Updates</h2>
+                                <p class="section-subtitle">Automatic updates for approvals, rejections, and request status changes.</p>
+                            </div>
+                            <div class="notifications-controls">
+                                <span id="notificationsUnreadCount" class="unread-badge">0 unread</span>
+                                <button id="markAllNotificationsRead" type="button">Mark all read</button>
+                            </div>
+                        </div>
+                        <div id="notificationsList">Loading updates...</div>
+                    </section>
+                </section>
+
+                <section class="profile-panel" id="profile-panel-offers">
+                    <section class="profile-offers">
+                        <h2>My Car Offers</h2>
+                        <p class="section-subtitle">Track your submitted offers and admin responses.</p>
+                        <div id="offersList">Loading...</div>
+                    </section>
+                </section>
+
+                <section class="profile-panel" id="profile-panel-wishlist">
+                    <section class="profile-wishlist">
+                        <h2>My Wishlist</h2>
+                        <p class="section-subtitle">Saved cars you want to keep an eye on.</p>
+                        <div id="wishlistMessage" class="wishlist-message">Loading...</div>
+                        <div id="wishlistList" class="wishlist-grid"></div>
+                    </section>
+                </section>
+
+                <section class="profile-panel" id="profile-panel-queries">
+                    <section class="profile-queries">
+                        <h2>My Queries</h2>
+                        <p class="section-subtitle">Your vehicle queries and admin responses.</p>
+                        <div id="queriesList">Loading...</div>
+                    </section>
+                </section>
+
+                <section class="profile-panel" id="profile-panel-listings">
+                    <section class="profile-listings">
+                        <h2>My Listings</h2>
+                        <p class="section-subtitle">Track your sell requests and see what is live, sold, or rejected.</p>
+                        <section class="listings-grid">
+                            <section class="listings-section">
+                                <h3>Pending Requests</h3>
+                                <p class="section-subtitle">Submitted and awaiting admin review.</p>
+                                <div id="pendingList" class="listings-list">Loading...</div>
+                            </section>
+
+                            <section class="listings-section">
+                                <h3>Active Listings</h3>
+                                <p class="section-subtitle">Approved and currently visible to buyers.</p>
+                                <div id="activeList" class="listings-list">Loading...</div>
+                            </section>
+
+                            <section class="listings-section">
+                                <h3>Sold Listings</h3>
+                                <p class="section-subtitle">Cars sold after your listing was approved.</p>
+                                <div id="soldList" class="listings-list">Loading...</div>
+                            </section>
+
+                            <section class="listings-section">
+                                <h3>Rejected Requests</h3>
+                                <p class="section-subtitle">Requests not approved by admin.</p>
+                                <div id="rejectedList" class="listings-list">Loading...</div>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="rescheduleModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Reschedule Booking</h2>
+            <form id="rescheduleForm">
+                <input type="hidden" id="rescheduleBookingId">
+                <label for="rescheduleDate">New Date:</label>
+                <input type="date" id="rescheduleDate" required>
+                <label for="rescheduleTime">New Time Slot:</label>
+                <select id="rescheduleTime" required>
+                    <option value="">Select a time slot</option>
+                </select>
+                <button type="submit">Confirm Reschedule</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="complaintModal" class="modal" style="display:none;">
+        <div class="modal-content complaint-modal">
+            <span class="close-button" id="complaintClose">&times;</span>
+            <h2>Report a Complaint</h2>
+            <div id="complaintCarSummary" class="complaint-summary"></div>
+            <div id="complaintStatus" class="complaint-status"></div>
+            <form id="complaintForm">
+                <input type="hidden" id="complaintPurchaseId">
+                <label for="complaintSubject">Subject</label>
+                <input type="text" id="complaintSubject" maxlength="120" required>
+                <label for="complaintMessage">Complaint Details</label>
+                <textarea id="complaintMessage" rows="4" required></textarea>
+                <div id="complaintAdminWrap" class="complaint-admin-wrap" style="display:none;">
+                    <span>Admin Response</span>
+                    <div id="complaintAdminResponse"></div>
+                </div>
+                <button type="submit" id="complaintSubmitBtn">Submit Complaint</button>
+                <div id="complaintFormMsg" class="complaint-form-msg"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+    <script src="Home.js"></script>
+    <script>
+    // Show My Profile link only if user is logged in (same as Home.html)
+    document.addEventListener('DOMContentLoaded', function() {
+        var profileSection = document.getElementById('profile-section');
+        var myProfileLink = document.getElementById('my-profile-link');
+        if (profileSection && myProfileLink) {
+            setTimeout(function() {
+                if (profileSection.style.display === 'flex' || profileSection.style.display === '') {
+                    myProfileLink.style.display = 'inline-block';
+                } else {
+                    myProfileLink.style.display = 'none';
+                }
+            }, 200);
+        }
+    });
+    </script>
+</body>
+</html>
+
+

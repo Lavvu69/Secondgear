@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details - SecondGear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="car-details.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/user">Login</a>
+        </nav>
+    </header>
+    <main id="car-details-main">
+        <div class="details-shell" id="details-shell">
+            <div class="car-details-container" id="car-details-container">
+                <div class="car-image-section">
+                    <img id="car-image" src="" alt="Car Image">
+                    <aside class="quick-purchase-card" id="quick-purchase-card">
+                        <p class="quick-label">Quick Deal</p>
+                        <p class="quick-price" id="quick-price">--</p>
+                        <div class="quick-meta">
+                            <div class="quick-meta-item">
+                                <span>Year</span>
+                                <strong id="quick-year">--</strong>
+                            </div>
+                            <div class="quick-meta-item">
+                                <span>Fuel</span>
+                                <strong id="quick-fuel">--</strong>
+                            </div>
+                            <div class="quick-meta-item">
+                                <span>Owners</span>
+                                <strong id="quick-owners">--</strong>
+                            </div>
+                            <div class="quick-meta-item">
+                                <span>Mileage</span>
+                                <strong id="quick-mileage">--</strong>
+                            </div>
+                        </div>
+                        <button id="proceed-to-buy" class="buy-btn">Proceed to Buy</button>
+                        <p class="quick-note">Final price shown above. No hidden charges from SecondGear.</p>
+                    </aside>
+                </div>
+                <div class="car-info-section">
+                    <div class="car-info-header">
+                        <div class="car-title-group">
+                            <h1 id="car-title"></h1>
+                            <span id="listing-badge" class="listing-badge"></span>
+                            <span id="verified-seller-badge" class="verified-seller-badge" style="display:none;">Verified Seller</span>
+                        </div>
+                        <button id="chat-seller-btn" class="chat-seller-btn" type="button" style="display:none;">Chat With Seller</button>
+                        <button id="toggle-query" class="query-toggle-btn" type="button">Ask a Question</button>
+                    </div>
+                    <div id="car-autogen-description" class="autogen-description"></div>
+                    <table class="car-info-table" id="car-info-table"></table>
+                </div>
+            </div>
+
+            <aside class="query-panel" id="query-panel">
+                <h2>Have a Question?</h2>
+                <p>Send a query about this vehicle and our team will respond.</p>
+                <form id="car-query-form">
+                    <input type="text" id="query-subject" name="subject" placeholder="Subject" required>
+                    <textarea id="query-message" name="message" rows="4" placeholder="Write your question here..." required></textarea>
+                    <button type="submit" class="query-btn">Submit Query</button>
+                    <div id="query-status" class="query-status"></div>
+                </form>
+            </aside>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 SecondGear. All rights reserved. <a href="/about.html">About Us</a></p>
+    </footer>
+    <script src="car-details.js"></script>
+</body>
+</html>
+
+

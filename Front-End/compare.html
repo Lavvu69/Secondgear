@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Vehicles - SecondGear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="buy.css">
+    <link rel="stylesheet" href="compare.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/user">Login</a>
+        </nav>
+    </header>
+
+    <main class="compare-shell">
+        <section class="compare-hero">
+            <div>
+                <h1>Compare Vehicles</h1>
+                <p>Review key specs side by side to decide faster.</p>
+            </div>
+            <div class="compare-actions">
+                <a class="compare-back" href="/buy">Back to Buy</a>
+                <button id="compare-clear" class="compare-clear" type="button">Clear Selection</button>
+            </div>
+        </section>
+
+        <section id="compare-grid" class="compare-grid">
+            <div class="compare-empty">
+                <div class="empty-illustration">
+                    <img src="images/icons/car-front.png" alt="Empty compare" />
+                </div>
+                <h2>No cars selected yet</h2>
+                <p>Select 2–3 cars on the Buy page, then return here to compare.</p>
+                <div class="empty-steps">
+                    <div class="empty-step">
+                        <span class="step-badge">1</span>
+                        <span>Add cars to compare</span>
+                    </div>
+                    <div class="empty-step">
+                        <span class="step-badge">2</span>
+                        <span>Open Compare page</span>
+                    </div>
+                    <div class="empty-step">
+                        <span class="step-badge">3</span>
+                        <span>Review specs side by side</span>
+                    </div>
+                </div>
+                <div class="empty-actions">
+                    <a href="/buy" class="compare-clear">Browse Cars</a>
+                    <a href="/buy" class="compare-back">Go to Buy</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="compare.js"></script>
+</body>
+</html>
+
+

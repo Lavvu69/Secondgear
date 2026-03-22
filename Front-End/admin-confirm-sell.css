@@ -1,0 +1,270 @@
+:root {
+    --bg: #eef3fb;
+    --surface: #ffffff;
+    --surface-soft: #f8fbff;
+    --text: #1f2937;
+    --muted: #64748b;
+    --primary: #1d4ed8;
+    --accent: #0ea5e9;
+    --danger: #dc2626;
+    --border: #dbe5f3;
+    --shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 12% 12%, rgba(29, 78, 216, 0.1), transparent 30%),
+        radial-gradient(circle at 88% 16%, rgba(14, 165, 233, 0.1), transparent 32%),
+        linear-gradient(180deg, #eff4ff 0%, #e8eef8 100%);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.simple-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(90deg, #0f172a, #1e293b);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 8px 18px rgba(2, 6, 23, 0.25);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.simple-navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.simple-navbar nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 7px 10px;
+    border-radius: 8px;
+}
+
+.simple-navbar nav a:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: #fff;
+}
+
+.admin-logout-btn {
+    background: linear-gradient(90deg, #ef4444, #f97316);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.confirm-sell-container {
+    width: min(860px, 94vw);
+    margin: 20px auto 30px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+}
+
+.confirm-sell-title {
+    margin: 0;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #0f172a;
+}
+
+.confirm-sell-sub {
+    margin: 8px 0 14px;
+    text-align: center;
+    color: var(--muted);
+}
+
+#carDetails {
+    margin-bottom: 16px !important;
+    padding: 14px !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface-soft) !important;
+    box-shadow: none !important;
+    line-height: 1.55;
+}
+
+#carDetails h2 {
+    margin: 0;
+    color: #0f172a;
+}
+
+.details-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.details-header p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.details-image img {
+    width: 200px;
+    height: 130px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    object-fit: cover;
+    background: #e2e8f0;
+}
+
+.details-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: minmax(140px, 180px) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+}
+
+.detail-label {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 0.9rem;
+}
+
+.detail-value {
+    color: #334155;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+.detail-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #1e3a8a;
+}
+
+#confirmForm {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    padding: 14px;
+}
+
+#optional-details-section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.confirm-form-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 700;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.confirm-form-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-soft);
+    padding: 9px 10px;
+    font-size: 0.92rem;
+    color: var(--text);
+    outline: none;
+}
+
+.confirm-form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14);
+    background: #fff;
+}
+
+.confirm-margin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px dashed var(--border);
+    background: var(--surface-soft);
+    font-weight: 700;
+    color: #0f172a;
+}
+
+#profitValue {
+    color: #0f172a;
+}
+
+.confirm-btn-main {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.96rem;
+    padding: 11px 12px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(29, 78, 216, 0.24);
+    transition: transform 0.15s ease;
+}
+
+.confirm-btn-main:hover {
+    transform: translateY(-1px);
+}
+
+#toggle-details-btn {
+    margin-top: 4px;
+}
+
+@media (max-width: 760px) {
+    .confirm-sell-container {
+        width: 97vw;
+        padding: 12px;
+    }
+
+    #optional-details-section {
+        grid-template-columns: 1fr;
+    }
+
+    .details-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .details-image img {
+        width: 100%;
+        height: 180px;
+    }
+
+    .detail-row {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+    }
+}

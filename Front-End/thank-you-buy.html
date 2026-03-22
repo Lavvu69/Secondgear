@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - SecondGear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="buy.css">
+    <style>
+        :root {
+            --ink-900: #0f172a;
+            --ink-700: #334155;
+            --ink-500: #64748b;
+            --surface: #ffffff;
+            --line-200: #e2e8f0;
+            --accent-700: #0f3d57;
+            --accent-500: #157090;
+            --accent-300: #5fb3c8;
+            --success-600: #15803d;
+        }
+        body {
+            margin: 0;
+            font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+            color: var(--ink-900);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(15, 61, 87, 0.08), transparent 45%),
+                radial-gradient(circle at 90% 0%, rgba(21, 112, 144, 0.08), transparent 45%),
+                linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+            min-height: 100vh;
+        }
+        .thank-you-container {
+            max-width: 720px;
+            margin: 90px auto 80px;
+            background: var(--surface);
+            padding: 44px 52px;
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+            text-align: center;
+            border-top: 4px solid var(--accent-500);
+            position: relative;
+            overflow: hidden;
+        }
+        .thank-you-container::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            right: -80px;
+            top: -80px;
+            background: radial-gradient(circle, rgba(21, 112, 144, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+        }
+        .thank-you-container h1 {
+            color: var(--ink-900);
+            margin: 14px 0 10px;
+            font-size: 2.1rem;
+            font-family: "Space Grotesk", "Source Sans 3", sans-serif;
+        }
+        .thank-you-container p {
+            font-size: 1.05rem;
+            color: var(--ink-700);
+            line-height: 1.6;
+            margin: 8px 0 14px;
+        }
+        .thank-you-icon {
+            width: 86px;
+            height: 86px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            background: #ecfdf3;
+            color: var(--success-600);
+            display: grid;
+            place-items: center;
+            font-size: 2.2rem;
+            border: 1px solid #86efac;
+            box-shadow: 0 12px 24px rgba(21, 128, 61, 0.18);
+        }
+        .receipt-card {
+            margin: 18px auto 24px;
+            max-width: 520px;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid var(--line-200);
+            border-radius: 14px;
+            padding: 16px 18px;
+            color: var(--ink-700);
+        }
+        .return-btn {
+            background: linear-gradient(135deg, var(--accent-700) 0%, #1a586e 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            margin-top: 8px;
+            box-shadow: 0 10px 24px rgba(15, 61, 87, 0.25);
+        }
+        .return-btn:hover {
+            background: linear-gradient(135deg, #144a63 0%, #1f6c85 100%);
+            transform: translateY(-1px);
+        }
+        .redirect-text {
+            font-size: 0.9rem;
+            color: var(--ink-500);
+            margin-top: 22px;
+        }
+        @media (max-width: 720px) {
+            .thank-you-container {
+                margin: 70px 16px 60px;
+                padding: 32px 24px;
+            }
+            .thank-you-container h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"> 
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login &#9662;</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="thank-you-container">
+        <div class="thank-you-icon" aria-hidden="true">&check;</div>
+        <h1>Thank You for Choosing SecondGear!</h1>
+        <p>Your vehicle purchase has been successfully processed.</p>
+        <p>An invoice containing all your purchase details has been sent to your registered email address.</p>
+        <div class="receipt-card">
+            <strong>What happens next</strong>
+            <p>Our team will contact you to confirm delivery details and assist with the remaining paperwork.</p>
+        </div>
+        
+        <a href="/" class="return-btn">Return to Home</a>
+        <p class="redirect-text">You will be automatically redirected to the Home page in <span id="countdown">7</span> seconds...</p>
+    </div>
+
+    <script>
+        // Automatic redirect countdown script
+        let seconds = 7;
+        const countdownEl = document.getElementById('countdown');
+        
+        const interval = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = '/';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+
+

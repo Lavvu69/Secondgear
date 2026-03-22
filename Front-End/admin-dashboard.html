@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SecondGear</title>
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="admin-dashboard.css">
+    
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="admin-dashboard.html" class="active">Dashboard</a>
+            <a href="/feedback.html">Feedback</a>
+            <a href="admin-bookings.html" id="bookingsTab">Bookings</a>
+            <button id="admin-logout-btn" style="float:right; margin-left:20px; background:#b1422e; color:#fff; border:none; border-radius:6px; padding:6px 14px; font-weight:600; box-shadow:0 2px 6px rgba(231,76,60,0.08); cursor:pointer; transition:background 0.2s;">Logout (Admin)</button>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <div id="adminSectionDashboard" class="admin-section">
+            <div class="admin-dashboard-hero">
+                <div class="admin-dashboard-title">
+                    <h1>Admin Dashboard</h1>
+                    <a href="/admin/register" class="add-admin-inline-btn admin-add-btn" title="Register a new admin account">+</a>
+                </div>
+                <div class="admin-dashboard-actions">
+                    <a href="admin-sell-requests.html" class="admin-action-btn">View Sell Requests</a>
+                    <a href="admin-sold-cars.html" class="admin-action-btn admin-action-success">View Sold Cars</a>
+                    <button id="pw-reset-requests-btn" class="admin-action-btn admin-action-warn">PW Request</button>
+                    <button id="verification-requests-btn" class="admin-action-btn admin-action-verify">Verification Requests</button>
+                    <button id="chat-requests-btn" class="admin-action-btn admin-action-chat">Chat Requests</button>
+                    <button id="customer-offers-btn" class="admin-action-btn">Customer Offers</button>
+                </div>
+            </div>
+
+            <!-- Password Reset Requests Section (hidden by default) -->
+            <section id="pwResetRequestsSection" class="smooth-unfold-section" aria-hidden="true" style="margin-top:32px; width:100%;">
+                <h2 style="color:#27ae60;">Password Reset Requests</h2>
+                <table id="pwResetRequestsTable" style="width:100%; border-collapse:collapse; margin-top:12px;">
+                    <thead>
+                        <tr style="background: linear-gradient(90deg, #e67e22 0%, #f6b93b 100%); color: #fff; font-size: 1.08em; letter-spacing: 0.5px;">
+                            <th style="padding:10px; border:1px solid #e0e0e0;">User ID</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Email</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Answer Correct?</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Status</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="verificationRequestsSection" class="smooth-unfold-section" aria-hidden="true" style="margin-top:32px; width:100%;">
+                <h2 style="color:#16a34a;">Verified Seller Requests</h2>
+                <table id="verificationRequestsTable" style="width:100%; border-collapse:collapse; margin-top:12px;">
+                    <thead>
+                        <tr style="background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%); color: #fff; font-size: 1.02em; letter-spacing: 0.5px;">
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Request ID</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">User</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Email</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">ID Type</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">ID Number</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Docs</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Status</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="chatRequestsSection" class="smooth-unfold-section" aria-hidden="true" style="margin-top:32px; width:100%;">
+                <h2 style="color:#0f766e;">Chat Requests</h2>
+                <table id="chatRequestsTable" style="width:100%; border-collapse:collapse; margin-top:12px;">
+                    <thead>
+                        <tr style="background: linear-gradient(90deg, #0f766e 0%, #14b8a6 100%); color: #fff; font-size: 1.02em; letter-spacing: 0.5px;">
+                            <th style="padding:10px; border:1px solid #e0e0e0;">ID</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Car</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Buyer</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Seller</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Status</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Created</th>
+                            <th style="padding:10px; border:1px solid #e0e0e0;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="customerOffersSection" class="smooth-unfold-section" aria-hidden="true" style="margin-top:32px; width:100%;">
+                <div style="margin: 0 0 14px; padding: 16px; border: 1px solid #dbe5f3; border-radius: 10px; background: #f8fbff;">
+                    <h3 style="margin: 0 0 12px; color: #1e3a8a;">Customer Price Offers</h3>
+                    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
+                        <label for="customerOffersStatusFilter" style="font-weight:600;">Status</label>
+                        <select id="customerOffersStatusFilter" style="padding:8px 10px; border-radius:6px; border:1px solid #bfc9d1;">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="countered">Countered</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="withdrawn">Withdrawn</option>
+                            <option value="expired">Expired</option>
+                        </select>
+                        <button type="button" id="refreshCustomerOffersBtn" style="padding:8px 14px; border:none; border-radius:6px; background:#2d6cdf; color:#fff; font-weight:600; cursor:pointer;">Refresh</button>
+                    </div>
+                    <table id="customerOffersTable" style="width:100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Car</th>
+                                <th>Buyer</th>
+                                <th>Listed</th>
+                                <th>Offered</th>
+                                <th>Counter</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="9" style="text-align:center; color:#64748b;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="statsSection" style="margin-top: 32px; margin-bottom: 32px; background: #f9f9f9; padding: 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 style="color:#b1422e; margin: 0;">Business Statistics</h2>
+                    <div id="date-range-filter" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+                        <label for="startDate">From:</label>
+                        <input type="date" id="startDate" name="startDate" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                        <label for="endDate">To:</label>
+                        <input type="date" id="endDate" name="endDate" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                        <button id="filterStatsBtn" style="padding: 8px 16px; background-color: #2d6cdf; color: white; border: none; border-radius: 4px; cursor: pointer;">Filter</button>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+                        <h3 style="margin-top:0; color: #2d6cdf;">Car Sales Revenue</h3>
+                        <p id="carRevenue" style="font-size: 2rem; font-weight: 700; color: #2c3e50; margin: 0;">₹0</p>
+                    </div>
+                    <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+                        <h3 style="margin-top:0; color: #27ae60;">Fulfilled Service Revenue</h3>
+                        <p id="serviceRevenue" style="font-size: 2rem; font-weight: 700; color: #2c3e50; margin: 0;">₹0</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="directMessageSection" class="direct-message-section">
+                <h2>Send Direct User Message</h2>
+                <p style="margin-top:0; color:#64748b;">Send an in-app message to a specific user using their registered email.</p>
+                <form id="adminDirectMessageForm" class="direct-message-form">
+                    <label>User Email
+                        <input type="email" id="dmUserEmail" name="email" placeholder="user@example.com" required>
+                    </label>
+                    <label>Message Title
+                        <input type="text" id="dmTitle" name="title" placeholder="Status Update" required>
+                    </label>
+                    <label class="full-width">Message
+                        <textarea id="dmMessage" name="message" rows="4" placeholder="Write your update here..." required></textarea>
+                    </label>
+                    <label>Optional Link
+                        <input type="text" id="dmLink" name="link" placeholder="profile.html">
+                        <small style="color:#64748b; font-weight:500;">When user clicks "Open" in the message, they will be sent to this page/link.</small>
+                    </label>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="adminDirectMessageStatus" style="margin-top:10px; font-weight:700;"></div>
+            </section>
+
+            <h2>Registered Users</h2>
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Joined On</th>
+                        <th>Verified</th>
+                        <th>Verified At</th>
+                                            <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Users will be populated here by JS -->
+                </tbody>
+            </table>
+            <h2 style="margin-top:40px;">Banned Users</h2>
+            <table id="bannedUsersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Banned At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Banned users will be populated here by JS -->
+                </tbody>
+            </table>
+            <form id="addCarForm" enctype="multipart/form-data">
+                <div class="form-title">Add a Car</div>
+                <style>
+                .form-title {
+                    font-size: 2.1rem;
+                    font-weight: 800;
+                    color: #2d6cdf;
+                    letter-spacing: 0.02em;
+                    margin-bottom: 0.2em;
+                    margin-top: 0.5em;
+                    text-shadow: 0 2px 8px rgba(44,62,80,0.08);
+                    border-bottom: 3px solid #2d6cdf;
+                    display: inline-block;
+                    padding-bottom: 4px;
+                }
+                </style>
+                <div class="form-tip">Fill in the details to add a new car to the system.</div>
+                <div class="form-row">
+                    <label>Make
+                        <select name="make" id="admin-make-select" class="cute-dropdown" required>
+                            <option value="">Select Make</option>
+                        </select>
+                    </label>
+                    <label>Model
+                        <select name="model" id="admin-model-select" class="cute-dropdown" required>
+                            <option value="">Select Model</option>
+                        </select>
+                    </label>
+                    <label>Year
+                        <input type="number" name="year" id="admin-year-input" required min="1900" max="2099" placeholder="e.g. 2020">
+                    </label>
+                    <label>Price (INR)
+                        <input type="number" name="price" required min="0" step="0.01" placeholder="e.g. 15000">
+                    </label>
+                    <label>Fuel Type
+                        <select name="fuel_type" id="admin-fuel-type-select" class="cute-dropdown" required>
+                            <option value="">Select Fuel Type</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="CNG">CNG</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="LPG">LPG</option>
+                        </select>
+                    </label>
+                    <label>Transmission
+                        <select name="transmission" id="admin-transmission-select" class="cute-dropdown" required>
+                            <option value="">Select Transmission</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="AMT">AMT</option>
+                            <option value="CVT">CVT</option>
+                            <option value="DCT">DCT</option>
+                        </select>
+                    </label>
+                </div>
+                    <style>
+                    .cute-dropdown {
+                        width: 100%;
+                        padding: 10px;
+                        border: 2px solid #bfc9d1;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        margin-top: 4px;
+                        background: linear-gradient(90deg, #f8fafc 0%, #e3e9f1 100%);
+                        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+                        transition: border 0.2s, box-shadow 0.2s;
+                    }
+                    .cute-dropdown:focus {
+                        border: 2px solid #2d6cdf;
+                        box-shadow: 0 0 0 2px #2d6cdf33;
+                        outline: none;
+                    }
+                    </style>
+                <div class="form-row">
+                    <label class="custom-file-label">Car Image
+                        <input type="file" name="image_file" accept="image/*" required id="car-image-input" style="display:none">
+                        <span id="car-image-fake-btn" class="file-btn">Choose Image</span>
+                        <span id="car-image-filename" class="file-filename">No file chosen</span>
+                        <div style="font-size:0.95em;color:#888;margin-top:2px;">(Tip: Place your images in <b>C:/Users/heyyy/Desktop/SecondGear/Front-End/images/cars</b> for easy access)</div>
+                    </label>
+                    <label>Color
+                        <input type="text" name="color" placeholder="e.g. Red">
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>Mileage (km)
+                        <input type="number" name="mileage" placeholder="e.g. 35000">
+                    </label>
+                    <label>Number of Owners
+                        <input type="number" name="num_owners" placeholder="e.g. 1">
+                    </label>
+                    <label>Registration City
+                        <input type="text" name="registration_city" placeholder="e.g. Delhi">
+                    </label>
+                    <label>Registration Number
+                        <input type="text" name="registration_number" placeholder="e.g. DL8CAF5031">
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>VIN
+                        <input type="text" name="vin" placeholder="e.g. MA3EUA12345678901">
+                    </label>
+                    <label>Insurance Validity
+                        <input type="date" name="insurance_validity" id="admin-insurance-validity-date">
+                        <label style="display:inline; margin-left:10px; font-weight:400;">
+                            <input type="checkbox" id="admin-no-insurance-checkbox" style="margin-right:4px;"> No Insurance
+                        </label>
+                    </label>
+                    <script>
+                    // Set min date to today for insurance validity in admin add car form
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var insDate = document.getElementById('admin-insurance-validity-date');
+                        var noInsCheckbox = document.getElementById('admin-no-insurance-checkbox');
+                        if (insDate) {
+                            var today = new Date();
+                            var yyyy = today.getFullYear();
+                            var mm = String(today.getMonth() + 1).padStart(2, '0');
+                            var dd = String(today.getDate()).padStart(2, '0');
+                            var minDate = yyyy + '-' + mm + '-' + dd;
+                            insDate.setAttribute('min', minDate);
+                        }
+                        if (insDate && noInsCheckbox) {
+                            noInsCheckbox.addEventListener('change', function() {
+                                if (noInsCheckbox.checked) {
+                                    insDate.value = '';
+                                    insDate.disabled = true;
+                                } else {
+                                    insDate.disabled = false;
+                                }
+                            });
+                        }
+                    });
+                    </script>
+                </div>
+                <div class="form-footer-row">
+                    <label class="description-field">Description
+                        <textarea name="description" placeholder="Optional: Add a description..."></textarea>
+                    </label>
+                    <div class="form-submit-area">
+                        <label for="available">
+                            <input type="checkbox" name="available" id="available" checked>
+                            Available for sale
+                        </label>
+                        <button type="submit">Add Car</button>
+                    </div>
+                </div>
+            </form>
+            <div class="featured-admin">
+                <div class="featured-admin-head">
+                    <div>
+                        <h3>Featured Cars</h3>
+                        <p>Choose cars to highlight on the homepage.</p>
+                    </div>
+                    <button type="button" id="refreshFeaturedCars" class="featured-refresh-btn">Refresh</button>
+                </div>
+                <div class="featured-admin-tools">
+                    <label class="featured-search" for="featuredCarsSearch">
+                        <span>Search cars</span>
+                        <input type="text" id="featuredCarsSearch" placeholder="Search by make, model, year, type...">
+                    </label>
+                </div>
+                <div id="featuredCarsList" class="featured-admin-list">Loading featured cars...</div>
+            </div>
+        </div>
+        <div id="adminSectionNewsletter" class="admin-section" style="display:none;">
+            <h2>Newsletter Subscribers</h2>
+            <table id="newsletterTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Subscribed At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Newsletter subscribers will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+        <div id="adminSectionOffers" class="admin-section" style="display:none;">
+            <h2>Offers / Notifications for Subscribers</h2>
+            <!-- Car Offers Section -->
+            <div style="margin-bottom: 24px;">
+                <h3 style="color:#2d6cdf; margin-bottom:10px;">Add Subscriber Discount Offer</h3>
+                <form id="addCarOfferForm" style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+                    <input type="hidden" id="carOfferId" name="carOfferId" value="">
+                    <div style="flex:1 1 60%; min-width:180px;">
+                        <label for="carOfferSelect" style="font-weight:600; color:#2d6cdf;">Select Car</label>
+                        <select id="carOfferSelect" name="carOfferSelect" style="width:100%; padding:10px; border:1px solid #bfc9d1; border-radius:6px; font-size:16px; margin-top:4px;"></select>
+                    </div>
+                    <div style="flex:2 1 100%; margin-top:8px; min-width:220px;">
+                        <label for="carOfferText" style="font-weight:600; color:#2d6cdf;">Offer Message (optional)</label>
+                        <input type="text" id="carOfferText" name="carOfferText" readonly style="width:100%; padding:10px; border:1px solid #bfc9d1; border-radius:6px; font-size:16px; margin-top:4px; background:#f7fafd;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="carOfferDiscountType" style="font-weight:600; color:#2d6cdf;">Discount Type</label>
+                        <select id="carOfferDiscountType" name="carOfferDiscountType" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                            <option value="percent">Percent (%)</option>
+                            <option value="amount">Flat Amount (₹)</option>
+                        </select>
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="carOfferDiscountValue" style="font-weight:600; color:#2d6cdf;">Discount Value</label>
+                        <input type="number" id="carOfferDiscountValue" name="carOfferDiscountValue" min="0" step="0.01" placeholder="e.g. 10 or 5000" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="carOfferValidFrom" style="font-weight:600; color:#2d6cdf;">Valid From</label>
+                        <input type="date" id="carOfferValidFrom" name="carOfferValidFrom" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="carOfferValidTo" style="font-weight:600; color:#2d6cdf;">Valid To</label>
+                        <input type="date" id="carOfferValidTo" name="carOfferValidTo" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <div style="flex:1 1 220px; min-width:200px; margin-top:8px;">
+                        <div style="font-weight:600; color:#1e3a8a; margin-bottom:4px;">Preview Price</div>
+                        <div id="carOfferPreviewPrice" style="background:#f1f5ff; border:1px solid #cbd5f5; border-radius:8px; padding:8px 10px; font-weight:700;">Select a car to preview</div>
+                    </div>
+                    <button type="submit" id="carOfferSubmitBtn" style="padding:10px 28px; background:#2d6cdf; color:#fff; border:none; border-radius:6px; font-weight:600; font-size:16px; box-shadow:0 2px 8px rgba(44,62,80,0.08); cursor:pointer; transition:background 0.2s; margin-top:8px;">Save Offer</button>
+                </form>
+            </div>
+            <!-- Manual Offer Section -->
+            <form id="addOfferForm" style="margin-bottom: 20px;">
+                <div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+                    <div style="flex: 1 1 60%; min-width:180px;">
+                        <label for="offerText" style="font-weight: 600; color: #2d6cdf;">Offer/Notification Text</label>
+                        <input type="text" id="offerText" name="offerText" required placeholder="Enter offer or notification..." style="width: 100%; padding: 10px; border: 1px solid #bfc9d1; border-radius: 6px; font-size: 16px; margin-top: 4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="offerValidFrom" style="font-weight:600; color:#2d6cdf;">Valid From</label>
+                        <input type="date" id="offerValidFrom" name="offerValidFrom" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="offerValidTo" style="font-weight:600; color:#2d6cdf;">Valid To</label>
+                        <input type="date" id="offerValidTo" name="offerValidTo" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <button type="submit" style="padding: 10px 28px; background: #2d6cdf; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 16px; box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08); cursor: pointer; transition: background 0.2s; margin-top:8px;">Add Offer</button>
+                </div>
+            </form>
+
+            <table id="offersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Car</th>
+                        <th>Discount</th>
+                        <th>Final Price</th>
+                        <th>Validity</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Offers will be populated here by JS -->
+                </tbody>
+            </table>
+
+            <h3 style="margin-top:36px; color:#888; font-weight:600;">Previous Offers</h3>
+            <table id="previousOffersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Offer/Notification</th>
+                        <th>Created At</th>
+                        <th>Deleted At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Previous offers will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+        <div id="adminSectionQueries" class="admin-section" style="display:none;">
+            <h2>Vehicle Queries</h2>
+            <p style="color:#64748b; margin-top:4px;">Respond to customer questions about specific cars.</p>
+            <div id="carQueriesList" class="queries-list">
+                <div class="queries-empty">Loading...</div>
+            </div>
+        </div>
+        <div id="adminSectionFeedback" class="admin-section" style="display:none;">
+            <!-- Feedback section content (existing or to be filled by JS) -->
+        </div>
+        <div id="adminSectionBookings" class="admin-section" style="display:none;">
+            <h2>Service Bookings</h2>
+            <table id="bookingsTable">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User</th>
+                        <th>Vehicle Type</th>
+                        <th>Service Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Bookings will be populated here by JS -->
+                </tbody>
+            </table>
+            <!-- Removed: Add Service, Mechanic, Workshop forms and tables. These features are now on admin-bookings.html -->
+        </div>
+    </main>
+
+    <script>
+        // ...existing code...
+    </script>
+    <script src="admin-auth.js"></script>
+    <script src="admin-dashboard.js"></script>
+    <div id="admin-toast" class="admin-toast" aria-live="polite"></div>
+
+    <div id="counterOfferModal" class="admin-modal" aria-hidden="true" role="dialog" aria-labelledby="counterOfferTitle">
+        <div class="admin-modal-panel">
+            <div class="admin-modal-header">
+                <div>
+                    <h3 id="counterOfferTitle">Send Counter Offer</h3>
+                    <p id="counterOfferSubtitle">Propose a new price and optionally add a note.</p>
+                </div>
+                <button type="button" id="counterOfferClose" class="admin-modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="admin-modal-body">
+                <div class="admin-modal-summary" id="counterOfferSummary">Loading...</div>
+                <label class="admin-modal-field" id="counterPriceField">
+                    <span>Counter Price (INR)</span>
+                    <input type="number" id="counterOfferPrice" min="1" step="1" placeholder="Enter your counter price">
+                </label>
+                <label class="admin-modal-field">
+                    <span>Message to Buyer (Optional)</span>
+                    <textarea id="counterOfferMessage" rows="3" placeholder="Add a short note for the buyer..."></textarea>
+                </label>
+                <div class="admin-modal-actions">
+                    <button type="button" id="counterOfferCancel" class="admin-modal-btn ghost">Cancel</button>
+                    <button type="button" id="counterOfferSend" class="admin-modal-btn primary">Send Response</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+

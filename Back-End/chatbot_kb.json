@@ -1,0 +1,202 @@
+{
+  "intents": [
+    {
+      "id": "about_secondgear",
+      "title": "What is SecondGear?",
+      "keywords": ["secondgear", "second gear", "about", "platform", "website"],
+      "answer": "SecondGear is a platform for buying and selling used vehicles and booking vehicle services. You can browse listings, make offers, and manage service bookings in one place."
+    },
+    {
+      "id": "buy_flow",
+      "title": "How to buy a car",
+      "keywords": ["buy", "purchase", "checkout", "available", "listing"],
+      "answer": "To buy a car, open the Buy page, select a listing, and continue to checkout. Only available cars appear in active listings."
+    },
+    {
+      "id": "car_details",
+      "title": "Car details page",
+      "keywords": ["details", "specs", "car details", "vehicle details", "more info"],
+      "answer": "You can open a car's details page from the Buy page listing. The details page shows photos, specs, pricing, and allows you to proceed to purchase or send a query."
+    },
+    {
+      "id": "featured_cars",
+      "title": "Featured cars",
+      "keywords": ["featured", "featured cars", "featured picks", "highlighted"],
+      "answer": "Featured Picks on the homepage are hand-selected listings. You can open a featured car to view full details and continue to purchase."
+    },
+    {
+      "id": "offer_flow",
+      "title": "Make an offer",
+      "keywords": ["offer", "negotiate", "counter", "price"],
+      "answer": "You can make an offer on a car from the Buy page. Admin may accept, reject, or counter your offer. If accepted, you will get a checkout link."
+    },
+    {
+      "id": "offer_status",
+      "title": "Offer status updates",
+      "keywords": ["offer status", "counter offer", "accepted", "rejected", "pending"],
+      "answer": "Offer updates appear in your Profile notifications. If an offer is accepted or countered, you will see the next step to proceed."
+    },
+    {
+      "id": "Register_flow",
+      "title": "Register Profile",
+      "keywords": ["login", "register", "make account", "profile", "signup"],
+      "answer": "You can register a new profile from the signup page on the user login screen."
+    },
+    {
+      "id": "login_help",
+      "title": "Login help",
+      "keywords": ["login", "sign in", "cant login", "unable to login"],
+      "answer": "Use the User Login page to sign in. If you forgot your password, use the forgot-password option to submit a reset request."
+    },
+    {
+      "id": "sell_flow",
+      "title": "How to sell a car",
+      "keywords": ["sell", "list", "listing", "approval"],
+      "answer": "To sell your car, go to the Sell page and submit details and photos. Your request is reviewed by admin, who can ask questions or make a price offer. You can then accept, counter, or reject the admin offer. Accepted deals are added to the Buy page by admin."
+    },
+    {
+      "id": "sell_approval_time",
+      "title": "Sell request approval",
+      "keywords": ["sell request", "approval time", "review", "pending"],
+      "answer": "Sell requests are reviewed by admin. You will be notified in messages when admin posts a price offer or asks for more info. You can open the message link to view status and respond."
+    },
+    {
+      "id": "sell_offer_admin",
+      "title": "Admin offer on sell request",
+      "keywords": ["admin offer", "sell offer", "price offer", "admin price", "admin decides price"],
+      "answer": "After you submit a sell request, admin reviews your car details and decides a price to offer. You will see the offer in messages and can accept, counter, or reject."
+    },
+    {
+      "id": "sell_counter_flow",
+      "title": "Counter or reject admin offer",
+      "keywords": ["counter offer", "reject offer", "accept offer", "sell counter", "sell reject", "sell accept"],
+      "answer": "When admin makes a sell offer, you can accept, counter, or reject. Admin is notified of your choice. Rejected deals can be deleted, countered deals can be accepted by admin, and accepted deals move forward to listing."
+    },
+    {
+      "id": "sell_messages",
+      "title": "Sell request messages",
+      "keywords": ["sell messages", "admin questions", "message link", "progress link", "status link"],
+      "answer": "Admin can ask questions about your car in messages. Each message includes a link to view your sell request status, the admin offer, and actions to accept, counter, or reject."
+    },
+    {
+      "id": "sell_listing_after_accept",
+      "title": "Listing after sell acceptance",
+      "keywords": ["listing after accept", "added to buy page", "publish listing", "approved listing"],
+      "answer": "If you accept the admin offer, admin adds your car to the Buy page listing. You will be notified once the listing goes live."
+    },
+    {
+      "id": "service_booking",
+      "title": "Service booking",
+      "keywords": ["service", "booking", "book", "mechanic", "workshop"],
+      "answer": "To book a service, open the Service page, choose service type, date, and time, then submit. You can cancel or reschedule from your profile."
+    },
+    {
+      "id": "service_reschedule",
+      "title": "Reschedule or cancel service",
+      "keywords": ["reschedule", "cancel service", "change booking", "service change"],
+      "answer": "Open your Profile and go to Service Bookings to reschedule or cancel a booking, if it is still eligible."
+    },
+    {
+      "id": "payments",
+      "title": "Payments",
+      "keywords": ["payment", "pay", "invoice", "receipt", "price"],
+      "answer": "Payments are handled during checkout. You will see the available payment options there, and your purchase is saved in your account history."
+    },
+    {
+      "id": "purchase_help",
+      "title": "Purchase issues",
+      "keywords": ["purchase issue", "checkout error", "payment failed", "problem buying"],
+      "answer": "If checkout fails, try refreshing and re-opening the listing. If it persists, contact support through the Contact page with the car ID."
+    },
+    {
+      "id": "account_security",
+      "title": "Account and security",
+      "keywords": ["password", "forgot", "reset", "security", "login"],
+      "answer": "Use the forgot-password option on the user login page. Requests are reviewed by admin for security before approval."
+    },
+    {
+      "id": "profile_notifications",
+      "title": "Profile and notifications",
+      "keywords": ["profile", "account", "update", "notification", "message"],
+      "answer": "Open your Profile to update details and view notifications or messages related to offers, approvals, and bookings."
+    },
+    {
+      "id": "newsletter",
+      "title": "Newsletter and offers",
+      "keywords": ["newsletter", "offers", "subscribe", "unsubscribe", "notifications"],
+      "answer": "You can subscribe to offers on the homepage. If you are subscribed, offers appear on the home page, and you can unsubscribe anytime."
+    },
+    {
+      "id": "feedback",
+      "title": "Submit feedback",
+      "keywords": ["feedback", "review", "suggestion", "complaint"],
+      "answer": "Use the feedback form in the footer to share comments or suggestions. Your feedback helps us improve."
+    },
+    {
+      "id": "contact_support",
+      "title": "Contact support",
+      "keywords": ["contact", "support", "help", "email", "phone"],
+      "answer": "If you need direct help, open the Contact page from the navigation or FAQ section and submit your query."
+    },
+    {
+      "id": "auto_oil",
+      "title": "Oil change intervals",
+      "keywords": ["oil", "engine oil", "service interval"],
+      "answer": "General tip: most cars need an oil change every 5,000 to 10,000 km depending on the manufacturer and oil type. Check your owner's manual for exact intervals."
+    },
+    {
+      "id": "auto_tyre",
+      "title": "Tyre pressure",
+      "keywords": ["tyre", "tire", "pressure"],
+      "answer": "General tip: check tyre pressure monthly and before long trips. Correct pressure improves safety, mileage, and tyre life."
+    },
+    {
+      "id": "auto_battery",
+      "title": "Battery help",
+      "keywords": ["battery", "jump start", "jumpstart"],
+      "answer": "General tip: if a battery is weak, avoid leaving lights on. For jump-start, connect positive to positive, negative to a grounded metal point."
+    },
+    {
+      "id": "auto_mileage",
+      "title": "Mileage tips",
+      "keywords": ["mileage", "fuel", "economy", "efficiency"],
+      "answer": "General tip: keep tyres inflated, drive smoothly, avoid heavy idling, and service regularly to improve mileage."
+    },
+    {
+      "id": "auto_brakes",
+      "title": "Brake warning signs",
+      "keywords": ["brakes", "brake noise", "squeal", "grinding"],
+      "answer": "General tip: squealing or grinding sounds can indicate worn brake pads. Get brakes inspected if you notice noise or reduced braking performance."
+    },
+    {
+      "id": "auto_engine_light",
+      "title": "Check engine light",
+      "keywords": ["check engine", "engine light", "warning light"],
+      "answer": "General tip: a check engine light can indicate many issues. If it is steady, schedule a diagnostic soon; if it is flashing, reduce driving and seek service."
+    },
+    {
+      "id": "auto_ac",
+      "title": "AC not cooling",
+      "keywords": ["ac", "air conditioning", "not cooling", "weak cooling"],
+      "answer": "General tip: low refrigerant or a clogged cabin filter can reduce cooling. If AC performance drops, book a service check."
+    }
+  ],
+  "fallbacks": [
+    "I can help with SecondGear and general automobile questions. Try asking about buying, selling, offers, service booking, payments, or account help.",
+    "I am best at SecondGear and automobile questions. Ask about listings, offers, service bookings, or account support."
+  ],
+  "followups": {
+    "generic": "Could you specify what you want help with? Buying, selling, offers, service booking, payments, or account?"
+  },
+  "suggested_topics": [
+    "How do I buy a car?",
+    "How do I sell my car?",
+    "How does the offer system work?",
+    "How do I book a service?",
+    "How do I reset my password?",
+    "How do I view car details?",
+    "Where do I see offer updates?",
+    "How do I subscribe to offers?",
+    "How do I contact support?"
+  ]
+}

@@ -1,0 +1,58 @@
+.wishlist-hero {
+    padding: 30px 20px 10px;
+    text-align: center;
+}
+
+.wishlist-hero h1 {
+    margin-bottom: 6px;
+}
+
+.wishlist-sub {
+    color: #475569;
+    margin: 0;
+}
+
+.wishlist-main {
+    padding: 10px 20px 40px;
+}
+
+#wishlist-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+#wishlist-list .car-card {
+    width: 100%;
+    max-width: 320px;
+    justify-self: center;
+}
+
+.wishlist-message {
+    text-align: center;
+    color: #64748b;
+    margin: 18px 0;
+    font-weight: 600;
+}
+
+.wishlist-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.wishlist-remove-btn {
+    border: 1px solid #fca5a5;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.wishlist-remove-btn:hover {
+    background: #fecaca;
+}

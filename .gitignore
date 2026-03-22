@@ -1,0 +1,17 @@
+# secrets
+Back-End/.env
+Back-End/ca.pem
+
+# dependencies
+**/node_modules/
+
+# build artifacts
+**/dist/
+**/build/
+
+# logs
+**/*.log
+
+# OS junk
+.DS_Store
+Thumbs.db

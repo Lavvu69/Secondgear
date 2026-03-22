@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sold Cars - Admin</title>
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="admin-sold-cars.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/admin">Admin</a>
+            <a href="/feedback.html">Feedback</a>
+            <a href="admin-bookings.html" id="bookingsTab">Bookings</a>
+            <a href="admin-sell-requests.html">Sell Requests</a>
+            <a href="admin-sold-cars.html" style="background:#27ae60; color:#fff; border-radius:6px; padding:6px 14px; font-weight:600; box-shadow:0 2px 6px rgba(39,174,96,0.08);">Sold Cars</a>
+        </nav>
+    </header>
+    <main class="dashboard-container">
+        <div class="admin-section">
+            <div class="sold-page-top">
+                <div>
+                    <h1>Sold Cars</h1>
+                    <p class="sold-page-subtitle">Track completed transactions, buyer details, and payment records.</p>
+                </div>
+                <div class="sold-stats" id="sold-stats">
+                    <div class="sold-stat-chip">
+                        <span>Total Sold</span>
+                        <strong id="stat-total-sold">0</strong>
+                    </div>
+                    <div class="sold-stat-chip">
+                        <span>Today</span>
+                        <strong id="stat-today-sold">0</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="sold-tools">
+                <input type="text" id="sold-search-input" placeholder="Search by car, buyer, or contact...">
+                <button type="button" id="export-sold-cars-btn">Export CSV</button>
+            </div>
+            <div id="sold-cars-list" class="sold-cars-list"></div>
+            <table id="sold-cars-table" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Car</th>
+                        <th>Buyer Name</th>
+                        <th>Contact</th>
+                        <th>Sold At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sold cars data will be inserted here by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <div id="complaintModal" class="sold-complaint-modal" style="display:none;">
+        <div class="sold-complaint-panel">
+            <div class="sold-complaint-header">
+                <div>
+                    <h3>Purchase Complaint</h3>
+                    <p id="complaintCarLine" class="sold-complaint-subtitle"></p>
+                </div>
+                <button type="button" id="complaintCloseBtn" class="sold-complaint-close">&times;</button>
+            </div>
+            <div class="sold-complaint-body">
+                <div class="sold-complaint-meta">
+                    <span id="complaintStatusBadge" class="sold-complaint-badge">Complaint</span>
+                    <span id="complaintCreatedAt" class="sold-complaint-time"></span>
+                </div>
+                <div class="sold-complaint-block">
+                    <strong>Subject</strong>
+                    <p id="complaintSubject"></p>
+                </div>
+                <div class="sold-complaint-block">
+                    <strong>Message</strong>
+                    <p id="complaintMessage"></p>
+                </div>
+                <div class="sold-complaint-block">
+                    <strong>Admin Response</strong>
+                    <p id="complaintAdminResponse">No response yet.</p>
+                </div>
+                <label class="sold-complaint-field">
+                    <span>Reply to Buyer</span>
+                    <textarea id="complaintResponseInput" rows="4" placeholder="Write your response..."></textarea>
+                </label>
+                <div class="sold-complaint-actions">
+                    <select id="complaintStatusSelect">
+                        <option value="responded">Responded</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                    <button type="button" id="complaintSendBtn">Send Response</button>
+                </div>
+                <div id="complaintFeedback" class="sold-complaint-feedback"></div>
+            </div>
+        </div>
+    </div>
+    <script src="admin-auth.js"></script>
+    <script src="admin-sold-cars.js"></script>
+</body>
+</html>
+
+

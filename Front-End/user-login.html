@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - SecondGear</title>
+    <link rel="stylesheet" href="user-login.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <!-- Floating Navigation Bar -->
+    <header class="floating-navbar">
+        <div class="logo"> 
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="#">Sell</a>
+           <a href="service-booking.html">Service</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin">Admin Login</a>
+
+                </div>
+            </div>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" style="font-weight:bold;"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-header">
+                <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+                <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+                <span class="brand-text">SecondGear</span>
+            </div>
+            <div class="user-badge">USER LOGIN</div>
+            <div class="welcome-block">
+                <img src="Logo-gear.png" alt="Gear" class="welcome-gear" aria-hidden="true">
+                <div class="welcome-text">
+                    <h2 class="welcome-title">Sign in to SecondGear</h2>
+                    <p class="welcome-sub">Buy, sell & service vehicles - your trusted marketplace</p>
+                </div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="user-email">Email Address</label>
+                    <input type="email" id="user-email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-password">Password</label>
+                    <input type="password" id="user-password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="/signup">Sign up here</a>
+            </div>
+
+            <div class="footer-links">
+                <a href="#" id="forgot-password-link">Forgot Password?</a>
+                <a href="faq.html">Help</a>
+            </div>
+
+            <div class="back-link">
+                <a href="/">Back to Home</a> |
+                <a href="/admin">Admin Login</a> 
+
+            </div>
+        </div>
+    </div>
+<script src="user-login.js"></script>
+<div id="forgot-password-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(44,62,80,0.18);z-index:1002;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:32px 28px 18px 28px;border-radius:12px;box-shadow:0 4px 24px rgba(44,62,80,0.18);max-width:370px;width:100%;position:relative;">
+        <button id="close-forgot-modal" style="position:absolute;top:10px;right:12px;background:none;border:none;font-size:1.5em;color:#888;cursor:pointer;">&times;</button>
+        <h2 style="margin-top:0;font-size:1.3em;color:#2d6cdf;">Forgot Password</h2>
+        <form id="forgot-password-form">
+            <div class="form-group">
+                <label for="fp-email">Email Address</label>
+                <input type="email" id="fp-email" name="fp-email" required placeholder="Enter your email">
+            </div>
+            <div id="fp-question-block" style="display:none;">
+                <div class="form-group">
+                    <label id="fp-question-label"></label>
+                    <input type="text" id="fp-answer" name="fp-answer" required placeholder="Enter your answer">
+                </div>
+                <div class="form-group">
+                    <label for="fp-new-password">New Password</label>
+                    <input type="password" id="fp-new-password" name="fp-new-password" required placeholder="Enter new password">
+                </div>
+                <div class="form-group">
+                    <label for="fp-confirm-password">Confirm New Password</label>
+                    <input type="password" id="fp-confirm-password" name="fp-confirm-password" required placeholder="Confirm new password">
+                </div>
+            </div>
+            <button type="submit" id="fp-next-btn" style="background:#2d6cdf;color:#fff;border:none;border-radius:6px;padding:10px 22px;font-weight:600;font-size:1em;cursor:pointer;">Next</button>
+        </form>
+        <div id="fp-message" style="color:#e74c3c;margin-top:10px;font-size:1em;"></div>
+    </div>
+</div>
+<script>
+// Forgot Password Modal Logic
+document.addEventListener('DOMContentLoaded', function() {
+    const forgotLink = document.getElementById('forgot-password-link');
+    const modal = document.getElementById('forgot-password-modal');
+    const closeBtn = document.getElementById('close-forgot-modal');
+    const form = document.getElementById('forgot-password-form');
+    const emailInput = document.getElementById('fp-email');
+    const questionBlock = document.getElementById('fp-question-block');
+    const questionLabel = document.getElementById('fp-question-label');
+    const answerInput = document.getElementById('fp-answer');
+    const newPassInput = document.getElementById('fp-new-password');
+    const confirmPassInput = document.getElementById('fp-confirm-password');
+    const nextBtn = document.getElementById('fp-next-btn');
+    const messageDiv = document.getElementById('fp-message');
+    let fetchedQuestion = '';
+    let fetchedEmail = '';
+    let step = 1;
+
+    forgotLink.onclick = function(e) {
+        e.preventDefault();
+        modal.style.display = 'flex';
+        form.reset();
+        questionBlock.style.display = 'none';
+        nextBtn.textContent = 'Next';
+        messageDiv.textContent = '';
+        step = 1;
+        // Only email is required in step 1
+        emailInput.required = true;
+        answerInput.required = false;
+        newPassInput.required = false;
+        confirmPassInput.required = false;
+    };
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+    };
+    form.onsubmit = async function(e) {
+        e.preventDefault();
+        messageDiv.textContent = '';
+        if (step === 1) {
+            // Only email is required
+            emailInput.required = true;
+            answerInput.required = false;
+            newPassInput.required = false;
+            confirmPassInput.required = false;
+            // Fetch security question for email
+            const email = emailInput.value.trim();
+            if (!email) { messageDiv.textContent = 'Please enter your email.'; return; }
+            try {
+                const res = await fetch(`/user/security-question?email=${encodeURIComponent(email)}`);
+                const data = await res.json();
+                if (res.ok && data.question) {
+                    fetchedQuestion = data.question;
+                    fetchedEmail = email;
+                    questionLabel.textContent = data.question;
+                    questionBlock.style.display = '';
+                    nextBtn.textContent = 'Submit';
+                    step = 2;
+                    // Now only answer and passwords are required
+                    emailInput.required = false;
+                    answerInput.required = true;
+                    newPassInput.required = true;
+                    confirmPassInput.required = true;
+                } else {
+                    messageDiv.textContent = data.message || 'No account found for this email.';
+                }
+            } catch (err) {
+                messageDiv.textContent = 'Server error. Please try again.';
+            }
+        } else if (step === 2) {
+            // Only answer and passwords are required
+            emailInput.required = false;
+            answerInput.required = true;
+            newPassInput.required = true;
+            confirmPassInput.required = true;
+            // Submit answer and new password for admin approval
+            const answer = answerInput.value.trim();
+            const newPassword = newPassInput.value;
+            const confirmPassword = confirmPassInput.value;
+            if (!answer || !newPassword || !confirmPassword) {
+                messageDiv.textContent = 'Please fill all fields.';
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                messageDiv.textContent = 'Passwords do not match.';
+                return;
+            }
+            try {
+                const res = await fetch('/user/forgot-password-request', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: fetchedEmail, answer, newPassword })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    messageDiv.style.color = '#27ae60';
+                    messageDiv.textContent = 'Your request has been submitted for admin approval.';
+                    nextBtn.disabled = true;
+                } else {
+                    messageDiv.textContent = data.message || 'Request failed.';
+                }
+            } catch (err) {
+                messageDiv.textContent = 'Server error. Please try again.';
+            }
+        }
+    };
+});
+</script>
+<script>
+// Profile section logic for navbar
+document.addEventListener('DOMContentLoaded', function() {
+    const profileSection = document.getElementById('profile-section');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const profileUsername = document.getElementById('profile-username');
+    const logoutBtn = document.getElementById('logout-btn');
+        const getAuthItem = (key) => sessionStorage.getItem(key) ?? localStorage.getItem(key);
+        const clearAuthStorage = () => {
+            ['userLoggedIn', 'userInfo', 'user_id', 'rememberMe'].forEach((key) => {
+                localStorage.removeItem(key);
+                sessionStorage.removeItem(key);
+            });
+        };
+        const user = JSON.parse(getAuthItem('userInfo') || '{}');
+        if (getAuthItem('userLoggedIn') && user.username) {
+            profileSection.style.display = 'flex';
+            welcomeMessage.textContent = 'Welcome to SecondGear,';
+            profileUsername.textContent = ' ' + user.username;
+            logoutBtn.style.display = 'inline-block';
+            logoutBtn.onclick = function() {
+                clearAuthStorage();
+                window.location.reload();
+            };
+        }
+});
+</script>
+</body>
+</html>
+
+
+

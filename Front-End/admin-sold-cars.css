@@ -1,0 +1,424 @@
+:root {
+    --bg: #eef3fb;
+    --surface: #ffffff;
+    --text: #1f2937;
+    --muted: #64748b;
+    --primary: #1d4ed8;
+    --success: #16a34a;
+    --accent: #0ea5e9;
+    --border: #dbe5f3;
+    --shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 10% 12%, rgba(29, 78, 216, 0.1), transparent 28%),
+        radial-gradient(circle at 86% 16%, rgba(34, 197, 94, 0.1), transparent 30%),
+        linear-gradient(180deg, #eff4ff 0%, #e8eef8 100%);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container {
+    width: min(1240px, 95vw);
+    margin: 20px auto 34px;
+}
+
+.admin-section {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+}
+
+.sold-page-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 14px;
+}
+
+.admin-section h1 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 2rem;
+}
+
+.sold-page-subtitle {
+    margin: 8px 0 0;
+    color: #64748b;
+    font-size: 0.97rem;
+}
+
+.sold-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.sold-stat-chip {
+    min-width: 112px;
+    background: linear-gradient(120deg, #eff6ff, #e0f2fe);
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.sold-stat-chip span {
+    display: block;
+    font-size: 0.78rem;
+    color: #1e3a8a;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.sold-stat-chip strong {
+    font-size: 1.22rem;
+    color: #0f172a;
+}
+
+.sold-tools {
+    margin-bottom: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#sold-search-input {
+    width: min(100%, 520px);
+    height: 42px;
+    border: 1px solid #c7d8f0;
+    border-radius: 11px;
+    padding: 0 12px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #fff;
+    outline: none;
+}
+
+#sold-search-input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+#export-sold-cars-btn {
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    padding: 0 16px;
+    background: linear-gradient(90deg, #1e40af, #0ea5e9);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+#export-sold-cars-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(29, 78, 216, 0.3);
+}
+
+#export-sold-cars-btn:disabled {
+    cursor: not-allowed;
+    background: #94a3b8;
+    box-shadow: none;
+}
+
+.sold-cars-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.sold-car-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff, #f8fbff);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    padding: 14px;
+}
+
+.sold-car-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.sold-car-img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 9px;
+}
+
+.sold-car-title {
+    margin-bottom: 4px;
+    color: #0f172a;
+    font-size: 1.06rem;
+    font-weight: 800;
+}
+
+.sold-car-buyer,
+.sold-car-contact,
+.sold-car-address,
+.sold-car-date {
+    color: #334155;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.sold-car-payment {
+    margin-top: 4px;
+    color: #065f46;
+    background: #dcfce7;
+    border-radius: 999px;
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.sold-complaint-chip {
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #9a3412;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.sold-complaint-btn {
+    margin-top: 8px;
+    border: 1px solid #f59e0b;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sold-complaint-btn:hover {
+    filter: brightness(0.98);
+}
+
+.sold-car-time-badge {
+    color: #1e3a8a;
+    background: #dbeafe;
+    border-radius: 999px;
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.sold-complaint-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.sold-complaint-panel {
+    width: min(720px, 96vw);
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    overflow: hidden;
+}
+
+.sold-complaint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 18px;
+    background: linear-gradient(90deg, #eff6ff, #fef3c7);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.sold-complaint-header h3 {
+    margin: 0;
+    color: #0f172a;
+}
+
+.sold-complaint-subtitle {
+    margin: 6px 0 0;
+    color: #475569;
+    font-weight: 600;
+}
+
+.sold-complaint-close {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.sold-complaint-body {
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sold-complaint-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sold-complaint-badge {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.sold-complaint-badge.responded {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+}
+
+.sold-complaint-badge.closed {
+    background: #dcfce7;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.sold-complaint-time {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.sold-complaint-block strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #0f172a;
+}
+
+.sold-complaint-block p {
+    margin: 0;
+    color: #334155;
+}
+
+.sold-complaint-field span {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #0f172a;
+}
+
+.sold-complaint-field textarea {
+    width: 100%;
+    border: 1px solid #cbd5f5;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 110px;
+    font-size: 0.95rem;
+}
+
+.sold-complaint-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sold-complaint-actions select {
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #cbd5f5;
+    padding: 0 10px;
+}
+
+.sold-complaint-actions button {
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    padding: 0 16px;
+    background: linear-gradient(90deg, #1d4ed8, #0ea5e9);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sold-complaint-feedback {
+    font-weight: 700;
+}
+
+.sold-placeholder {
+    padding: 40px 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 1.03rem;
+    background: #f8fbff;
+    border: 1px dashed #bfd7f6;
+    border-radius: 14px;
+}
+
+.sold-placeholder.error {
+    color: #b91c1c;
+    border-color: #fecaca;
+    background: #fff1f2;
+}
+
+@media (max-width: 640px) {
+    .dashboard-container {
+        width: 97vw;
+    }
+
+    .admin-section {
+        padding: 12px;
+    }
+
+    .sold-car-img {
+        height: 150px;
+    }
+
+    .sold-page-top {
+        flex-direction: column;
+    }
+
+    .sold-stats {
+        width: 100%;
+    }
+
+    .sold-stat-chip {
+        flex: 1;
+    }
+}

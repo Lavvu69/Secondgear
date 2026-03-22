@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access Management - SecondGear</title>
+    <link rel="stylesheet" href="/floating-navbar.css">
+    <link rel="stylesheet" href="/admin-register.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="/Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="/Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="/service-booking.html">Service</a>
+            <a href="/admin-dashboard.html">Dashboard</a>
+            <a href="/admin/register" class="active">Add Admin</a>
+            <button id="admin-logout-btn" class="admin-logout-btn">Logout (Admin)</button>
+        </nav>
+    </header>
+
+    <main class="admin-register-page">
+        <section class="admin-register-hero">
+            <div>
+                <p class="eyebrow">Admin Access Control</p>
+                <h1>Register New Admin</h1>
+                <p class="hero-copy">Create additional admin accounts without logging out. New admins get dashboard access with the same admin code policy.</p>
+            </div>
+            <a href="/admin-dashboard.html" class="back-dashboard-link">Back to Dashboard</a>
+        </section>
+
+        <section class="admin-register-grid">
+            <article class="card register-card">
+                <h2>Create Admin Account</h2>
+                <p class="muted">Use a unique email and a strong password. Admin code remains required as `7410`.</p>
+                <form id="createAdminForm" class="create-admin-form">
+                    <label for="newAdminEmail">Admin Email</label>
+                    <input id="newAdminEmail" type="email" placeholder="newadmin@secondgear.com" required>
+
+                    <label for="newAdminPassword">Password</label>
+                    <input id="newAdminPassword" type="password" minlength="6" placeholder="At least 6 characters" required>
+
+                    <label for="newAdminCode">Admin Code</label>
+                    <input id="newAdminCode" type="password" value="7410" required>
+
+                    <button type="submit">Create Admin</button>
+                    <div id="createAdminStatus" class="status" aria-live="polite"></div>
+                </form>
+            </article>
+
+            <article class="card list-card">
+                <div class="list-card-head">
+                    <h2>Existing Admins</h2>
+                    <button id="refreshAdminsBtn" type="button">Refresh</button>
+                </div>
+                <div class="table-wrap">
+                    <table id="adminsTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Created By</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script src="/admin-auth.js"></script>
+    <script src="/admin-register.js"></script>
+</body>
+</html>
+
+

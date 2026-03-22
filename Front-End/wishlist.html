@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - SecondGear</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="buy.css">
+    <link rel="stylesheet" href="wishlist.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/user" id="wishlist-login-link">Login</a>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" style="font-weight:bold;"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <section class="wishlist-hero">
+        <h1>My Wishlist</h1>
+        <p class="wishlist-sub">Saved cars you want to keep an eye on.</p>
+    </section>
+
+    <main class="wishlist-main">
+        <div id="wishlist-message" class="wishlist-message"></div>
+        <div id="wishlist-list" class="vehicle-list-grid"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SecondGear. All rights reserved. <a href="/about.html">About Us</a></p>
+    </footer>
+
+    <script src="wishlist.js"></script>
+</body>
+</html>
+
+

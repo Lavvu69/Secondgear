@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - SecondGear</title>
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="faq.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/faq" class="active">FAQ</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="faq-page">
+        <section class="faq-hero">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers about buying, selling, payments, services, and account support on SecondGear.</p>
+        </section>
+
+        <section class="faq-wrap">
+            <div class="faq-group">
+                <h2>Buying Cars</h2>
+                <details open>
+                    <summary>How do I buy a car on SecondGear?</summary>
+                    <p>Go to the Buy page, choose a listed car, open details, and continue to purchase. Fill your checkout details and submit payment to complete the order.</p>
+                </details>
+                <details>
+                    <summary>Can I negotiate the price?</summary>
+                    <p>Yes. Use the Make Offer option on the Buy page. Admin can accept, reject, or counter your offer.</p>
+                </details>
+                <details>
+                    <summary>What happens when my offer is accepted?</summary>
+                    <p>You receive a notification with a checkout link. Open it and complete purchase using the agreed offer price.</p>
+                </details>
+                <details>
+                    <summary>How do I know if a car is still available?</summary>
+                    <p>Only available cars appear in active listings. Once purchased, the car is marked sold and removed from available stock.</p>
+                </details>
+            </div>
+
+            <div class="faq-group">
+                <h2>Selling Cars</h2>
+                <details>
+                    <summary>How can I list my car for sale?</summary>
+                    <p>Go to the Sell page and submit car details and photos. Admin reviews your request and approves valid listings.</p>
+                </details>
+                <details>
+                    <summary>How long does approval take?</summary>
+                    <p>Approval time depends on review queue and data completeness. Listings with clear images and complete information are processed faster.</p>
+                </details>
+                <details>
+                    <summary>Can I track my submitted listing?</summary>
+                    <p>Yes. You can track listing status from your profile/listings area after login.</p>
+                </details>
+            </div>
+
+            <div class="faq-group">
+                <h2>Payments & Pricing</h2>
+                <details>
+                    <summary>Which payment methods are supported?</summary>
+                    <p>Current checkout options include card payments, PayPal, and cash on delivery, depending on the flow shown at purchase.</p>
+                </details>
+                <details>
+                    <summary>Will I receive a purchase confirmation?</summary>
+                    <p>Yes. Purchase confirmation is stored in your account history and invoice communication is sent to the registered email when available.</p>
+                </details>
+                <details>
+                    <summary>Is offer-agreed price saved in records?</summary>
+                    <p>Yes. Final deal price is stored for purchase and sold-car records, including agreed offer/counter-offer transactions.</p>
+                </details>
+            </div>
+
+            <div class="faq-group">
+                <h2>Service Booking</h2>
+                <details>
+                    <summary>How do I book a vehicle service?</summary>
+                    <p>Use the Service page, choose service type, date, and time slot, then submit your booking request.</p>
+                </details>
+                <details>
+                    <summary>Can I cancel or reschedule service?</summary>
+                    <p>Yes. In your profile, open bookings and use cancel or reschedule actions where available.</p>
+                </details>
+            </div>
+
+            <div class="faq-group">
+                <h2>Account & Security</h2>
+                <details>
+                    <summary>I forgot my password. What should I do?</summary>
+                    <p>Use the forgot-password flow in user login. Reset requests are reviewed through admin verification for security.</p>
+                </details>
+                <details>
+                    <summary>How do I update my profile details?</summary>
+                    <p>Log in and open My Profile to update your name, phone, and password.</p>
+                </details>
+                <details>
+                    <summary>Where can I see notifications?</summary>
+                    <p>Open the Messages section in your profile to view offer updates, approvals, and other account notices.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="faq-chat">
+            <div class="faq-chat-header">
+                <h3>Ask SecondGear Assistant</h3>
+                <p>Get answers about SecondGear and general automobile questions.</p>
+            </div>
+            <div id="faqChatStatus" class="faq-chat-status">Checking login status...</div>
+            <div id="faqChatMessages" class="faq-chat-messages" aria-live="polite"></div>
+            <form id="faqChatForm" class="faq-chat-form">
+                <input type="text" id="faqChatInput" placeholder="Type your question..." autocomplete="off" />
+                <button type="submit" id="faqChatSend">Send</button>
+            </form>
+            <div class="faq-chat-note">Chatbot is available to logged-in users only.</div>
+        </section>
+
+        <section class="faq-help">
+            <h3>Still need help?</h3>
+            <p>If your question is not listed, contact our support team and we will assist you.</p>
+            <a href="contact.html" class="faq-contact-btn">Go To Contact Page</a>
+        </section>
+    </main>
+    <script src="faq-chat.js"></script>
+</body>
+</html>
+
+

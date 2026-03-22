@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Your Car</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="sell.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="Home.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="sell.html" class="active">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login &#x25bc;</a>
+                <div class="dropdown-content">
+                    <a href="user-login.html">User Login</a>
+                    <a href="admin_login.html">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" style="font-weight:bold;"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <main class="sell-main">
+        <section class="sell-container">
+            <div class="sell-header">
+                <img src="https://img.icons8.com/ios-filled/100/2d6cdf/car--v2.png" alt="Car Icon" class="sell-hero-icon">
+                <h1>Sell Your Car</h1>
+                <p class="sell-subtitle">Get an instant estimate and submit your request in minutes.</p>
+            </div>
+
+            <div id="progressBarContainer" aria-label="Form completion progress">
+                <div id="progressBar"></div>
+            </div>
+
+            <form id="sellForm">
+                <div class="form-grid">
+                    <div class="field-wrap full-width">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required readonly class="readonly-input">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="make">Make</label>
+                        <select id="make" name="make" required>
+                            <option value="">Select Make</option>
+                            <option value="Maruti Suzuki">Maruti Suzuki</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Tata">Tata</option>
+                            <option value="Mahindra">Mahindra</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Renault">Renault</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Skoda">Skoda</option>
+                            <option value="MG">MG</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="Jeep">Jeep</option>
+                            <option value="Fiat">Fiat</option>
+                            <option value="Datsun">Datsun</option>
+                            <option value="Mercedes-Benz">Mercedes-Benz</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Volvo">Volvo</option>
+                            <option value="Jaguar">Jaguar</option>
+                            <option value="Land Rover">Land Rover</option>
+                            <option value="Porsche">Porsche</option>
+                            <option value="Mini">Mini</option>
+                            <option value="Mitsubishi">Mitsubishi</option>
+                            <option value="Isuzu">Isuzu</option>
+                            <option value="Lexus">Lexus</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                            <option value="Opel">Opel</option>
+                            <option value="Force">Force</option>
+                            <option value="Citroen">Citroen</option>
+                        </select>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="model">Model</label>
+                        <select id="model" name="model" required>
+                            <option value="">Select Model</option>
+                        </select>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="type">Type</label>
+                        <select id="type" name="type" required>
+                            <option value="">Select Type</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Coupe">Coupe</option>
+                            <option value="Convertible">Convertible</option>
+                        </select>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="year">Year</label>
+                        <input type="number" id="year" name="year" required placeholder="e.g. 2019" min="1900" max="2026">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="km">KM Driven</label>
+                        <input type="number" id="km" name="km" min="0" required>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="condition">Condition</label>
+                        <select id="condition" name="condition" required>
+                            <option value="">Select Condition</option>
+                            <option value="Good">Good</option>
+                            <option value="Average">Average</option>
+                            <option value="Poor">Poor</option>
+                        </select>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="color">Color</label>
+                        <input type="text" id="color" name="color" required placeholder="e.g. Blue">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="fuel_type">Fuel Type</label>
+                        <select id="fuel_type" name="fuel_type" required>
+                            <option value="">Select Fuel Type</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="CNG">CNG</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="LPG">LPG</option>
+                        </select>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="mileage">Mileage (km/l)</label>
+                        <input type="number" id="mileage" name="mileage" min="0" required placeholder="e.g. 18">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="num_owners">Number of Owners</label>
+                        <input type="number" id="num_owners" name="num_owners" min="1" required placeholder="e.g. 1">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="registration_city">Registration City</label>
+                        <input type="text" id="registration_city" name="registration_city" required placeholder="e.g. Chandigarh">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="registration_number">Registration Number</label>
+                        <input type="text" id="registration_number" name="registration_number" required placeholder="e.g. PB10AB1234">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission" name="transmission" required>
+                            <option value="">Select Transmission</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="AMT">AMT</option>
+                            <option value="CVT">CVT</option>
+                            <option value="DSG">DSG</option>
+                            <option value="Tiptronic">Tiptronic</option>
+                        </select>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="vin">VIN</label>
+                        <input type="text" id="vin" name="vin" required placeholder="e.g. 1HGCM82633A123456">
+                    </div>
+
+                    <div class="field-wrap full-width">
+                        <label for="insurance_validity">Insurance Validity</label>
+                        <div class="inline-row">
+                            <input type="date" id="insurance_validity" name="insurance_validity" required>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="no_insurance" name="no_insurance">
+                                No Insurance
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field-wrap full-width">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" required placeholder="Brief description about your car"></textarea>
+                    </div>
+
+                    <div class="field-wrap full-width">
+                        <label for="image">Upload Image</label>
+                        <div class="image-upload-row">
+                            <input type="file" id="image" name="image" accept="image/*" required>
+                            <label for="image" id="imageLabel">Choose Image</label>
+                            <span id="imageFileName"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn">Review Estimate</button>
+            </form>
+
+            <div id="estimateSection" style="display:none;">
+                <p id="estimateText"></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Show selected file name for image upload
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageInput = document.getElementById('image');
+            const imageFileName = document.getElementById('imageFileName');
+            if (imageInput && imageFileName) {
+                imageInput.addEventListener('change', function () {
+                    if (imageInput.files && imageInput.files[0]) {
+                        imageFileName.textContent = imageInput.files[0].name;
+                    } else {
+                        imageFileName.textContent = '';
+                    }
+                });
+            }
+        });
+
+        // Models for each make
+        const carModels = {
+            "Maruti Suzuki": ["Swift", "Baleno", "Dzire", "Wagon R", "Alto", "Ertiga", "Celerio", "Vitara Brezza", "S-Presso", "Ignis"],
+            "Hyundai": ["Creta", "i20", "Venue", "Verna", "Grand i10", "Aura", "Santro", "Elantra", "Tucson"],
+            "Tata": ["Nexon", "Altroz", "Tiago", "Harrier", "Safari", "Tigor", "Punch", "Hexa"],
+            "Mahindra": ["Scorpio", "XUV700", "XUV300", "Thar", "Bolero", "Marazzo", "KUV100", "Alturas G4"],
+            "Honda": ["City", "Amaze", "Jazz", "WR-V", "Civic", "CR-V", "Brio"],
+            "Toyota": ["Fortuner", "Innova", "Glanza", "Etios", "Corolla", "Camry", "Yaris", "Urban Cruiser"],
+            "Kia": ["Seltos", "Sonet", "Carens", "Carnival", "EV6"],
+            "Volkswagen": ["Polo", "Vento", "Taigun", "Virtus", "Tiguan"],
+            "Renault": ["Kwid", "Triber", "Duster", "Kiger", "Captur"],
+            "Ford": ["EcoSport", "Figo", "Endeavour", "Aspire", "Freestyle"],
+            "Skoda": ["Octavia", "Superb", "Rapid", "Kushaq", "Slavia", "Kodiaq"],
+            "MG": ["Hector", "ZS EV", "Gloster", "Astor"],
+            "Nissan": ["Magnite", "Kicks", "Sunny", "Micra", "Terrano"],
+            "Jeep": ["Compass", "Meridian", "Wrangler", "Grand Cherokee"],
+            "Fiat": ["Punto", "Linea", "Avventura", "Urban Cross"],
+            "Datsun": ["GO", "GO Plus", "Redi-GO"],
+            "Mercedes-Benz": ["C-Class", "E-Class", "GLA", "GLC", "S-Class", "GLE", "GLS"],
+            "BMW": ["3 Series", "5 Series", "X1", "X3", "X5", "7 Series"],
+            "Audi": ["A3", "A4", "A6", "Q3", "Q5", "Q7"],
+            "Volvo": ["XC40", "XC60", "XC90", "S60", "V90"],
+            "Jaguar": ["XE", "XF", "F-Pace", "XJ"],
+            "Land Rover": ["Range Rover", "Discovery", "Defender", "Evoque"],
+            "Porsche": ["Cayenne", "Macan", "Panamera", "911"],
+            "Mini": ["Cooper", "Countryman", "Clubman"],
+            "Mitsubishi": ["Pajero", "Outlander", "Evo", "Cedia"],
+            "Isuzu": ["D-Max", "MU-X"],
+            "Lexus": ["ES", "NX", "RX", "LS"],
+            "Chevrolet": ["Beat", "Cruze", "Spark", "Enjoy", "Sail", "Tavera"],
+            "Opel": ["Corsa", "Astra", "Vectra"],
+            "Force": ["Gurkha", "Trax"],
+            "Citroen": ["C3", "C5 Aircross"]
+        };
+
+        // Populate make and model
+        document.addEventListener('DOMContentLoaded', function () {
+            const makeSelect = document.getElementById('make');
+            const modelSelect = document.getElementById('model');
+            const yearSelect = document.getElementById('year');
+
+            // Populate year from 1970 to 2026
+            for (let y = 1970; y <= 2026; y++) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                yearSelect.appendChild(opt);
+            }
+
+            // When make changes, update model
+            makeSelect.addEventListener('change', function () {
+                const make = makeSelect.value;
+                modelSelect.innerHTML = '<option value="">Select Model</option>';
+                if (carModels[make]) {
+                    carModels[make].forEach(function (model) {
+                        const opt = document.createElement('option');
+                        opt.value = model;
+                        opt.textContent = model;
+                        modelSelect.appendChild(opt);
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="sell.js"></script>
+</body>
+
+</html>
+
+

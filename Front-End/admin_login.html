@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - SecondGear</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <!-- Floating Navigation Bar -->
+    <header class="floating-navbar">
+        <div class="logo"> 
+             <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+             <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+             <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="Home.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="sell.html">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-header">
+                 <img src="Logo-text.png" alt="SecondGear" class="logo-text">    
+                <img src="Logo-gear.png" alt="Gear">
+                <span class="brand-text">SecondGear</span>
+            </div>
+            <div class="admin-badge">ADMIN PORTAL</div>
+            <h2>Admin Access</h2>
+            <div id="admin-session-hint" class="admin-session-hint" style="display:none;">
+                <span id="admin-session-text">Admin session is active.</span>
+                <a href="/admin-dashboard.html" id="admin-access-dashboard-link" target="_blank" rel="noopener">Access Dashboard</a>
+            </div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="admin-email">Email Address</label>
+                    <input type="email" id="admin-email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-code">Admin Code</label>
+                    <input type="password" id="admin-code" name="admin-code" placeholder="Enter admin code" required>
+                </div>
+
+                <button type="submit" class="login-btn">Login as Admin</button>
+            </form>
+
+            <div class="footer-links">
+
+            </div>
+
+            <div class="back-link">
+                <a href="/">Back to Home</a> |
+                <a href="/user">User Login</a>
+            </div>
+        </div>
+    </div>
+    <script src="admin-login.js"></script>
+
+</body>
+</html>
+
+
+

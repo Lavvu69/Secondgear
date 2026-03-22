@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Vehicle Service | SecondGear</title>
+    <link rel="stylesheet" href="service-booking.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html" class="active">Service</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" class="profile-username-bold"></span>
+            <button id="logout-btn" class="logout-btn-hide">Logout</button>
+        </div>
+    </header>
+
+    <main class="service-main">
+        <section class="service-booking-container">
+            <div class="service-hero">
+                <p class="service-kicker">SecondGear Workshop Network</p>
+                <h1>Book Your Vehicle Service</h1>
+                <p class="service-subtitle">Choose your service, preferred date and time, and we will confirm your slot quickly.</p>
+            </div>
+
+            <div class="service-layout">
+                <aside class="service-side-panel">
+                    <button id="toggleTimetableBtn" type="button" class="timetable-toggle-btn">Available Days</button>
+
+                    <section id="timetableSection" class="timetable-section">
+                        <h3 class="timetable-title">Service Timetable</h3>
+                        <div class="timetable-card">
+                            <table class="timetable-table">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Work Hours</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Monday</td><td>9:00 AM - 5:00 PM</td></tr>
+                                    <tr><td>Tuesday</td><td>9:00 AM - 5:00 PM</td></tr>
+                                    <tr><td>Wednesday</td><td>9:00 AM - 5:00 PM</td></tr>
+                                    <tr><td>Thursday</td><td>9:00 AM - 5:00 PM</td></tr>
+                                    <tr><td>Friday</td><td>9:00 AM - 5:00 PM</td></tr>
+                                    <tr><td>Saturday</td><td>11:00 AM - 3:00 PM</td></tr>
+                                    <tr class="timetable-sunday"><td>Sunday</td><td>Holiday</td></tr>
+                                </tbody>
+                            </table>
+                            <div id="holidaysNotice" class="holidays-notice">Other holidays may apply. See highlighted rows below.</div>
+                        </div>
+                    </section>
+                </aside>
+
+                <form id="serviceBookingForm" class="service-booking-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vehicleType">Vehicle Type</label>
+                            <select id="vehicleType" name="vehicleType" required>
+                                <option value="">Select type</option>
+                                <option value="car">Car</option>
+                                <option value="bike">Bike</option>
+                                <option value="scooter">Scooter</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="serviceType">Service Type</label>
+                            <select id="serviceType" name="serviceType" required>
+                                <option value="">Select service</option>
+                                <option value="oil-change">Oil Change</option>
+                                <option value="inspection">Inspection</option>
+                                <option value="repair">Repair</option>
+                                <option value="cleaning">Cleaning</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="workshop">Workshop</label>
+                            <select id="workshop" name="workshop">
+                                <option value="">Let system decide</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mechanic">Mechanic</label>
+                            <select id="mechanic" name="mechanic">
+                                <option value="">Let system decide</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time-hour">Preferred Time</label>
+                            <div class="time-picker-group">
+                                <select id="time-hour" name="time-hour" required></select>
+                                <select id="time-minute" name="time-minute" required></select>
+                                <select id="time-ampm" name="time-ampm" required></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact">Contact Number</label>
+                            <div class="phone-input">
+                                <span class="phone-prefix" aria-hidden="true">+91</span>
+                                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required placeholder="10-digit mobile">
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="notes">Special Requests</label>
+                            <textarea id="notes" name="notes" placeholder="Any special instructions..."></textarea>
+                            <small class="special-requests-note">Extra for special instructions (if any)</small>
+                        </div>
+
+                        <div class="form-group cost-display-group full-width">
+                            <span id="serviceCost" class="service-cost">Total Cost: ₹0</span>
+                            <input type="hidden" id="price" name="price" value="0">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="booking-btn">Book Service</button>
+                    <div id="bookingMsg" class="booking-msg"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="service-booking.js"></script>
+</body>
+
+</html>
+
+

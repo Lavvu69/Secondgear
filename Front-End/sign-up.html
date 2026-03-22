@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - SecondGear</title>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <!-- Floating Navigation Bar -->
+    <header class="floating-navbar">
+        <div class="logo"> 
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="Home.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="sell.html">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" style="font-weight:bold;"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+    <div class="login-container">
+        <div class="signup-box">
+            <div class="logo-header">
+                <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+                <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+                <span class="brand-text">SecondGear</span>
+            </div>
+            <div class="signup-badge">CREATE ACCOUNT</div>
+            <h2>Join SecondGear</h2>
+         <form id="signupForm" method="POST" action="/signup" autocomplete="off">
+    <!-- Hidden dummy inputs (trick some browsers) -->
+    <input type="text" style="display:none">
+    <input type="password" style="display:none">
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first-name" placeholder="First name" required autocomplete="off" pattern="[A-Za-z]+" title="First name should contain only alphabets">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last-name" placeholder="Last name" required autocomplete="off" pattern="[A-Za-z]+" title="Last name should contain only alphabets">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+    </div>
+
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <div class="phone-input">
+        <span class="phone-prefix" aria-hidden="true">+91</span>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"
+               pattern="[0-9]{10}" maxlength="10" required
+               title="Please enter a valid 10-digit phone number" inputmode="numeric" onkeypress="if(event.which<48||event.which>57)event.preventDefault();">
+    </div>
+</div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required autocomplete="new-password">
+    </div>
+
+    <div class="form-group">
+        <label for="security-question">Security Question</label>
+        <select id="security-question" name="security-question" required>
+            <option value="">-- Select a security question --</option>
+            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+            <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+            <option value="What is your favorite book?">What is your favorite book?</option>
+            <option value="What city were you born in?">What city were you born in?</option>
+            <option value="What is your favorite food?">What is your favorite food?</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="security-answer">Your Answer</label>
+        <input type="text" id="security-answer" name="security-answer" placeholder="Enter your answer" required>
+    </div>
+
+    <div class="terms-block">
+        <label class="terms-check">
+            <input type="checkbox" id="terms-accepted" name="terms-accepted" required>
+            <span class="terms-text">
+                I agree to the
+                <button type="button" class="terms-link" id="open-terms">Terms &amp; Conditions</button>
+                and acknowledge the Privacy Policy.
+            </span>
+        </label>
+        <p class="terms-hint">You must accept the Terms to create your account.</p>
+    </div>
+
+    <button type="submit" class="signup-btn">Create Account</button>
+</form>
+
+            <div class="login-link">
+                Already have an account? <a href="user-login.html">Login here</a>
+            </div>
+
+            <div class="back-link">
+                <a href="/">Back to Home</a> |
+                <a href="/admin">Admin Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="terms-modal" id="terms-modal" aria-hidden="true">
+        <div class="terms-card" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+            <div class="terms-header">
+                <h3 id="terms-title">SecondGear Terms &amp; Conditions</h3>
+                <button type="button" class="terms-close" id="close-terms" aria-label="Close Terms">×</button>
+            </div>
+            <div class="terms-body">
+                <p><strong>Last updated:</strong> March 22, 2026</p>
+                <p>By creating an account, you agree to use SecondGear responsibly and provide accurate information.</p>
+                <h4>Account Responsibilities</h4>
+                <ul>
+                    <li>Keep your login credentials confidential and notify us of any unauthorized access.</li>
+                    <li>Ensure all personal and vehicle details you submit are truthful and up to date.</li>
+                </ul>
+                <h4>Purchases &amp; Listings</h4>
+                <ul>
+                    <li>All prices and fees are shown before checkout and may change before purchase.</li>
+                    <li>Vehicles are sold “as listed” with inspection and documentation details provided.</li>
+                </ul>
+                <h4>Platform Use</h4>
+                <ul>
+                    <li>Do not misuse the platform, automate access, or attempt unauthorized data access.</li>
+                    <li>We may suspend accounts that violate policies, safety, or compliance standards.</li>
+                </ul>
+                <h4>Privacy</h4>
+                <p>We use your data to provide services, facilitate transactions, and improve your experience. We do not sell personal data.</p>
+                <p>For full details, review our Privacy Policy in the footer or contact support.</p>
+            </div>
+            <div class="terms-actions">
+                <button type="button" class="terms-primary" id="accept-terms">I Agree</button>
+                <button type="button" class="terms-secondary" id="decline-terms">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script src="signup.js"></script>
+        <script>
+        // Extra JS validation for first and last name fields
+        document.addEventListener('DOMContentLoaded', function() {
+            function onlyAlphabets(e) {
+                const char = String.fromCharCode(e.which);
+                if (!/[a-zA-Z]/.test(char) && e.which !== 8 && e.which !== 9) {
+                    e.preventDefault();
+                }
+            }
+            document.getElementById('first-name').addEventListener('keypress', onlyAlphabets);
+            document.getElementById('last-name').addEventListener('keypress', onlyAlphabets);
+        });
+        </script>
+    <script>
+    // Profile section logic for navbar
+    document.addEventListener('DOMContentLoaded', function() {
+        const profileSection = document.getElementById('profile-section');
+        const welcomeMessage = document.getElementById('welcome-message');
+        const profileUsername = document.getElementById('profile-username');
+        const logoutBtn = document.getElementById('logout-btn');
+        const getAuthItem = (key) => sessionStorage.getItem(key) ?? localStorage.getItem(key);
+        const clearAuthStorage = () => {
+            ['userLoggedIn', 'userInfo', 'user_id', 'rememberMe'].forEach((key) => {
+                localStorage.removeItem(key);
+                sessionStorage.removeItem(key);
+            });
+        };
+        const user = JSON.parse(getAuthItem('userInfo') || '{}');
+        if (getAuthItem('userLoggedIn') && user.username) {
+            profileSection.style.display = 'flex';
+            welcomeMessage.textContent = 'Welcome to SecondGear,';
+            profileUsername.textContent = ' ' + user.username;
+            logoutBtn.style.display = 'inline-block';
+            logoutBtn.onclick = function() {
+                clearAuthStorage();
+                window.location.reload();
+            };
+        }
+    });
+    </script>
+</body>
+</html>
+
+

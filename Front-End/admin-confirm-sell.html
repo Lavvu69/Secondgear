@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin | Confirm Sell Request</title>
+        <link rel="stylesheet" href="admin-confirm-sell.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+        <header class="floating-navbar simple-navbar">
+            <nav>
+                <a href="admin-dashboard.html">Dashboard</a>
+                <button id="admin-logout-btn" class="admin-logout-btn">Logout (Admin)</button>
+            </nav>
+        </header>
+        <div class="confirm-sell-container">
+            <div class="confirm-sell-title">Confirm Sell Request</div>
+            <div class="confirm-sell-sub">Review the details and set the final price for this vehicle before adding it to the marketplace.</div>
+            <!-- Car details will be injected here by JS -->
+            <form id="confirmForm" enctype="multipart/form-data" autocomplete="off">
+                <label class="confirm-form-label">Set Price (INR):
+                    <input type="number" name="price" required min="0" step="1" placeholder="e.g. 15000" class="confirm-form-input">
+                </label>
+                <div class="confirm-margin">
+                    <span>Estimated Profit:</span>
+                    <strong id="profitValue">₹0</strong>
+                </div>
+                <button type="submit" class="confirm-btn-main">Confirm & Add to Buy</button>
+            </form>
+        </div>
+        <script src="admin-auth.js"></script>
+        <script src="admin-dashboard.js"></script>
+        <script src="admin-confirm-sell.js"></script>
+</body>
+</html>
+
+

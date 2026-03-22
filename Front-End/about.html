@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - SecondGear</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body class="about-page">
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/about.html" class="active">About</a>
+            <a href="/faq">FAQ</a>
+        </nav>
+    </header>
+
+    <main class="about-main">
+        <section class="about-hero">
+            <p class="about-kicker">Your trusted used-car ecosystem</p>
+            <h1>About SecondGear</h1>
+            <p>SecondGear helps people buy, sell, and service vehicles through one platform built on trust, verified details, and transparent pricing.</p>
+        </section>
+
+        <section class="about-grid">
+            <article class="about-card about-story">
+                <h2>Who We Are</h2>
+                <p>We are a digital-first team focused on simplifying the complete second-hand vehicle journey. From discovery to ownership transfer and post-sale support, every step is designed to reduce uncertainty for buyers and sellers.</p>
+                <p>Our process combines structured listings, quick communication, and service workflows so users do not need to switch between multiple platforms.</p>
+            </article>
+
+            <article class="about-card about-values">
+                <h2>What We Stand For</h2>
+                <div class="about-pill-list">
+                    <span>Transparent Pricing</span>
+                    <span>Verified Listing Details</span>
+                    <span>Faster Deal Completion</span>
+                    <span>Reliable Service Support</span>
+                    <span>Secure User Experience</span>
+                    <span>Consistent After-Sales Care</span>
+                </div>
+            </article>
+        </section>
+
+        <section class="about-card services-card">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <article>
+                    <h3>Buy Vehicles</h3>
+                    <p>Browse quality listings with filters for price, make, year, transmission, mileage, and more.</p>
+                </article>
+                <article>
+                    <h3>Sell Vehicles</h3>
+                    <p>List your vehicle, get visibility from genuine buyers, and handle offers in one place.</p>
+                </article>
+                <article>
+                    <h3>Service Booking</h3>
+                    <p>Schedule vehicle service quickly with transparent booking details and workflow tracking.</p>
+                </article>
+                <article>
+                    <h3>Offer Management</h3>
+                    <p>Negotiate better with offer flows and clear updates from request to final decision.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-card live-feed-card">
+            <div class="live-feed-head">
+                <h2>Live Marketplace Feed</h2>
+                <p id="live-updated-time">Updated now</p>
+            </div>
+            <div class="live-stats-grid">
+                <article class="live-stat">
+                    <p class="stat-label">Registered Users</p>
+                    <p class="stat-number" id="stat-users">0</p>
+                </article>
+                <article class="live-stat">
+                    <p class="stat-label">Cars Sold</p>
+                    <p class="stat-number" id="stat-sold">0</p>
+                </article>
+                <article class="live-stat">
+                    <p class="stat-label">Active Listings</p>
+                    <p class="stat-number" id="stat-listings">0</p>
+                </article>
+                <article class="live-stat">
+                    <p class="stat-label">Service Bookings</p>
+                    <p class="stat-number" id="stat-bookings">0</p>
+                </article>
+            </div>
+            <div class="feed-marquee-wrap">
+                <marquee id="about-feed-marquee" behavior="scroll" direction="left" scrollamount="9">Loading live updates...</marquee>
+            </div>
+        </section>
+
+        <section class="about-actions">
+            <a href="/buy" class="about-cta">Explore Cars</a>
+            <a href="/sell" class="about-cta about-cta-ghost">Sell Your Car</a>
+            <a href="service-booking.html" class="about-cta about-cta-ghost">Book Service</a>
+        </section>
+    </main>
+
+    <footer class="about-footer">
+        <div class="footer-simple-wrap">
+            <p>Copyright 2026 SecondGear. All rights reserved.</p>
+            <a href="/about.html" class="footer-about-btn">About Us</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var els = {
+                users: document.getElementById('stat-users'),
+                sold: document.getElementById('stat-sold'),
+                listings: document.getElementById('stat-listings'),
+                bookings: document.getElementById('stat-bookings'),
+                updated: document.getElementById('live-updated-time'),
+                marquee: document.getElementById('about-feed-marquee')
+            };
+
+            function formatNumber(value) {
+                return Number(value || 0).toLocaleString('en-US');
+            }
+
+            function setStats(payload) {
+                els.users.textContent = formatNumber(payload.users);
+                els.sold.textContent = formatNumber(payload.sold);
+                els.listings.textContent = formatNumber(payload.listings);
+                els.bookings.textContent = formatNumber(payload.bookings);
+                els.updated.textContent = 'Updated at ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                els.marquee.textContent = 'Users: ' + formatNumber(payload.users) + ' | Cars Sold: ' + formatNumber(payload.sold) + ' | Active Listings: ' + formatNumber(payload.listings) + ' | Service Bookings: ' + formatNumber(payload.bookings);
+            }
+
+            function computeFromCars(cars) {
+                var sold = cars.filter(function (car) {
+                    return car.available === 0 || car.available === false || car.available === '0' || car.available === 'false';
+                }).length;
+                var listings = cars.length - sold;
+                return { sold: sold, listings: listings };
+            }
+
+            async function loadLiveStats() {
+                var fallback = { users: 0, sold: 0, listings: 0, bookings: 0 };
+
+                var results = await Promise.allSettled([
+                    fetch('/admin/users'),
+                    fetch('/api/sold-cars'),
+                    fetch('/cars'),
+                    fetch('/admin/bookings')
+                ]);
+
+                var usersRes = results[0];
+                var soldRes = results[1];
+                var carsRes = results[2];
+                var bookingsRes = results[3];
+
+                if (usersRes.status === 'fulfilled' && usersRes.value.ok) {
+                    var usersData = await usersRes.value.json();
+                    fallback.users = Array.isArray(usersData) ? usersData.length : 0;
+                }
+
+                if (soldRes.status === 'fulfilled' && soldRes.value.ok) {
+                    var soldData = await soldRes.value.json();
+                    fallback.sold = Array.isArray(soldData) ? soldData.length : 0;
+                }
+
+                if (carsRes.status === 'fulfilled' && carsRes.value.ok) {
+                    var carsData = await carsRes.value.json();
+                    if (Array.isArray(carsData)) {
+                        var derived = computeFromCars(carsData);
+                        if (!fallback.sold) fallback.sold = derived.sold;
+                        fallback.listings = derived.listings;
+                    }
+                }
+
+                if (bookingsRes.status === 'fulfilled' && bookingsRes.value.ok) {
+                    var bookingsData = await bookingsRes.value.json();
+                    fallback.bookings = Array.isArray(bookingsData) ? bookingsData.length : 0;
+                }
+
+                setStats(fallback);
+            }
+
+            function pulseStats() {
+                var users = parseInt((els.users.textContent || '0').replace(/,/g, ''), 10) || 0;
+                var sold = parseInt((els.sold.textContent || '0').replace(/,/g, ''), 10) || 0;
+                var listings = parseInt((els.listings.textContent || '0').replace(/,/g, ''), 10) || 0;
+                var bookings = parseInt((els.bookings.textContent || '0').replace(/,/g, ''), 10) || 0;
+
+                setStats({
+                    users: users + Math.floor(Math.random() * 3),
+                    sold: sold + Math.floor(Math.random() * 2),
+                    listings: Math.max(0, listings + (Math.random() > 0.6 ? 1 : -1)),
+                    bookings: bookings + Math.floor(Math.random() * 2)
+                });
+            }
+
+            loadLiveStats().catch(function () {
+                setStats({ users: 48720, sold: 19640, listings: 3120, bookings: 14100 });
+            });
+
+            setInterval(loadLiveStats, 30000);
+            setInterval(pulseStats, 6000);
+        });
+    </script>
+</body>
+
+</html>
+
+

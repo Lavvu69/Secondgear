@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Listings - SecondGear</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="my-listings.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body class="my-listings-page">
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="profile.html">My Profile</a>
+            <a href="my-listings.html" class="active">Your Listings</a>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px; align-items:center; gap:10px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <main class="listings-main">
+        <section class="listings-hero">
+            <h1>Your Listings</h1>
+            <p>Track your sell requests and see what is live, sold, or rejected.</p>
+            <div id="verifiedSellerBadge" class="verified-seller-badge" style="display:none;">Verified Seller</div>
+        </section>
+
+        <section class="listings-grid">
+            <section class="listings-section">
+                <h2>Pending Requests</h2>
+                <p class="section-subtitle">Submitted and awaiting admin review.</p>
+                <div id="pendingList" class="listings-list">Loading...</div>
+            </section>
+
+            <section class="listings-section">
+                <h2>Active Listings</h2>
+                <p class="section-subtitle">Approved and currently visible to buyers.</p>
+                <div id="activeList" class="listings-list">Loading...</div>
+            </section>
+
+            <section class="listings-section">
+                <h2>Sold Listings</h2>
+                <p class="section-subtitle">Cars sold after your listing was approved.</p>
+                <div id="soldList" class="listings-list">Loading...</div>
+            </section>
+
+            <section class="listings-section">
+                <h2>Rejected Requests</h2>
+                <p class="section-subtitle">Requests not approved by admin.</p>
+                <div id="rejectedList" class="listings-list">Loading...</div>
+            </section>
+        </section>
+    </main>
+
+    <script src="my-listings.js"></script>
+</body>
+</html>
+
+

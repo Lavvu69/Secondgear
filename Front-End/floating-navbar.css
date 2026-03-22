@@ -1,0 +1,140 @@
+/* Floating Navigation Bar */
+.floating-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 0 24px;
+    background: linear-gradient(90deg, #0b0f19, #111827);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 10px 24px rgba(2, 6, 23, 0.35);
+}
+
+.floating-navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.floating-navbar .logo-text,
+.floating-navbar .logo-gear {
+    height: 24px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.floating-navbar .brand-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: 0.04em;
+    margin-left: 4px;
+}
+
+.floating-navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#admin-logout-btn {
+    margin-left: auto !important;
+    order: 999;
+}
+
+.floating-navbar nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.93rem;
+    padding: 7px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.floating-navbar nav a:hover {
+    color: #ffffff;
+    background: rgba(59, 130, 246, 0.22);
+}
+
+.floating-navbar .login-dropdown {
+    position: relative;
+}
+
+.floating-navbar .login-btn {
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    border-radius: 8px;
+    padding: 7px 10px;
+    color: #f8fafc;
+    background: rgba(30, 41, 59, 0.65);
+}
+
+.floating-navbar .login-btn:hover {
+    background: rgba(59, 130, 246, 0.24);
+}
+
+.floating-navbar .dropdown-content {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    background: linear-gradient(180deg, #0f172a, #1e293b);
+    box-shadow: 0 14px 28px rgba(2, 6, 23, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px) scale(0.98);
+    transition: opacity 0.26s ease, transform 0.26s ease;
+    z-index: 1001;
+}
+
+.floating-navbar .login-dropdown:hover .dropdown-content {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.floating-navbar .dropdown-content a {
+    display: block;
+    margin: 2px 0;
+    padding: 9px 10px;
+    border-radius: 9px;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.floating-navbar .dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.35), rgba(14, 165, 233, 0.3));
+    color: #ffffff;
+}
+
+body {
+    padding-top: 72px;
+}
+
+@media (max-width: 860px) {
+    .floating-navbar {
+        height: auto;
+        min-height: 72px;
+        align-items: flex-start;
+        padding: 10px 12px;
+    }
+
+    .floating-navbar nav {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .floating-navbar nav a {
+        font-size: 0.88rem;
+    }
+}

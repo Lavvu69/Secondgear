@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Bookings - SecondGear</title>
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="admin-bookings.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="/feedback.html">Feedback</a>
+            <a href="admin-bookings.html" class="active">Bookings</a>
+            <a href="#" id="newsletterTab" style="margin-left: 10px;">Newsletter</a>
+            <a href="#" id="offersTab" style="margin-left: 10px;">Offers</a>
+            <button id="admin-logout-btn" style="float:right; margin-left:20px; background:#b1422e; color:#fff; border:none; border-radius:6px; padding:6px 14px; font-weight:600; box-shadow:0 2px 6px rgba(231,76,60,0.08); cursor:pointer; transition:background 0.2s;">Logout (Admin)</button>
+
+        </nav>
+    </header>
+    <main class="dashboard-container">
+        <div id="adminSectionBookings" class="admin-section">
+        <!-- Holiday Management Section -->
+        <section id="holidayManagementSection" style="margin-bottom:32px;">
+            <h2 style="color:#b1422e;">Manage Holidays</h2>
+            <form id="addHolidayForm" style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+                <label for="holidayDate" style="font-weight:500;">Add Holiday Date:</label>
+                <input type="date" id="holidayDate" name="holidayDate" required>
+                <input type="text" id="holidayDesc" name="holidayDesc" placeholder="Description (optional)" style="width:180px;">
+                <button type="submit" style="background:#2d6cdf; color:#fff; border:none; border-radius:5px; padding:7px 18px; font-weight:600; cursor:pointer;">Add Holiday</button>
+            </form>
+            <table id="holidaysTable" style="width:100%; border-collapse:collapse;">
+                <thead>
+                    <tr style="background: linear-gradient(90deg, #b1422e 0%, #e67e22 100%); color: #fff;">
+                        <th style="padding:8px; border:1px solid #e0e0e0;">Date</th>
+                        <th style="padding:8px; border:1px solid #e0e0e0;">Description</th>
+                        <th style="padding:8px; border:1px solid #e0e0e0;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Holidays will be populated by JS -->
+                </tbody>
+            </table>
+            <div style="margin-top:8px; color:#888; font-size:0.98em;">Note: Sundays are always holidays by default.</div>
+        </section>
+        <h1>Service Bookings</h1>
+        <div class="responsive-table-container">
+            <table id="bookingsTable">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User</th>
+                        <th>Vehicle Type</th>
+                        <th>Service Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Contact</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Bookings will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+        <h3 style="margin-top:32px;">Record Offline Booking</h3>
+        <form id="addOfflineBookingForm" style="margin-bottom:24px;">
+            <div class="form-title">Add Offline Booking</div>
+            <div class="service-form-row">
+                <select name="vehicleType" required>
+                    <option value="">Vehicle Type</option>
+                    <option value="car">Car</option>
+                    <option value="bike">Bike</option>
+                    <option value="scooter">Scooter</option>
+                    <option value="other">Other</option>
+                </select>
+                <div>
+                    <input type="text" name="serviceType" list="offlineServiceList" required placeholder="Service Type">
+                    <datalist id="offlineServiceList"></datalist>
+                </div>
+                <input type="date" name="bookingDate" required>
+                <input type="time" name="bookingTime" required>
+                <input type="text" name="contact" required placeholder="Contact">
+                <input type="number" name="price" min="0" step="0.01" required placeholder="Price">
+                <select name="workshopId" id="offlineWorkshopSelect">
+                    <option value="">Select Workshop (optional)</option>
+                </select>
+                <select name="mechanicId" id="offlineMechanicSelect">
+                    <option value="">Select Mechanic (optional)</option>
+                </select>
+                <label style="display:flex; align-items:center; gap:8px;">
+                    <input type="checkbox" name="fulfilled" checked>
+                    Mark as fulfilled
+                </label>
+                <label style="display:flex; align-items:center; gap:8px;">
+                    <input type="checkbox" name="ignoreConflicts">
+                    Ignore schedule conflicts
+                </label>
+                <textarea name="notes" placeholder="Notes (optional)"></textarea>
+                <button type="submit">Add Offline Booking</button>
+            </div>
+            <div style="margin-top:6px; color:#6b7280; font-size:0.92rem;">
+                Pick a mechanic or a workshop. If both are selected, mechanic is used.
+            </div>
+        </form>
+        <h3 style="margin-top:32px;">Add New Service</h3>
+        <form id="addServiceForm" style="margin-bottom:24px;">
+            <div class="form-title">Add Service</div>
+            <div class="service-form-row">
+                <input type="text" name="serviceName" required placeholder="Service Name">
+                <textarea name="serviceDescription" required placeholder="Service Description"></textarea>
+                <input type="number" name="servicePrice" min="0" step="0.01" required placeholder="Price">
+                <button type="submit">Add Service</button>
+            </div>
+        </form>
+        <h3 style="margin-top:32px;">Manage Mechanics & Workshops</h3>
+        <form id="addMechanicForm" style="margin-bottom:24px;">
+            <div class="form-title">Add Mechanic</div>
+            <div class="service-form-row">
+                <input type="text" name="mechanicName" required placeholder="Mechanic Name">
+                <input type="text" name="mechanicPhone" required placeholder="Phone">
+                <select name="workshopId" id="mechanicWorkshopSelect" class="cute-dropdown" required>
+                    <option value="">Assign to Workshop</option>
+                    <!-- Workshops will be populated here by JS -->
+                </select>
+                <button type="submit">Add Mechanic</button>
+            </div>
+        </form>
+        <div class="responsive-table-container">
+            <table id="mechanicsTable">
+                <thead>
+                    <tr>
+                        <th>Mechanic ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Workshop</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Mechanics will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+        <form id="addWorkshopForm" style="margin-bottom:24px;">
+            <div class="form-title">Add Workshop</div>
+            <div class="service-form-row">
+                <input type="text" name="workshopName" required placeholder="Workshop Name">
+                <input type="text" name="workshopAddress" required placeholder="Address">
+                <input type="text" name="workshopPhone" required placeholder="Phone">
+                <button type="submit">Add Workshop</button>
+            </div>
+        </form>
+        <div class="responsive-table-container">
+            <table id="workshopsTable">
+                <thead>
+                    <tr>
+                        <th>Workshop ID</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Workshops will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div id="adminSectionNewsletter" class="admin-section" style="display:none;">
+            <h2>Newsletter Subscribers</h2>
+            <table id="newsletterTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Subscribed At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Newsletter subscribers will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+        <div id="adminSectionOffers" class="admin-section" style="display:none;">
+            <h2>Offers / Notifications for Subscribers</h2>
+            <div style="margin-bottom: 24px;">
+                <h3 style="color:#2d6cdf; margin-bottom:10px;">Add Car as Offer</h3>
+                <form id="addCarOfferForm" style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+                    <div style="flex:1 1 60%; min-width:180px;">
+                        <label for="carOfferSelect" style="font-weight:600; color:#2d6cdf;">Select Car</label>
+                        <select id="carOfferSelect" name="carOfferSelect" style="width:100%; padding:10px; border:1px solid #bfc9d1; border-radius:6px; font-size:16px; margin-top:4px;"></select>
+                    </div>
+                    <div style="flex:2 1 100%; margin-top:8px; min-width:220px;">
+                        <label for="carOfferText" style="font-weight:600; color:#2d6cdf;">Auto-generated Offer Message</label>
+                        <input type="text" id="carOfferText" name="carOfferText" readonly style="width:100%; padding:10px; border:1px solid #bfc9d1; border-radius:6px; font-size:16px; margin-top:4px; background:#f7fafd;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="carOfferValidFrom" style="font-weight:600; color:#2d6cdf;">Valid From</label>
+                        <input type="date" id="carOfferValidFrom" name="carOfferValidFrom" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="carOfferValidTo" style="font-weight:600; color:#2d6cdf;">Valid To</label>
+                        <input type="date" id="carOfferValidTo" name="carOfferValidTo" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <button type="submit" style="padding:10px 28px; background:#2d6cdf; color:#fff; border:none; border-radius:6px; font-weight:600; font-size:16px; box-shadow:0 2px 8px rgba(44,62,80,0.08); cursor:pointer; transition:background 0.2s; margin-top:8px;">Add Car Offer</button>
+                </form>
+            </div>
+            <form id="addOfferForm" style="margin-bottom: 20px;">
+                <div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+                    <div style="flex: 1 1 60%; min-width:180px;">
+                        <label for="offerText" style="font-weight: 600; color: #2d6cdf;">Offer/Notification Text</label>
+                        <input type="text" id="offerText" name="offerText" required placeholder="Enter offer or notification..." style="width: 100%; padding: 10px; border: 1px solid #bfc9d1; border-radius: 6px; font-size: 16px; margin-top: 4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="offerValidFrom" style="font-weight:600; color:#2d6cdf;">Valid From</label>
+                        <input type="date" id="offerValidFrom" name="offerValidFrom" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <div style="flex:1 1 160px; min-width:140px; margin-top:8px;">
+                        <label for="offerValidTo" style="font-weight:600; color:#2d6cdf;">Valid To</label>
+                        <input type="date" id="offerValidTo" name="offerValidTo" style="width:100%; padding:8px; border:1px solid #bfc9d1; border-radius:6px; font-size:15px; margin-top:4px;">
+                    </div>
+                    <button type="submit" style="padding: 10px 28px; background: #2d6cdf; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 16px; box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08); cursor: pointer; transition: background 0.2s; margin-top:8px;">Add Offer</button>
+                </div>
+            </form>
+            <table id="offersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Offer/Notification</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Offers will be populated here by JS -->
+                </tbody>
+            </table>
+            <h3 style="margin-top:36px; color:#888; font-weight:600;">Previous Offers</h3>
+            <table id="previousOffersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Offer/Notification</th>
+                        <th>Created At</th>
+                        <th>Deleted At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Previous offers will be populated here by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="admin-auth.js"></script>
+    <script src="admin-bookings.js"></script>
+</body>
+</html>
+
+

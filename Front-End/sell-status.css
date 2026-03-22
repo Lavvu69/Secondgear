@@ -1,0 +1,219 @@
+:root {
+    --bg-1: #eef3fb;
+    --bg-2: #e0e9f8;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --primary: #1d4ed8;
+    --primary-dark: #1e3a8a;
+    --accent: #0ea5e9;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --border: #dbe5f3;
+    --shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.sell-status-page {
+    margin: 0;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 10% 12%, rgba(29, 78, 216, 0.1), transparent 28%),
+        radial-gradient(circle at 86% 16%, rgba(14, 165, 233, 0.12), transparent 30%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+}
+
+.sell-status-main {
+    width: min(1200px, 94vw);
+    margin: 24px auto 32px;
+}
+
+.status-hero {
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.96), rgba(245, 250, 255, 0.92));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 18px 22px;
+    margin-bottom: 16px;
+}
+
+.status-hero h1 {
+    margin: 0 0 6px;
+    color: #10285a;
+    font-size: clamp(1.7rem, 3vw, 2.2rem);
+}
+
+.status-hero p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.status-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 16px;
+    min-height: 220px;
+}
+
+.status-card h2 {
+    margin: 0 0 10px;
+    color: #0f172a;
+}
+
+#messagesPanel {
+    grid-column: 1 / -1;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px dashed #e6edf7;
+    font-size: 0.92rem;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-awaiting {
+    background: #dbeafe;
+    color: #1e3a8a;
+}
+
+.status-accepted {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-countered {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.offer-actions {
+    margin-top: 12px;
+    display: grid;
+    gap: 10px;
+}
+
+.field-label {
+    font-size: 0.88rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.offer-actions input,
+.offer-actions textarea,
+.message-compose textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    background: #f8fbff;
+}
+
+.action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: #fff;
+}
+
+.btn-secondary {
+    background: linear-gradient(90deg, #64748b, #475569);
+    color: #fff;
+}
+
+.btn-danger {
+    background: linear-gradient(90deg, #ef4444, var(--danger));
+    color: #fff;
+}
+
+.messages-list {
+    min-height: 120px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    background: #f8fbff;
+    display: grid;
+    gap: 10px;
+}
+
+.message-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.message-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.message-compose {
+    margin-top: 10px;
+    display: grid;
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+}

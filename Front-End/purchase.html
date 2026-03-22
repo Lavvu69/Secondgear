@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Purchase - SecondGear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="buy.css">
+    <link rel="stylesheet" href="purchase.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/signup">Sign Up</a>
+            <a href="/user">Login</a>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" style="font-weight:bold;"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+    <section class="purchase-form-section">
+        <h1>Complete Your Purchase</h1>
+        <form id="purchase-form">
+            <div class="location-toggle-row form-group">
+                <span class="location-toggle-label">Location Input Mode:</span>
+                <div class="location-mode-control" id="location-mode-control" role="group" aria-label="Location input mode">
+                    <span class="mode-thumb" id="mode-thumb" aria-hidden="true"></span>
+                    <button type="button" class="mode-option active" data-mode="auto">Auto-detect</button>
+                    <button type="button" class="mode-option" data-mode="manual">Manual entry</button>
+                </div>
+                <input type="checkbox" id="location-toggle" checked hidden aria-hidden="true">
+                <span class="toggle-hint">(Toggle to enter manually)</span>
+            </div>
+            <input type="hidden" id="car-id" name="car_id">
+            <div class="form-group">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="zip">ZIP Code:</label>
+                <input type="text" id="zip" name="zip" required>
+            </div>
+            <div class="form-group">
+                <label for="payment-method">Payment Method:</label>
+                <select id="payment-method" name="payment_method" required>
+                    <option value="credit_card">Credit Card</option>
+                    <option value="debit_card">Debit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cod">Cash on Delivery</option>
+                </select>
+            </div>
+            <div id="payment-details"></div>
+            <div id="payment-status" class="payment-status" aria-live="polite"></div>
+            <p class="payment-note">Note: Payments are simulated for this project. No real money or credentials are used.</p>
+            <section id="purchase-summary-card" class="purchase-summary-card" aria-live="polite">
+                <h2>Purchase Summary</h2>
+                <div class="summary-row">
+                    <span>Vehicle</span>
+                    <strong id="summary-car-name">Loading...</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Base Price</span>
+                    <strong id="summary-car-price">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <strong id="summary-car-delivery">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Documentation Fee</span>
+                    <strong id="summary-car-doc">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Registration Transfer Fee</span>
+                    <strong id="summary-car-registration">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Inspection / Certification Fee</span>
+                    <strong id="summary-car-inspection">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Platform / Service Fee</span>
+                    <strong id="summary-car-platform">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Insurance Add-on (Optional)</span>
+                    <strong id="summary-car-insurance">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Warranty Extension (Optional)</span>
+                    <strong id="summary-car-warranty">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Accessory Bundle (Optional)</span>
+                    <strong id="summary-car-accessory">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Payable</span>
+                    <strong id="summary-car-total">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Year</span>
+                    <strong id="summary-car-year">--</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Stock ID</span>
+                    <strong id="summary-car-id">--</strong>
+                </div>
+                <div class="summary-row addons-row">
+                    <span>Add-ons</span>
+                    <div class="addons-grid">
+                        <label class="addon-option">
+                            <input type="checkbox" id="insurance-addon-checkbox">
+                            <span class="addon-box" aria-hidden="true"></span>
+                            <span class="addon-info">
+                                <span class="addon-title">Insurance Add-on</span>
+                                <span class="addon-meta">Optional coverage package</span>
+                            </span>
+                            <span class="addon-badge">Optional</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" id="warranty-addon-checkbox">
+                            <span class="addon-box" aria-hidden="true"></span>
+                            <span class="addon-info">
+                                <span class="addon-title">Warranty Extension</span>
+                                <span class="addon-meta">12-month extended protection</span>
+                            </span>
+                            <span class="addon-badge">Optional</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" id="accessory-addon-checkbox">
+                            <span class="addon-box" aria-hidden="true"></span>
+                            <span class="addon-info">
+                                <span class="addon-title">Accessory Bundle</span>
+                                <span class="addon-meta">Seat covers, mats, essentials</span>
+                            </span>
+                            <span class="addon-badge">Optional</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+            <button type="submit">Submit Payment</button>
+        </form>
+    </section>
+    <script src="purchase.js"></script>
+    <script>
+        // Profile section logic for navbar
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileSection = document.getElementById('profile-section');
+            const welcomeMessage = document.getElementById('welcome-message');
+            const profileUsername = document.getElementById('profile-username');
+            const logoutBtn = document.getElementById('logout-btn');
+            const getAuthItem = (key) => sessionStorage.getItem(key) ?? localStorage.getItem(key);
+            const clearAuthStorage = () => {
+                ['userLoggedIn', 'userInfo', 'user_id', 'rememberMe'].forEach((key) => {
+                    localStorage.removeItem(key);
+                    sessionStorage.removeItem(key);
+                });
+            };
+            const user = JSON.parse(getAuthItem('userInfo') || '{}');
+            if (getAuthItem('userLoggedIn') && user.username) {
+                profileSection.style.display = 'flex';
+                welcomeMessage.textContent = 'Welcome to SecondGear,';
+                profileUsername.textContent = ' ' + user.username;
+                logoutBtn.style.display = 'inline-block';
+                logoutBtn.onclick = function () {
+                    clearAuthStorage();
+                    window.location.reload();
+                };
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+

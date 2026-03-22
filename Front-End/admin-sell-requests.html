@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sell Requests</title>
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="admin-sell-requests.css">
+    <style>
+        .admin-navbar-link {
+            display: inline-block;
+            padding: 8px 22px;
+            margin: 0 8px;
+            background: #f4f8fb;
+            color: #145a72;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.08rem;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(45,108,223,0.10);
+            transition: background 0.2s, color 0.2s, box-shadow 0.15s;
+            border: none;
+        }
+        .admin-navbar-link:hover {
+            background: #e6edf3;
+            color: #2d6cdf;
+        }
+        .admin-navbar-link.active, .admin-navbar-link[aria-current="page"] {
+            background: #2d6cdf;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(45,108,223,0.18);
+        }
+        .admin-navbar-logout {
+            background: #b1422e;
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-left: 32px;
+            padding: 8px 22px;
+            border: none;
+            box-shadow: 0 2px 8px rgba(231,76,60,0.08);
+            transition: background 0.2s;
+        }
+        .admin-navbar-logout:hover {
+            background: #922b1a;
+        }
+    </style>
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin-sell-requests.html" class="active">Sell Requests</a>
+            <a href="admin-sold-cars.html">Sold Cars</a>
+            <a href="admin-newsletter.html">Newsletter</a>
+            <a href="#" id="offersTab" style="margin-left: 10px;">Offers</a>
+            <button id="admin-logout-btn" style="float:right; margin-left:20px; background:#b1422e; color:#fff; border:none; border-radius:6px; padding:6px 14px; font-weight:600; box-shadow:0 2px 6px rgba(231,76,60,0.08); cursor:pointer; transition:background 0.2s;">Logout (Admin)</button>
+        </nav>
+    </header>
+    <main class="dashboard-container">
+            <script>
+            // Offers tab navigation (match admin-dashboard.js logic)
+            document.getElementById('offersTab').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = '/admin?section=offers';
+            });
+            </script>
+        <h1>Sell Requests Dashboard</h1>
+        <div class="admin-section">
+            <h2>Pending Sell Requests</h2>
+            <table id="sellRequestsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>KM Driven</th>
+                        <th>Type</th>
+                        <th>Estimated Price</th>
+                        <th>Admin Offer</th>
+                        <th>Seller Response</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Requests will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="admin-section">
+            <h2 style="color:#e74c3c;">Rejected Sell Requests</h2>
+            <table id="rejectedRequestsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>KM Driven</th>
+                        <th>Type</th>
+                        <th>Estimated Price</th>
+                        <th>Status</th>
+                        <th>Rejected At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rejected requests will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="sellRequestModal" class="sr-modal" style="display:none;">
+        <div class="sr-modal-card">
+            <button type="button" id="srModalClose" class="sr-modal-close">&times;</button>
+            <div id="srModalBody">Loading...</div>
+        </div>
+    </div>
+
+    <script src="admin-auth.js"></script>
+    <script src="admin-dashboard.js"></script>
+    <script src="admin-sell-requests.js"></script>
+</body>
+</html>
+
+

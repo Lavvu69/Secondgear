@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecondGear</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body class="home-page">
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="profile.html" id="my-profile-link" style="display:none;">My Profile <span id="home-profile-message-badge" class="nav-message-badge" style="display:none;">0</span></a>
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/user">User Login</a>
+                    <a href="/admin-dashboard.html" id="home-access-dashboard-link" style="display:none;">Access Dashboard</a>
+                    <a href="/admin">Admin Login</a>
+                </div>
+            </div>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px; align-items:center; gap:10px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <section class="hero" id="home-hero">
+        <div class="hero-slides" aria-hidden="true">
+            <div class="hero-slide hero-slide-1"></div>
+            <div class="hero-slide hero-slide-2"></div>
+            <div class="hero-slide hero-slide-3"></div>
+        </div>
+        <div class="hero-ambient hero-ambient--one" aria-hidden="true"></div>
+        <div class="hero-ambient hero-ambient--two" aria-hidden="true"></div>
+        <div class="hero-inner">
+            <p class="hero-kicker">Trusted Vehicle Marketplace</p>
+            <h1>Buy, Sell, and <span id="hero-dynamic-word">Service</span> Vehicles With Confidence</h1>
+            <p>Your all-in-one platform for second-hand vehicles, transparent deals, and reliable service booking.</p>
+            <div class="hero-actions">
+                <a class="hero-cta" href="/buy">Explore Vehicles</a>
+                <a class="hero-cta hero-cta--ghost" href="/sell">Sell Your Car</a>
+            </div>
+        </div>
+        <button class="hero-scroll-cue" id="hero-scroll-cue" type="button" aria-label="Scroll to offers">
+            <span></span>
+        </button>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="featured-section" id="featured-section" style="display:none;">
+        <div class="featured-header">
+            <div>
+                <h2>Featured Picks</h2>
+                <p>Hand-selected cars worth a closer look.</p>
+            </div>
+            <a class="featured-cta" href="/buy">View all cars</a>
+        </div>
+        <div class="featured-grid" id="featured-grid"></div>
+    </section>
+
+    <section class="offers-section">
+        <div class="offers-header">
+            <h2>Offers For You</h2>
+            <span class="offers-pill">Newsletter Exclusive</span>
+        </div>
+        <div id="offersMarquee" class="offers-ticker" aria-live="polite">
+            <div id="offersMarqueeTrack" class="offers-ticker__track"></div>
+        </div>
+        <div id="userOffersEmpty">No offers available right now. Subscribe to get notified.</div>
+    </section>
+
+    <section class="map-services-flex">
+        <div class="location card-surface">
+            <h2>Our Location</h2>
+            <iframe src="https://www.google.com/maps?q=31.115163728054874,76.1166085052392&z=15&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="location-info">
+                <p>Find us at SecondGear HQ, Punjab, India.</p>
+                <p>Located in the heart of Nawanshahr, we are ready to help with buying, selling, and servicing your vehicle through a smooth and trusted experience.</p>
+            </div>
+        </div>
+
+        <div class="services card-surface">
+            <h2>What We Offer</h2>
+            <div class="service-box">
+                <h3>Buy Vehicles</h3>
+                <p>Browse quality second-hand vehicles at affordable prices.</p>
+            </div>
+            <div class="service-box">
+                <h3>Sell Vehicles</h3>
+                <p>List your vehicle and reach genuine buyers quickly.</p>
+            </div>
+            <div class="service-box">
+                <h3>Book Service</h3>
+                <p>Schedule service appointments with trusted mechanics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feedback-section">
+        <h2 class="feedback-title">Feedback</h2>
+        <div class="feedback-subtitle">What our users say</div>
+        <div class="testimonial-carousel">
+            <button class="testimonial-arrow testimonial-arrow--prev" id="testimonial-prev" aria-label="Previous testimonial"></button>
+            <div class="testimonial-card" id="testimonial-card">
+                <div class="testimonial-quote"></div>
+                <div class="testimonial-user"></div>
+                <div class="testimonial-meta"></div>
+            </div>
+            <button class="testimonial-arrow testimonial-arrow--next" id="testimonial-next" aria-label="Next testimonial"></button>
+        </div>
+    </section>
+
+    <footer class="modern-footer">
+        <div class="footer-sections">
+            <div class="footer-section">
+                <h3>Feedback</h3>
+                <form id="footerFeedbackForm" class="footer-form">
+                    <input type="email" id="footer-feedback-email" name="email" placeholder="Your email" required class="footer-input">
+                    <textarea id="footer-feedback-text" name="feedback" placeholder="Your feedback..." required class="footer-textarea"></textarea>
+                    <button type="submit" class="footer-btn">Send Feedback</button>
+                    <div id="footerFeedbackMsg" class="footer-msg"></div>
+                </form>
+            </div>
+
+            <div class="footer-section">
+                <h3>Stay Up To Date</h3>
+                <form id="notifyForm" class="notify-form">
+                    <input type="email" id="notify-email" name="notify-email" placeholder="Your email for updates" required class="footer-input">
+                    <button type="submit" class="footer-btn notify-btn">Subscribe</button>
+                </form>
+                <div id="notifyMsg" class="footer-msg"></div>
+                <button type="button" id="unsubscribeBtn" class="footer-btn unsubscribe-btn" style="display:none;">Unsubscribe</button>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Have questions or need help?</p>
+                <div class="footer-contact-actions">
+                    <a href="contact.html" class="contact-btn">Contact Us</a>
+                    <a href="/about.html" class="faq-link">About Us</a>
+                    <a href="/faq" class="faq-link">View FAQ</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">Copyright 2026 SecondGear. All rights reserved.</div>
+    </footer>
+
+    <script src="Home.js"></script>
+    <script>
+        // Show My Profile link only if user is logged in
+        document.addEventListener('DOMContentLoaded', function () {
+            var profileSection = document.getElementById('profile-section');
+            var myProfileLink = document.getElementById('my-profile-link');
+            if (profileSection && myProfileLink) {
+                setTimeout(function () {
+                    if (profileSection.style.display === 'flex' || profileSection.style.display === '') {
+                        myProfileLink.style.display = 'inline-block';
+                    } else {
+                        myProfileLink.style.display = 'none';
+                    }
+                }, 200);
+            }
+        });
+    </script>
+</body>
+</html>
+
+

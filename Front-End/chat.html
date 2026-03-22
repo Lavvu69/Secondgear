@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - SecondGear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header class="floating-navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="profile.html">My Profile</a>
+            <a href="/chat" class="active">Chat</a>
+        </nav>
+    </header>
+
+    <main class="chat-main">
+        <section class="chat-shell">
+            <aside class="chat-sidebar">
+                <div class="chat-section">
+                    <div class="chat-section-header">
+                        <h2>Requests</h2>
+                        <button id="refreshRequestsBtn" type="button">Refresh</button>
+                    </div>
+                    <div id="chatRequestsList" class="chat-list">Loading...</div>
+                </div>
+                <div class="chat-section">
+                    <div class="chat-section-header">
+                        <h2>Conversations</h2>
+                        <button id="refreshConversationsBtn" type="button">Refresh</button>
+                    </div>
+                    <div id="chatConversationsList" class="chat-list">Loading...</div>
+                </div>
+            </aside>
+
+            <section class="chat-panel">
+                <div class="chat-panel-header">
+                    <div>
+                        <h3 id="chatTitle">Select a conversation</h3>
+                        <p id="chatSubtitle">Your approved chats will appear here.</p>
+                    </div>
+                    <div class="chat-header-actions">
+                        <button id="chatCloseBtn" type="button" class="chat-close-btn" style="display:none;">Close Chat</button>
+                        <span id="chatStatusBadge" class="chat-status-badge" style="display:none;">Active</span>
+                    </div>
+                </div>
+
+                <div class="chat-warning" id="chatWarning">
+                    <strong>Vehicle-only chat.</strong> Beware of scams. Avoid sharing personal contact details or paying outside SecondGear.
+                </div>
+
+                <div id="chatMessages" class="chat-messages">
+                    <p class="chat-empty">No conversation selected.</p>
+                </div>
+
+                <form id="chatForm" class="chat-form" style="display:none;">
+                    <input type="text" id="chatMessageInput" placeholder="Type a vehicle-related message..." maxlength="2000" required>
+                    <button type="submit">Send</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <script src="chat.js"></script>
+</body>
+</html>
+
+

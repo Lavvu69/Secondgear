@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Request Status - SecondGear</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="sell-status.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body class="sell-status-page">
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="profile.html">My Profile</a>
+            <a href="my-listings.html">Your Listings</a>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px; align-items:center; gap:10px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <main class="sell-status-main">
+        <section class="status-hero">
+            <h1>Sell Request Status</h1>
+            <p>Track admin updates, respond to offers, and chat about your vehicle.</p>
+        </section>
+
+        <section class="status-grid">
+            <section class="status-card" id="requestSummary">
+                <h2>Request Summary</h2>
+                <div id="requestDetails">Loading...</div>
+            </section>
+
+            <section class="status-card" id="offerPanel">
+                <h2>Admin Offer</h2>
+                <div id="offerDetails">Loading...</div>
+                <div id="offerActions" class="offer-actions" style="display:none;">
+                    <label class="field-label" for="counterPrice">Counter Offer (INR)</label>
+                    <input type="number" id="counterPrice" min="1" step="1" placeholder="Enter your counter price">
+                    <label class="field-label" for="sellerMessage">Message (optional)</label>
+                    <textarea id="sellerMessage" rows="3" placeholder="Add a note for admin..."></textarea>
+                    <div class="action-row">
+                        <button id="acceptOfferBtn" class="btn-primary" type="button">Accept Offer</button>
+                        <button id="counterOfferBtn" class="btn-secondary" type="button">Counter</button>
+                        <button id="rejectOfferBtn" class="btn-danger" type="button">Reject</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="status-card" id="messagesPanel">
+                <h2>Messages</h2>
+                <div id="messagesList" class="messages-list">Loading...</div>
+                <div class="message-compose">
+                    <textarea id="messageInput" rows="3" placeholder="Write a message to admin..."></textarea>
+                    <button id="sendMessageBtn" class="btn-primary" type="button">Send Message</button>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="sell-status.js"></script>
+</body>
+</html>
+
+

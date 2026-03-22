@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Vehicles - SecondGear</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="floating-navbar.css">
+    <link rel="stylesheet" href="buy.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="Logo-text.png" alt="SecondGear" class="logo-text">
+            <img src="Logo-gear.png" alt="Gear" class="logo-gear">
+            <span class="brand-name">SecondGear</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buy" class="active">Buy</a>
+            <a href="/sell">Sell</a>
+            <a href="service-booking.html">Service</a>
+            <a href="/admin-dashboard.html" id="buy-admin-dashboard-link" style="display:none;">Dashboard</a>
+            <button id="buy-admin-logout-btn" type="button" style="display:none;">Logout (Admin)</button>
+            <a href="/user" id="buy-login-link">Login</a>
+        </nav>
+        <div id="profile-section" style="display:none; margin-left:auto; padding:0 16px;">
+            <span id="welcome-message"></span>
+            <span id="profile-username" style="font-weight:bold;"></span>
+            <button id="logout-btn" style="margin-left:8px; display:none;">Logout</button>
+        </div>
+    </header>
+
+    <section class="buy-hero">
+        <div class="buy-hero-simple">
+            <h1>Buy Vehicles</h1>
+            <p class="buy-hero-sub">Find and purchase vehicles compatible with your requirements.</p>
+            <div id="admin-edit-note" style="display:none; color:#c00; font-weight:bold; margin-top:10px;">Admin: You can edit car prices below.</div>
+        </div>
+
+        <section id="filter-container" class="filter-container sleek-filter">
+            <div class="filter-row">
+                <div class="filter-group" style="justify-content:flex-start;">
+                    <label for="price-min">Min (₹)</label>
+                    <input type="number" id="price-min" placeholder="e.g. 5000" min="0">
+                </div>
+                <div class="filter-group" style="justify-content:center;">
+                    <label for="price-max">Max (₹)</label>
+                    <input type="number" id="price-max" placeholder="e.g. 20000" min="0">
+                </div>
+                <div class="filter-actions">
+                    <button id="toggle-advanced-filters" type="button" class="sleek-btn">Advanced Filters v</button>
+                </div>
+            </div>
+
+            <div id="advanced-filters" class="advanced-filters-row">
+                <div class="filter-group"><label for="filter-make">Make</label><select id="filter-make">
+                        <option value="">Any</option>
+                    </select></div>
+                <div class="filter-group"><label for="filter-model">Model</label><select id="filter-model">
+                        <option value="">Any</option>
+                    </select></div>
+                <div class="filter-group"><label for="filter-year">Year</label><select id="filter-year">
+                        <option value="">Any</option>
+                    </select></div>
+                <div class="filter-group"><label for="filter-color">Color</label><input type="text" id="filter-color" placeholder="e.g. Blue"></div>
+                <div class="filter-group"><label for="filter-fuel">Fuel</label><select id="filter-fuel">
+                        <option value="">Any</option>
+                        <option>Petrol</option>
+                        <option>Diesel</option>
+                        <option>Electric</option>
+                        <option>Hybrid</option>
+                    </select></div>
+                <div class="filter-group"><label for="filter-trans">Trans.</label><select id="filter-trans">
+                        <option value="">Any</option>
+                        <option>Manual</option>
+                        <option>Automatic</option>
+                    </select></div>
+                <div class="filter-group"><label for="filter-owners">Owners</label><select id="filter-owners">
+                        <option value="">Any</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4+</option>
+                    </select></div>
+                <div class="filter-group"><label for="filter-regcity">Reg. City</label><input type="text" id="filter-regcity" placeholder="e.g. Punjab"></div>
+                <div class="filter-group mileage-group"><label for="filter-mileage-min">Mileage Min</label><input type="number" id="filter-mileage-min" min="0" placeholder="e.g. 10000 km"><label for="filter-mileage-max">Max</label><input type="number" id="filter-mileage-max" min="0" placeholder="e.g. 50000 km"></div>
+            </div>
+
+            <button id="apply-price-filter" class="sleek-btn main-filter-btn">Filter</button>
+        </section>
+
+        <section id="compare-bar" class="compare-bar" aria-live="polite">
+            <div class="compare-bar-info">
+                <span class="compare-bar-title">Compare Vehicles</span>
+                <span id="compare-bar-count" class="compare-bar-count">Select up to 3 cars to compare.</span>
+                <div id="compare-bar-list" class="compare-bar-list"></div>
+            </div>
+            <div class="compare-bar-actions">
+                <button id="compare-clear-btn" class="compare-clear-btn" type="button">Clear</button>
+                <a id="compare-go-btn" class="compare-go-btn" href="compare.html" aria-disabled="true">Compare</a>
+            </div>
+        </section>
+
+        <section class="vehicle-listings">
+            <div id="members-only-message" class="members-only-message" style="display:none;">
+                <span class="members-icon">LOCKED</span>
+                <div class="members-text">Only members can view cars.<br><span style="font-size:0.95em; color:#666;">Please log in or sign up to see available vehicles.</span></div>
+            </div>
+            <div id="vehicle-list" class="vehicle-list-grid"></div>
+        </section>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 SecondGear. All rights reserved. <a href="/about.html">About Us</a></p>
+    </footer>
+
+    <div id="offer-modal" class="offer-modal" style="display:none;">
+        <div class="offer-modal-content">
+            <button id="offer-modal-close" type="button" class="offer-modal-close" aria-label="Close">&times;</button>
+            <h3>Make an Offer</h3>
+            <p id="offer-modal-car-label" class="offer-modal-subtitle"></p>
+            <form id="offer-form">
+                <input type="hidden" id="offer-car-id">
+                <div class="offer-field">
+                    <label>Listed Price</label>
+                    <input type="text" id="offer-listed-price" disabled>
+                </div>
+                <div class="offer-field">
+                    <label for="offer-price-input">Your Offer (₹)</label>
+                    <input type="number" id="offer-price-input" min="1" step="0.01" required>
+                </div>
+                <div class="offer-field">
+                    <label for="offer-message-input">Message (Optional)</label>
+                    <textarea id="offer-message-input" rows="3" maxlength="500" placeholder="Add a short note for admin review"></textarea>
+                </div>
+                <button id="offer-submit-btn" type="submit" class="offer-submit-btn">Submit Offer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="buy.js"></script>
+</body>
+
+</html>
+
+
