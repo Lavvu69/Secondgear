@@ -223,6 +223,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         async function loadCarImages(carId) {
             if (!photoGrid) return;
+            const existingHint = document.querySelector('.photo-hint');
+            if (existingHint) existingHint.remove();
             photoGrid.innerHTML = '<div class="photo-empty">Loading...</div>';
             try {
                 const res = await fetch(`/admin/cars/${carId}/images`);
@@ -232,11 +234,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     photoGrid.innerHTML = '<div class="photo-empty">No photos yet.</div>';
                     return;
                 }
+                const totalImages = data.length;
                 photoGrid.innerHTML = data.map(img => {
                     const isMain = !!img.is_main;
                     const badge = isMain ? '<span class="photo-main-badge">Main</span>' : '';
                     const mainBtn = isMain ? '' : `<button class="photo-main-btn" data-image-id="${img.id}">Set Main</button>`;
-                    const removeBtn = `<button class="photo-remove-btn" data-image-id="${img.id}">Remove</button>`;
+                    const disableRemove = totalImages <= 1;
+                    const removeBtn = `<button class="photo-remove-btn ${disableRemove ? 'disabled' : ''}" data-image-id="${img.id}" ${disableRemove ? 'disabled' : ''}>Remove</button>`;
                     return `
                         <div class="photo-card">
                             <img src="${img.image_url}" alt="Car photo">
@@ -248,6 +252,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                     `;
                 }).join('');
+                if (totalImages <= 1) {
+                    photoGrid.insertAdjacentHTML('afterend', '<div class="photo-hint">Upload another image before removing the main photo.</div>');
+                }
             } catch (err) {
                 photoGrid.innerHTML = `<div class="photo-empty error">${err.message || 'Failed to load images.'}</div>`;
             }
@@ -301,6 +308,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const btn = e.target.closest('.photo-remove-btn');
                 if (!btn || !activePhotoCarId) return;
                 const imageId = btn.getAttribute('data-image-id');
+                if (btn.disabled) return;
                 if (!confirm('Remove this image?')) return;
                 btn.disabled = true;
                 try {
