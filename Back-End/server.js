@@ -92,7 +92,10 @@ const allowedCarMimeTypes = new Set([
     'image/jpeg',
     'image/png',
     'image/webp',
-    'image/gif'
+    'image/gif',
+    'image/avif',
+    'image/heic',
+    'image/heif'
 ]);
 const upload = multer({
     storage: multer.memoryStorage(),
