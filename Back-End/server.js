@@ -4872,6 +4872,38 @@ app.put('/admin/cars/:carId/images/:imageId/main', requireAdmin, (req, res) => {
     });
 });
 
+// Admin: delete an image
+app.delete('/admin/cars/:carId/images/:imageId', requireAdmin, (req, res) => {
+    const carId = Number(req.params.carId);
+    const imageId = Number(req.params.imageId);
+    if (!carId || !imageId) return res.status(400).json({ message: 'Invalid ids' });
+
+    db.query('SELECT is_main FROM car_images WHERE id = ? AND car_id = ? LIMIT 1', [imageId, carId], (err, rows) => {
+        if (err) return res.status(500).json({ message: 'DB error', error: err });
+        if (!rows || !rows.length) return res.status(404).json({ message: 'Image not found' });
+        const wasMain = !!rows[0].is_main;
+
+        db.query('DELETE FROM car_images WHERE id = ? AND car_id = ?', [imageId, carId], (err2) => {
+            if (err2) return res.status(500).json({ message: 'DB error', error: err2 });
+            if (!wasMain) return res.json({ success: true, image_url: null });
+
+            db.query('SELECT image_url FROM car_images WHERE car_id = ? ORDER BY is_main DESC, created_at ASC LIMIT 1', [carId], (err3, nextRows) => {
+                if (err3) return res.status(500).json({ message: 'DB error', error: err3 });
+                if (nextRows && nextRows.length) {
+                    const nextUrl = nextRows[0].image_url;
+                    db.query('UPDATE car_images SET is_main = 0 WHERE car_id = ?', [carId], () => {
+                        db.query('UPDATE car_images SET is_main = 1 WHERE car_id = ? AND image_url = ? LIMIT 1', [carId, nextUrl], () => {});
+                    });
+                    db.query('UPDATE cars SET image_url = ? WHERE id = ?', [nextUrl, carId], () => {});
+                    return res.json({ success: true, image_url: nextUrl });
+                }
+                db.query('UPDATE cars SET image_url = NULL WHERE id = ?', [carId], () => {});
+                return res.json({ success: true, image_url: null });
+            });
+        });
+    });
+});
+
 // Admin: Toggle featured car
 app.post('/admin/cars/:id/feature', requireAdmin, (req, res) => {
     const carId = parseInt(req.params.id, 10);

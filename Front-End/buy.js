@@ -212,12 +212,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (photoGrid) photoGrid.innerHTML = '';
         }
 
+        async function readJsonResponse(res) {
+            const contentType = res.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+                return res.json();
+            }
+            const text = await res.text();
+            throw new Error('Server returned an unexpected response. Please make sure the backend is deployed and admin session is active.');
+        }
+
         async function loadCarImages(carId) {
             if (!photoGrid) return;
             photoGrid.innerHTML = '<div class="photo-empty">Loading...</div>';
             try {
                 const res = await fetch(`/admin/cars/${carId}/images`);
-                const data = await res.json();
+                const data = await readJsonResponse(res);
                 if (!res.ok) throw new Error(data.message || 'Failed to load images');
                 if (!data.length) {
                     photoGrid.innerHTML = '<div class="photo-empty">No photos yet.</div>';
@@ -226,12 +235,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 photoGrid.innerHTML = data.map(img => {
                     const isMain = !!img.is_main;
                     const badge = isMain ? '<span class="photo-main-badge">Main</span>' : '';
-                    const btn = isMain ? '' : `<button class="photo-main-btn" data-image-id="${img.id}">Set Main</button>`;
+                    const mainBtn = isMain ? '' : `<button class="photo-main-btn" data-image-id="${img.id}">Set Main</button>`;
+                    const removeBtn = `<button class="photo-remove-btn" data-image-id="${img.id}">Remove</button>`;
                     return `
                         <div class="photo-card">
                             <img src="${img.image_url}" alt="Car photo">
                             ${badge}
-                            ${btn}
+                            <div class="photo-card-actions">
+                                ${mainBtn}
+                                ${removeBtn}
+                            </div>
                         </div>
                     `;
                 }).join('');
@@ -273,13 +286,34 @@ document.addEventListener('DOMContentLoaded', async function() {
                 btn.disabled = true;
                 try {
                     const res = await fetch(`/admin/cars/${activePhotoCarId}/images/${imageId}/main`, { method: 'PUT' });
-                    const data = await res.json();
+                    const data = await readJsonResponse(res);
                     if (!res.ok) throw new Error(data.message || 'Failed to set main image');
                     await loadCarImages(activePhotoCarId);
                     const cardImg = document.querySelector(`.car-card[data-car-id="${activePhotoCarId}"] .car-image`);
                     if (cardImg && data.image_url) cardImg.src = data.image_url;
                 } catch (err) {
                     if (photoUploadMsg) photoUploadMsg.textContent = err.message || 'Failed to set main image';
+                } finally {
+                    btn.disabled = false;
+                }
+            });
+            photoGrid.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.photo-remove-btn');
+                if (!btn || !activePhotoCarId) return;
+                const imageId = btn.getAttribute('data-image-id');
+                if (!confirm('Remove this image?')) return;
+                btn.disabled = true;
+                try {
+                    const res = await fetch(`/admin/cars/${activePhotoCarId}/images/${imageId}`, { method: 'DELETE' });
+                    const data = await readJsonResponse(res);
+                    if (!res.ok) throw new Error(data.message || 'Failed to remove image');
+                    await loadCarImages(activePhotoCarId);
+                    const cardImg = document.querySelector(`.car-card[data-car-id="${activePhotoCarId}"] .car-image`);
+                    if (cardImg && data.image_url) {
+                        cardImg.src = data.image_url;
+                    }
+                } catch (err) {
+                    if (photoUploadMsg) photoUploadMsg.textContent = err.message || 'Failed to remove image';
                 } finally {
                     btn.disabled = false;
                 }
@@ -293,7 +327,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (photoUploadMsg) photoUploadMsg.textContent = 'Uploading...';
                 try {
                     const res = await fetch(`/admin/cars/${activePhotoCarId}/images`, { method: 'POST', body: formData });
-                    const data = await res.json();
+                    const data = await readJsonResponse(res);
                     if (!res.ok) throw new Error(data.message || 'Upload failed');
                     if (photoUploadMsg) photoUploadMsg.textContent = 'Uploaded.';
                     await loadCarImages(activePhotoCarId);
