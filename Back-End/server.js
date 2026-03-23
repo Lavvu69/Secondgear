@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 const dns = require('dns');
+const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 
 const session = require('express-session');
@@ -77,8 +78,6 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // --- Multer setup for car image uploads ---
-// (Moved below after 'path' is required)
-// --- Multer setup for car image uploads ---
 const multer = require('multer');
 const uploadDir = path.join(__dirname, '../Front-End/images/cars');
 const verificationUploadDir = path.join(__dirname, '../Front-End/images/verification');
@@ -89,15 +88,22 @@ function ensureDir(dirPath) {
 }
 ensureDir(uploadDir);
 ensureDir(verificationUploadDir);
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+const allowedCarMimeTypes = new Set([
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/gif'
+]);
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        if (!allowedCarMimeTypes.has(file.mimetype)) {
+            return cb(new Error('Only image files are allowed.'));
+        }
+        return cb(null, true);
     }
 });
-const upload = multer({ storage });
 const verificationStorage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, verificationUploadDir),
     filename: (req, file, cb) => {
@@ -124,6 +130,34 @@ const verificationUpload = multer({
     }
 });
 
+const cloudinaryConfigured =
+    !!process.env.CLOUDINARY_CLOUD_NAME &&
+    !!process.env.CLOUDINARY_API_KEY &&
+    !!process.env.CLOUDINARY_API_SECRET;
+
+if (cloudinaryConfigured) {
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+} else {
+    console.warn('Cloudinary is not configured. Car image uploads will fail until env vars are set.');
+}
+
+async function uploadCarImageToCloudinary(file) {
+    if (!file) return null;
+    if (!cloudinaryConfigured) {
+        throw new Error('Cloudinary is not configured.');
+    }
+    const dataUri = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+    const result = await cloudinary.uploader.upload(dataUri, {
+        folder: 'secondgear/cars',
+        resource_type: 'image'
+    });
+    return result.secure_url;
+}
+
 // --- Chat conversation closures ---
 db.query(
     `CREATE TABLE IF NOT EXISTS chat_conversation_closures (
@@ -135,6 +169,25 @@ db.query(
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`,
     (err) => {
         if (err) console.error('Error creating chat_conversation_closures table:', err);
+    }
+);
+
+// --- Car images gallery ---
+db.query(
+    `CREATE TABLE IF NOT EXISTS car_images (
+        id INT NOT NULL AUTO_INCREMENT,
+        car_id INT NOT NULL,
+        image_url VARCHAR(512) NOT NULL,
+        is_main TINYINT(1) NOT NULL DEFAULT 0,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_car_images_car (car_id),
+        CONSTRAINT fk_car_images_car
+            FOREIGN KEY (car_id) REFERENCES cars(id)
+            ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci`,
+    (err) => {
+        if (err) console.error('Error creating car_images table:', err);
     }
 );
 
@@ -4681,13 +4734,21 @@ app.post('/buy-legacy', (req, res) => {
 
 // ------------------
 // Admin: Add new car
-app.post('/admin/add-car', upload.single('image_file'), (req, res) => {
+app.post('/admin/add-car', upload.single('image_file'), async (req, res) => {
     const {
         make, model, year, price, description, available,
         color, fuel_type, mileage, num_owners, registration_city, registration_number,
         transmission, vin, insurance_validity
     } = req.body;
-    const image_url = req.file ? '/images/cars/' + req.file.filename : req.body.image_url || null;
+    let image_url = req.body.image_url || null;
+    if (req.file) {
+        try {
+            image_url = await uploadCarImageToCloudinary(req.file);
+        } catch (err) {
+            console.error('Car image upload failed:', err);
+            return res.status(500).json({ message: 'Image upload failed' });
+        }
+    }
     // Always set available to 1 by default (unless explicitly unchecked and sent as 0)
     const availableValue = (typeof available === 'undefined' || available === 'on' || available === true || available === 1) ? 1 : 0;
     if (!make || !model || !year || !price || !image_url) {
@@ -4715,6 +4776,99 @@ app.get('/admin/cars/all', (req, res) => {
     db.query('SELECT * FROM cars', (err, results) => {
         if (err) return res.status(500).json({ message: 'DB error' });
         res.json(results);
+    });
+});
+
+// --- Car images: ensure gallery entries exist ---
+function ensureCarImages(carId, cb) {
+    db.query('SELECT id, image_url, is_main FROM car_images WHERE car_id = ? ORDER BY is_main DESC, created_at ASC', [carId], (err, rows) => {
+        if (err) return cb(err);
+        if (rows && rows.length) return cb(null, rows);
+        db.query('SELECT image_url FROM cars WHERE id = ? LIMIT 1', [carId], (err2, carRows) => {
+            if (err2) return cb(err2);
+            const baseImage = carRows && carRows[0] ? carRows[0].image_url : null;
+            if (!baseImage) return cb(null, []);
+            db.query('INSERT INTO car_images (car_id, image_url, is_main) VALUES (?, ?, 1)', [carId, baseImage], (err3, result) => {
+                if (err3) return cb(err3);
+                cb(null, [{ id: result.insertId, image_url: baseImage, is_main: 1 }]);
+            });
+        });
+    });
+}
+
+// Public: get car images for gallery
+app.get('/cars/:id/images', (req, res) => {
+    const carId = Number(req.params.id);
+    if (!carId) return res.status(400).json({ message: 'Invalid car id' });
+    ensureCarImages(carId, (err, rows) => {
+        if (err) return res.status(500).json({ message: 'DB error', error: err });
+        res.json(rows || []);
+    });
+});
+
+// Admin: get car images
+app.get('/admin/cars/:id/images', requireAdmin, (req, res) => {
+    const carId = Number(req.params.id);
+    if (!carId) return res.status(400).json({ message: 'Invalid car id' });
+    ensureCarImages(carId, (err, rows) => {
+        if (err) return res.status(500).json({ message: 'DB error', error: err });
+        res.json(rows || []);
+    });
+});
+
+// Admin: upload multiple images for a car (Cloudinary)
+app.post('/admin/cars/:id/images', requireAdmin, upload.array('images', 8), async (req, res) => {
+    const carId = Number(req.params.id);
+    if (!carId) return res.status(400).json({ message: 'Invalid car id' });
+    const files = req.files || [];
+    if (!files.length) return res.status(400).json({ message: 'No images uploaded' });
+
+    try {
+        const uploads = [];
+        for (const file of files) {
+            const url = await uploadCarImageToCloudinary(file);
+            if (url) uploads.push(url);
+        }
+        if (!uploads.length) return res.status(500).json({ message: 'Image upload failed' });
+
+        db.query('SELECT id FROM car_images WHERE car_id = ? AND is_main = 1 LIMIT 1', [carId], (err, mainRows) => {
+            if (err) return res.status(500).json({ message: 'DB error', error: err });
+            const hasMain = mainRows && mainRows.length > 0;
+            const rowsToInsert = uploads.map((url, idx) => [carId, url, (!hasMain && idx === 0) ? 1 : 0]);
+            db.query('INSERT INTO car_images (car_id, image_url, is_main) VALUES ?', [rowsToInsert], (err2) => {
+                if (err2) return res.status(500).json({ message: 'DB error', error: err2 });
+                if (!hasMain) {
+                    db.query('UPDATE cars SET image_url = ? WHERE id = ?', [uploads[0], carId], () => {});
+                }
+                ensureCarImages(carId, (err3, rows) => {
+                    if (err3) return res.status(500).json({ message: 'DB error', error: err3 });
+                    res.json({ success: true, images: rows || [] });
+                });
+            });
+        });
+    } catch (err) {
+        console.error('Admin upload images failed:', err);
+        res.status(500).json({ message: 'Image upload failed' });
+    }
+});
+
+// Admin: set main image
+app.put('/admin/cars/:carId/images/:imageId/main', requireAdmin, (req, res) => {
+    const carId = Number(req.params.carId);
+    const imageId = Number(req.params.imageId);
+    if (!carId || !imageId) return res.status(400).json({ message: 'Invalid ids' });
+
+    db.query('UPDATE car_images SET is_main = 0 WHERE car_id = ?', [carId], (err) => {
+        if (err) return res.status(500).json({ message: 'DB error', error: err });
+        db.query('UPDATE car_images SET is_main = 1 WHERE id = ? AND car_id = ?', [imageId, carId], (err2) => {
+            if (err2) return res.status(500).json({ message: 'DB error', error: err2 });
+            db.query('SELECT image_url FROM car_images WHERE id = ? AND car_id = ? LIMIT 1', [imageId, carId], (err3, rows) => {
+                if (err3 || !rows || !rows.length) return res.status(500).json({ message: 'DB error', error: err3 });
+                const mainUrl = rows[0].image_url;
+                db.query('UPDATE cars SET image_url = ? WHERE id = ?', [mainUrl, carId], () => {});
+                res.json({ success: true, image_url: mainUrl });
+            });
+        });
     });
 });
 
@@ -4784,7 +4938,7 @@ app.get('/admin/rejected-requests', (req, res) => {
 });
 
 // 1. User submits sell request
-app.post('/sell-request', upload.single('image'), (req, res) => {
+app.post('/sell-request', upload.single('image'), async (req, res) => {
     const {
         email,
         make,
@@ -4812,8 +4966,15 @@ app.post('/sell-request', upload.single('image'), (req, res) => {
     const loggedInUserId = req.session && req.session.user ? req.session.user.id : null;
     let image_url = null;
     if (req.file) {
-        // Save relative path for DB (relative to Front-End/images/cars)
-        image_url = 'images/cars/' + req.file.filename;
+        try {
+            image_url = await uploadCarImageToCloudinary(req.file);
+        } catch (err) {
+            console.error('Sell request image upload failed:', err);
+            return res.status(500).json({ message: 'Image upload failed' });
+        }
+    }
+    if (!image_url) {
+        return res.status(400).json({ message: 'Image is required' });
     }
     db.query(
         `INSERT INTO sell_requests (
@@ -5148,7 +5309,7 @@ app.post('/user/sell-request/:id/respond', requireLogin, (req, res) => {
 });
 
 // 3. Admin confirms a request (uploads image, sets price, moves to cars table)
-app.post('/admin/sell-request/:id/confirm', upload.single('image'), (req, res) => {
+app.post('/admin/sell-request/:id/confirm', upload.single('image'), async (req, res) => {
     const id = req.params.id;
     // Support both JSON and multipart/form-data
     let carDetails = {};
@@ -5159,7 +5320,15 @@ app.post('/admin/sell-request/:id/confirm', upload.single('image'), (req, res) =
         carDetails.price = req.body.price;
     }
     // Use uploaded file if present, else use image_url from body or sell_request
-    let image = req.file ? '/images/cars/' + req.file.filename : (carDetails.image_url || null);
+    let image = carDetails.image_url || null;
+    if (req.file) {
+        try {
+            image = await uploadCarImageToCloudinary(req.file);
+        } catch (err) {
+            console.error('Confirm listing image upload failed:', err);
+            return res.status(500).json({ message: 'Image upload failed' });
+        }
+    }
     const toBool = (value, defaultValue = true) => {
         if (value === undefined || value === null || value === '') return defaultValue;
         if (typeof value === 'boolean') return value;
