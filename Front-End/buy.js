@@ -1,4 +1,4 @@
-// buy.js
+﻿// buy.js
 // Handles buy form submission for vehicle purchases
 
 
@@ -148,6 +148,32 @@ document.addEventListener('DOMContentLoaded', async function() {
         const offerSubmitBtn = document.getElementById('offer-submit-btn');
         const offerModalCarLabel = document.getElementById('offer-modal-car-label');
 
+        const adminPhotoModal = document.createElement('div');
+        adminPhotoModal.className = 'photo-modal';
+        adminPhotoModal.innerHTML = `
+            <div class="photo-modal-content">
+                <div class="photo-modal-head">
+                    <h3>Manage Photos</h3>
+                    <button type="button" class="photo-modal-close" aria-label="Close">×</button>
+                </div>
+                <div class="photo-upload-row">
+                    <label class="photo-upload-btn">
+                        <input type="file" id="photo-upload-input" accept="image/*" multiple>
+                        + Add
+                    </label>
+                    <span id="photo-upload-msg" class="photo-upload-msg"></span>
+                </div>
+                <div id="photo-grid" class="photo-grid"></div>
+            </div>
+        `;
+        document.body.appendChild(adminPhotoModal);
+
+        const photoGrid = adminPhotoModal.querySelector('#photo-grid');
+        const photoUploadInput = adminPhotoModal.querySelector('#photo-upload-input');
+        const photoUploadMsg = adminPhotoModal.querySelector('#photo-upload-msg');
+        const photoModalClose = adminPhotoModal.querySelector('.photo-modal-close');
+        let activePhotoCarId = null;
+
         async function loadWishlistIds() {
             if (!userLoggedIn || isAdmin) return;
             try {
@@ -173,6 +199,47 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (offerForm) offerForm.reset();
         }
 
+        function openPhotoModal(carId) {
+            activePhotoCarId = carId;
+            if (photoUploadMsg) photoUploadMsg.textContent = '';
+            adminPhotoModal.classList.add('show');
+            loadCarImages(carId);
+        }
+
+        function closePhotoModal() {
+            adminPhotoModal.classList.remove('show');
+            activePhotoCarId = null;
+            if (photoGrid) photoGrid.innerHTML = '';
+        }
+
+        async function loadCarImages(carId) {
+            if (!photoGrid) return;
+            photoGrid.innerHTML = '<div class="photo-empty">Loading...</div>';
+            try {
+                const res = await fetch(`/admin/cars/${carId}/images`);
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Failed to load images');
+                if (!data.length) {
+                    photoGrid.innerHTML = '<div class="photo-empty">No photos yet.</div>';
+                    return;
+                }
+                photoGrid.innerHTML = data.map(img => {
+                    const isMain = !!img.is_main;
+                    const badge = isMain ? '<span class="photo-main-badge">Main</span>' : '';
+                    const btn = isMain ? '' : `<button class="photo-main-btn" data-image-id="${img.id}">Set Main</button>`;
+                    return `
+                        <div class="photo-card">
+                            <img src="${img.image_url}" alt="Car photo">
+                            ${badge}
+                            ${btn}
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                photoGrid.innerHTML = `<div class="photo-empty error">${err.message || 'Failed to load images.'}</div>`;
+            }
+        }
+
         function openOfferModal(car) {
             if (!offerModal || !offerForm || !offerCarIdInput || !offerListedPriceInput || !offerPriceInput) return;
             offerCarIdInput.value = String(car.id);
@@ -190,6 +257,54 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (offerModal) {
             offerModal.addEventListener('click', function(e) {
                 if (e.target === offerModal) closeOfferModal();
+            });
+        }
+        if (photoModalClose) {
+            photoModalClose.addEventListener('click', closePhotoModal);
+        }
+        adminPhotoModal.addEventListener('click', (e) => {
+            if (e.target === adminPhotoModal) closePhotoModal();
+        });
+        if (photoGrid) {
+            photoGrid.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.photo-main-btn');
+                if (!btn || !activePhotoCarId) return;
+                const imageId = btn.getAttribute('data-image-id');
+                btn.disabled = true;
+                try {
+                    const res = await fetch(`/admin/cars/${activePhotoCarId}/images/${imageId}/main`, { method: 'PUT' });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.message || 'Failed to set main image');
+                    await loadCarImages(activePhotoCarId);
+                    const cardImg = document.querySelector(`.car-card[data-car-id="${activePhotoCarId}"] .car-image`);
+                    if (cardImg && data.image_url) cardImg.src = data.image_url;
+                } catch (err) {
+                    if (photoUploadMsg) photoUploadMsg.textContent = err.message || 'Failed to set main image';
+                } finally {
+                    btn.disabled = false;
+                }
+            });
+        }
+        if (photoUploadInput) {
+            photoUploadInput.addEventListener('change', async () => {
+                if (!activePhotoCarId || !photoUploadInput.files.length) return;
+                const formData = new FormData();
+                Array.from(photoUploadInput.files).forEach(file => formData.append('images', file));
+                if (photoUploadMsg) photoUploadMsg.textContent = 'Uploading...';
+                try {
+                    const res = await fetch(`/admin/cars/${activePhotoCarId}/images`, { method: 'POST', body: formData });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.message || 'Upload failed');
+                    if (photoUploadMsg) photoUploadMsg.textContent = 'Uploaded.';
+                    await loadCarImages(activePhotoCarId);
+                    const mainImage = (data.images || []).find(img => img.is_main) || null;
+                    const cardImg = document.querySelector(`.car-card[data-car-id="${activePhotoCarId}"] .car-image`);
+                    if (cardImg && mainImage) cardImg.src = mainImage.image_url;
+                } catch (err) {
+                    if (photoUploadMsg) photoUploadMsg.textContent = err.message || 'Upload failed';
+                } finally {
+                    photoUploadInput.value = '';
+                }
             });
         }
         if (offerForm) {
@@ -298,6 +413,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             cars.forEach(car => {
                 const card = document.createElement('div');
                 card.className = 'car-card';
+                card.dataset.carId = car.id;
                 const hasSeller = !!(car.seller_user_id || (car.seller_email && String(car.seller_email).trim()));
                 const isVerifiedSeller = !!car.seller_is_verified;
                 const listingLabel = hasSeller ? 'User Listing' : 'SecondGear Direct';
@@ -339,11 +455,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         ${isDeleted ? '<span class="car-status-badge">Soft Deleted</span>' : ''}
                     `;
                 }
-                  const offerButtonHtml = (!isAdminMode && car.available) ? `<button class="offer-btn" type="button">Make Offer</button>` : '';
-                  const compareButtonHtml = `<button class="compare-btn" type="button" data-compare-id="${car.id}">Compare</button>`;
-                  const wishlistHeartHtml = (!isAdminMode && userLoggedIn)
-                      ? `<button class="wishlist-heart ${wishlistIds.has(car.id) ? 'active' : ''}" type="button" data-wishlist-id="${car.id}" aria-label="Save to wishlist" title="${wishlistIds.has(car.id) ? 'Saved' : 'Save'}">♥</button>`
-                      : '';
+                const offerButtonHtml = (!isAdminMode && car.available) ? `<button class="offer-btn" type="button">Make Offer</button>` : '';
+                const compareButtonHtml = `<button class="compare-btn" type="button" data-compare-id="${car.id}">Compare</button>`;
+                const wishlistHeartHtml = (!isAdminMode && userLoggedIn)
+                    ? `<button class="wishlist-heart ${wishlistIds.has(car.id) ? 'active' : ''}" type="button" data-wishlist-id="${car.id}" aria-label="Save to wishlist" title="${wishlistIds.has(car.id) ? 'Saved' : 'Save'}">♥</button>`
+                    : '';
+                const adminPhotoBtnHtml = isAdminMode
+                    ? `<button class="photo-manage-btn" type="button" title="Manage photos" aria-label="Manage photos">+</button>`
+                    : '';
                 const adminManageHtml = isAdminMode ? `
                     <div class="admin-car-actions">
                         <button class="admin-delete-btn" type="button" data-car-id="${car.id}" ${isDeleted ? 'disabled' : ''}>${isDeleted ? 'Deleted' : 'Soft Delete'}</button>
@@ -353,6 +472,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 card.innerHTML = `
                       <div class="car-image-container">
                           ${wishlistHeartHtml}
+                          ${adminPhotoBtnHtml}
                           <a href="${imgUrl}" target="_blank">
                               <img src="${imgUrl}" alt="${car.make} ${car.model}" class="car-image" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';">
                           </a>
@@ -439,6 +559,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                           }
                       });
                   }
+                const photoManageBtn = card.querySelector('.photo-manage-btn');
+                if (photoManageBtn) {
+                    photoManageBtn.addEventListener('click', function() {
+                        openPhotoModal(car.id);
+                    });
+                }
                 // Admin price update logic
                 if (isAdminMode) {
                     const form = card.querySelector('.edit-price-form');
@@ -689,6 +815,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 });
+
 
 
 

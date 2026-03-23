@@ -30,7 +30,12 @@
         <div class="details-shell" id="details-shell">
             <div class="car-details-container" id="car-details-container">
                 <div class="car-image-section">
-                    <img id="car-image" src="" alt="Car Image">
+                    <div class="car-image-gallery">
+                        <button class="gallery-nav prev" id="gallery-prev" type="button" aria-label="Previous image">‹</button>
+                        <img id="car-image" src="" alt="Car Image">
+                        <button class="gallery-nav next" id="gallery-next" type="button" aria-label="Next image">›</button>
+                        <div class="gallery-counter" id="gallery-counter"></div>
+                    </div>
                     <aside class="quick-purchase-card" id="quick-purchase-card">
                         <p class="quick-label">Quick Deal</p>
                         <p class="quick-price" id="quick-price">--</p>

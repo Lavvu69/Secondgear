@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     const carDetailsContainer = document.getElementById('car-details-container');
     const carTitle = document.getElementById('car-title');
     const carImage = document.getElementById('car-image');
+    const galleryPrev = document.getElementById('gallery-prev');
+    const galleryNext = document.getElementById('gallery-next');
+    const galleryCounter = document.getElementById('gallery-counter');
     const carAutogenDescription = document.getElementById('car-autogen-description');
     const carInfoTable = document.getElementById('car-info-table');
     const proceedToBuyButton = document.getElementById('proceed-to-buy');
@@ -38,8 +41,55 @@ document.addEventListener('DOMContentLoaded', async function() {
     if(carDetailsContainer) carDetailsContainer.style.opacity = '0.5';
     if(proceedToBuyButton) proceedToBuyButton.disabled = true;
 
+    const PLACEHOLDER_IMG = 'images/cars/about.jpg';
+    const normalizeImageUrl = (url) => {
+        if (!url) return PLACEHOLDER_IMG;
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        if (url.startsWith('/')) return url;
+        return `/${url}`;
+    };
+
+    const updateGalleryUI = () => {
+        if (!carImage) return;
+        const total = galleryImages.length || 1;
+        if (!galleryImages.length) {
+            galleryImages = [PLACEHOLDER_IMG];
+            galleryIndex = 0;
+        } else {
+            galleryIndex = Math.min(Math.max(galleryIndex, 0), total - 1);
+        }
+        carImage.src = galleryImages[galleryIndex];
+        carImage.onerror = () => {
+            carImage.onerror = null;
+            carImage.src = PLACEHOLDER_IMG;
+        };
+        if (galleryCounter) {
+            galleryCounter.textContent = `${galleryIndex + 1} / ${total}`;
+        }
+        const disableNav = total <= 1;
+        if (galleryPrev) galleryPrev.disabled = disableNav;
+        if (galleryNext) galleryNext.disabled = disableNav;
+        if (galleryCounter) galleryCounter.style.display = total <= 1 ? 'none' : 'inline-flex';
+    };
+
+    if (galleryPrev) {
+        galleryPrev.addEventListener('click', () => {
+            if (galleryImages.length <= 1) return;
+            galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateGalleryUI();
+        });
+    }
+    if (galleryNext) {
+        galleryNext.addEventListener('click', () => {
+            if (galleryImages.length <= 1) return;
+            galleryIndex = (galleryIndex + 1) % galleryImages.length;
+            updateGalleryUI();
+        });
+    }
 
     let carData = null;
+    let galleryImages = [];
+    let galleryIndex = 0;
     try {
         const res = await fetch(`/cars/${carId}`);
         if (!res.ok) {
@@ -50,11 +100,28 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // --- Populate car details ---
 
-        // Set image
-        if(carImage) {
-            carImage.src = car.image_url || 'images/cars/default.jpg';
+        // Set image gallery (manual navigation)
+        const baseImageUrl = normalizeImageUrl(car.image_url || car.image || PLACEHOLDER_IMG);
+        try {
+            const imgRes = await fetch(`/cars/${carId}/images`);
+            if (imgRes.ok) {
+                const imgData = await imgRes.json();
+                if (Array.isArray(imgData) && imgData.length) {
+                    galleryImages = imgData.map(img => normalizeImageUrl(img.image_url)).filter(Boolean);
+                }
+            }
+        } catch (e) {
+            // ignore gallery fetch errors
+        }
+        if (!galleryImages.length) {
+            galleryImages = [baseImageUrl];
+        } else if (!galleryImages.includes(baseImageUrl)) {
+            galleryImages.unshift(baseImageUrl);
+        }
+        if (carImage) {
             carImage.alt = `${car.make} ${car.model}`;
         }
+        updateGalleryUI();
 
         // Set title
         if(carTitle) carTitle.textContent = `${car.make} ${car.model} (${car.year})`;
