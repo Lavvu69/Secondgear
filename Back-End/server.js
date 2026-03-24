@@ -15,6 +15,7 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 const activeAdminSessions = new Set();
+let buyMaintenanceEnabled = false;
 
 // Prefer IPv4 to avoid ENETUNREACH with IPv6-only SMTP routes on some hosts.
 try {
@@ -42,8 +43,8 @@ const db = mysql.createConnection({
 });
 
 db.connect(err => {
-    if (err) console.error('❌ DB Error:', err);
-    else console.log('✅ Connected To SecondGearDB');
+    if (err) console.error('? DB Error:', err);
+    else console.log('? Connected To SecondGearDB');
 });
 
 // --- Email Configuration (Nodemailer) ---
@@ -53,7 +54,7 @@ const transporter = nodemailer.createTransport({
     secure: false,
     auth: {
         user: process.env.EMAIL_USER || 'secondgearproject01@gmail.com',
-        pass: process.env.EMAIL_PASS || 'bcwn gcdk tfqr dohy'
+        pass: process.env.EMAIL_PASS || ''
     },
     family: 4
 });
@@ -61,9 +62,9 @@ const transporter = nodemailer.createTransport({
 // Test email connection
 transporter.verify((err, success) => {
     if (err) {
-        console.error('❌ Email configuration error:', err);
+        console.error('? Email configuration error:', err);
     } else {
-        console.log('✅ Email service ready');
+        console.log('? Email service ready');
     }
 });
 
@@ -5706,4 +5707,3 @@ app.get('/admin/stats', (req, res) => {
 
 // Serve static files after API routes
 app.use(express.static(path.resolve(__dirname, '../Front-End')));
-
