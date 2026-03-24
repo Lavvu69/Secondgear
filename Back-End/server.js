@@ -1858,7 +1858,7 @@ app.get('/chat', (req, res) => {
 // Route to serve the buy page
 app.get('/buy', (req, res) => {
     const isAdmin = !!(req.session && req.session.admin);
-    if (activeAdminSessions.size > 0 && !isAdmin) {
+    if (buyMaintenanceEnabled && !isAdmin) {
         return res.status(503).sendFile(path.resolve(__dirname, '../Front-End/buy-maintenance.html'));
     }
     res.sendFile(path.resolve(__dirname, '../Front-End/buy.html'));
@@ -4249,7 +4249,7 @@ app.get('/user/car-queries', requireLogin, (req, res) => {
 // Get all cars for buy page
 app.get('/cars', (req, res) => {
     const isAdmin = !!(req.session && req.session.admin);
-    if (activeAdminSessions.size > 0 && !isAdmin) {
+    if (buyMaintenanceEnabled && !isAdmin) {
         return res.status(503).json({ message: 'Buy page is under maintenance by admin.' });
     }
     const sql = isAdmin
@@ -4269,7 +4269,7 @@ app.get('/cars', (req, res) => {
 // Get a single car by ID
 app.get('/cars/:id', (req, res) => {
     const isAdmin = !!(req.session && req.session.admin);
-    if (activeAdminSessions.size > 0 && !isAdmin) {
+    if (buyMaintenanceEnabled && !isAdmin) {
         return res.status(503).json({ message: 'Buy page is under maintenance by admin.' });
     }
     const carId = req.params.id;
@@ -4294,7 +4294,7 @@ app.get('/cars/:id', (req, res) => {
 // Improved purchase route with transaction safety and optional accepted-offer pricing.
 app.post('/buy', (req, res) => {
     const isAdmin = !!(req.session && req.session.admin);
-    if (activeAdminSessions.size > 0 && !isAdmin) {
+    if (buyMaintenanceEnabled && !isAdmin) {
         return res.status(503).json({ message: 'Buy page is under maintenance by admin.' });
     }
 
@@ -4586,7 +4586,7 @@ app.post('/buy', (req, res) => {
 
 app.post('/buy-legacy', (req, res) => {
         const isAdmin = !!(req.session && req.session.admin);
-        if (activeAdminSessions.size > 0 && !isAdmin) {
+        if (buyMaintenanceEnabled && !isAdmin) {
             return res.status(503).json({ message: 'Buy page is under maintenance by admin.' });
         }
         console.log('Received /buy POST body:', req.body);
