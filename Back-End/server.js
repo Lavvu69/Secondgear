@@ -1826,6 +1826,16 @@ app.post('/admin/restore-car', (req, res) => {
     });
 });
 
+// Admin: get/update buy page maintenance mode
+app.get('/admin/buy-maintenance', requireAdmin, (req, res) => {
+    res.json({ enabled: !!buyMaintenanceEnabled });
+});
+app.post('/admin/buy-maintenance', requireAdmin, (req, res) => {
+    const enabled = req.body && (req.body.enabled === true || req.body.enabled === 'true' || req.body.enabled === 1 || req.body.enabled === '1');
+    buyMaintenanceEnabled = !!enabled;
+    res.json({ enabled: buyMaintenanceEnabled });
+});
+
 // ------------------
 // Serve frontend pages
 
