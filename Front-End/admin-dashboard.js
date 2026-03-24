@@ -26,6 +26,49 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial fetch for all-time stats
     fetchStats();
 
+    // --- Buy page maintenance toggle ---
+    const maintenanceToggle = document.getElementById('admin-buy-maintenance-toggle');
+    const maintenanceStatus = document.getElementById('admin-maintenance-status');
+
+    async function loadMaintenanceStatus() {
+        if (!maintenanceToggle || !maintenanceStatus) return;
+        try {
+            const res = await fetch('/admin/buy-maintenance');
+            const data = await res.json();
+            const enabled = !!(data && data.enabled);
+            maintenanceToggle.checked = enabled;
+            maintenanceStatus.textContent = enabled ? 'Maintenance On' : 'Live';
+            maintenanceStatus.classList.toggle('off', enabled);
+        } catch (err) {
+            maintenanceStatus.textContent = 'Unknown';
+            maintenanceStatus.classList.add('off');
+        }
+    }
+
+    if (maintenanceToggle) {
+        maintenanceToggle.addEventListener('change', async () => {
+            maintenanceToggle.disabled = true;
+            try {
+                const res = await fetch('/admin/buy-maintenance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled: maintenanceToggle.checked })
+                });
+                const data = await res.json();
+                const enabled = !!(data && data.enabled);
+                maintenanceToggle.checked = enabled;
+                maintenanceStatus.textContent = enabled ? 'Maintenance On' : 'Live';
+                maintenanceStatus.classList.toggle('off', enabled);
+            } catch (err) {
+                maintenanceStatus.textContent = 'Error';
+                maintenanceStatus.classList.add('off');
+            } finally {
+                maintenanceToggle.disabled = false;
+            }
+        });
+        loadMaintenanceStatus();
+    }
+
     // Event listener for the filter button
     const filterBtn = document.getElementById('filterStatsBtn');
     if (filterBtn) {

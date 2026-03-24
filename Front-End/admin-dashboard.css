@@ -112,6 +112,101 @@ body {
     justify-items: stretch;
 }
 
+.admin-maintenance-panel {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: linear-gradient(120deg, rgba(15, 23, 42, 0.08), rgba(30, 64, 175, 0.08));
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+.admin-maintenance-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-maintenance-title {
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.admin-maintenance-sub {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.admin-maintenance-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-maintenance-status {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.15);
+    color: #166534;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.admin-maintenance-status.off {
+    background: rgba(248, 113, 113, 0.18);
+    color: #b91c1c;
+}
+
+.maintenance-switch {
+    position: relative;
+    width: 46px;
+    height: 24px;
+}
+
+.maintenance-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.maintenance-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(148, 163, 184, 0.7);
+    transition: 0.2s;
+    border-radius: 999px;
+}
+
+.maintenance-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    transition: 0.2s;
+    border-radius: 50%;
+}
+
+.maintenance-switch input:checked + .maintenance-slider {
+    background: #ef4444;
+}
+
+.maintenance-switch input:checked + .maintenance-slider:before {
+    transform: translateX(22px);
+}
+
 .admin-action-btn {
     border: none;
     border-radius: 12px;
